@@ -116,10 +116,8 @@ let invoice = Invoice(
 ```
 
 <p align="center">
-    <img src="Images/invoice.png" width="400" max-width="90%" alt="Plot" />
+    <img src="Images/invoice.png" width="400" max-width="90%" alt="Invoice" />
 </p>
-
-<!--![Invoice Example](Images/invoice.png)-->
 
 ### Letter
 
@@ -135,6 +133,10 @@ let letter = Letter(
     body: "Dear [Recipient],\n\nThis is a placeholder letter. Please replace this text with the actual content.\n\nSincerely,\n[Your Company]"
 )
 ```
+
+<p align="center">
+    <img src="Images/letter.png" width="400" max-width="90%" alt="Letter" />
+</p>
 
 ## Contributing
 
