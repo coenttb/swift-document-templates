@@ -55,8 +55,8 @@ func asda() async throws {
         subject: "Subject of the Letter"
     ) {
         "Dear \(recipient.name),"
-        p { "I hope this finds you well" }
-        p { "best regards," }
+        p { "I hope this finds you well." }
+        p { "Best regards," }
         p { "coenttb" }
     }
     

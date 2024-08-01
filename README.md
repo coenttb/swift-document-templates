@@ -126,12 +126,30 @@ Draft a formal letter:
 ```swift
 import SwiftDocumentTemplates
 
-let letter = Letter(
-    sender: .init(name: "Your Company", address: ["123 Main St", "City", "Country"], phone: "123-456-7890", email: "info@company.com", website: "www.company.com"),
-    recipient: .init(name: "Recipient Name", address: ["456 Elm St", "City", "Country"]),
-    subject: "Subject of the Letter",
-    body: "Dear [Recipient],\n\nThis is a placeholder letter. Please replace this text with the actual content.\n\nSincerely,\n[Your Company]"
+let sender: Letter.Sender = .init(
+    name: "Your Company",
+    address: ["123 Main St", "City", "Country"],
+    phone: "123-456-7890",
+    email: "info@company.com",
+    website: "www.company.com"
 )
+let recipient: Letter.Recipient = .init(
+    name: "Recipient Name",
+    address: ["456 Elm St", "City", "Country"]
+)
+
+let letter: some HTML = Letter(
+    sender: sender,
+    recipient: recipient,
+    location: "Utrecht",
+    date: (sending: Date.now, signature: nil),
+    subject: "Subject of the Letter"
+) {
+    "Dear \(recipient.name),"
+    p { "I hope this finds you well." }
+    p { "Best regards," }
+    p { "coenttb" }
+}
 ```
 
 <p align="center">
