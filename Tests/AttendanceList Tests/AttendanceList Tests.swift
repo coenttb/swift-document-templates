@@ -25,8 +25,13 @@ func basldfva() async throws {
         dutch: "Aanwezigheidslijst",
         english: "Attendancelist"
     )
+    
+    enum Style {
+        case minimal
+        case modern
+    }
 
-    for wrap in ["minimal", "modern"] {
+    for wrap in [Style.minimal, Style.modern] {
         for language in [Language.english, .dutch] {
             try await withDependencies {
                 $0.language = language
@@ -39,18 +44,13 @@ func basldfva() async throws {
                     title: "\(language) | \(title) | \(wrap)",
                     to: directory,
                     wrapInHtmlDocument: {
-                        if wrap == "minimal" {
-                            return HTMLPreview.minimal
+                        switch wrap {
+                        case .minimal: HTMLPreview.minimal
+                        case .modern: HTMLPreview.modern
                         }
-                        if wrap == "modern" {
-                            return HTMLPreview.modern
-                        }
-
-                        fatalError()
                     }()
                 )
             }
         }
     }
-
 }
