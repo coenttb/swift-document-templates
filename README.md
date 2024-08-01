@@ -1,6 +1,6 @@
 # Swift Document Templates
 
-Swift Document Templates is a Swift package that simplifies the generation of common business documents. Designed for ease of use and automation, it leverages Swift's powerful type system and modern syntax to ensure accuracy and consistency. Whether you're generating an invoice, an agenda, or a letter, Swift Document Templates has you covered.
+Swift Document Templates is a Swift package that enables the data-driven creation of common business documents. Designed for ease of use and automation, it leverages Swift's powerful type system and modern syntax to ensure accuracy and consistency. Whether you're generating an invoice, an agenda, or a letter, Swift Document Templates has you covered.
 
 ## Features
 
