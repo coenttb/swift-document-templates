@@ -114,7 +114,12 @@ let invoice = Invoice(
     ]
 )
 ```
-![Invoice Example](Images/invoice.png)
+
+<p align="center">
+    <img src="Images/invoice.png" width="400" max-width="90%" alt="Plot" />
+</p>
+
+<!--![Invoice Example](Images/invoice.png)-->
 
 ### Letter
 
