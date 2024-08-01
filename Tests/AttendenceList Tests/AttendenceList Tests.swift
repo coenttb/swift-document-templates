@@ -5,7 +5,7 @@
 //  Created by Coen ten Thije Boonkkamp on 19/07/2024.
 //
 
-import AttendenceList
+import AttendanceList
 import CSS
 import Dependencies
 import Foundation
@@ -23,7 +23,7 @@ func basldfva() async throws {
 
     let title: TranslatedString = .init(
         dutch: "Aanwezigheidslijst",
-        english: "Attendencelist"
+        english: "Attendancelist"
     )
 
     for wrap in ["minimal", "modern"] {

@@ -5,7 +5,6 @@
 //  Created by Coen ten Thije Boonkkamp on 07/06/2022.
 //
 
-import Dependencies
 import Foundation
 import HTML
 import Internal

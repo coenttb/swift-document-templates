@@ -5,7 +5,7 @@ import PackageDescription
 
 extension String {
     static let agenda: Self = "Agenda"
-    static let attendenceList: Self = "AttendenceList"
+    static let attendanceList: Self = "AttendanceList"
     static let invitation: Self = "Invitation"
     static let invoice: Self = "Invoice"
     static let letter: Self = "Letter"
@@ -21,6 +21,7 @@ extension Target.Dependency {
 }
 
 extension Target.Dependency {
+    static var dependencies: Self { .product(name: "Dependencies", package: "swift-dependencies") }
     static var swiftDate: Self { .product(name: "SwiftDate", package: "SwiftDate") }
     static var languages: Self { .product(name: "Languages", package: "swift-language") }
     static var money: Self { .product(name: "Money", package: "swift-money") }
@@ -32,6 +33,7 @@ extension Target.Dependency {
 extension [Target.Dependency] {
     static var shared: Self {
         [
+            .dependencies,
             .languages,
             .html,
             .percent,
@@ -46,6 +48,7 @@ extension [Package.Dependency] {
         .package(url: "https://github.com/coenttb/swift-html.git", branch: "main"),
         .package(url: "https://github.com/coenttb/swift-html-to-pdf.git", branch: "main"),
         .package(url: "https://github.com/malcommac/SwiftDate.git", from: "7.0.0"),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies.git", from: "1.3.6"),
         .package(url: "https://github.com/tenthijeboonkkamp/swift-language.git", branch: "main"),
         .package(url: "https://github.com/tenthijeboonkkamp/swift-money.git", branch: "main"),
         .package(url: "https://github.com/tenthijeboonkkamp/swift-percent.git", branch: "main")
@@ -54,13 +57,13 @@ extension [Package.Dependency] {
 
 extension Package {
     static func swift_document_templates(
-        documents: [(
+        targets: [(
             name: String,
             dependencies: [Target.Dependency]
         )]
     ) -> Package {
 
-        let names = documents
+        let names = targets
             .map(\.name)
             .filter { $0 != .internal }
 
@@ -83,13 +86,13 @@ extension Package {
             ].flatMap { $0 },
             dependencies: .default,
             targets: [
-                documents.map { document in
+                targets.map { document in
                     Target.target(
                         name: "\(document.name)",
                         dependencies: .shared + [] + document.dependencies
                     )
                 },
-                documents.map { document in
+                targets.map { document in
                     Target.testTarget(
                         name: "\(document.name) Tests",
                         dependencies: [.init(stringLiteral: document.name)] + [.htmlToPdf]
@@ -101,7 +104,7 @@ extension Package {
 }
 
 let package = Package.swift_document_templates(
-    documents: [
+    targets: [
         (
             name: .agenda,
             dependencies: [
@@ -110,7 +113,7 @@ let package = Package.swift_document_templates(
         ),
 
         (
-            name: .attendenceList,
+            name: .attendanceList,
             dependencies: [
                 .internal
             ]

@@ -7,7 +7,7 @@
 
 import Foundation
 import HTML
-import Languages
+import TranslatedString
 
 extension TranslatedString: @retroactive HTML {
     public var body: some HTML {
