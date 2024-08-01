@@ -1,0 +1,25 @@
+{
+  "configurations" : [
+    {
+      "id" : "5BA24CD0-CA0A-490C-A562-60B8A7D0EE0B",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "Agenda Tests",
+        "name" : "Agenda Tests"
+      }
+    }
+  ],
+  "version" : 1
+}

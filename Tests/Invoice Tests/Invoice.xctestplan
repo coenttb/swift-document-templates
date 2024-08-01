@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "B2EB62AF-84BC-46C6-BE02-80640969977E",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "Invoice Tests",
+        "name" : "Invoice Tests"
+      }
+    }
+  ],
+  "version" : 1
+}

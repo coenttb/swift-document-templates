@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "BE62691D-A242-4E0B-AC31-32BA45E0408B",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "AttendenceList Tests",
+        "name" : "AttendenceList Tests"
+      }
+    }
+  ],
+  "version" : 1
+}

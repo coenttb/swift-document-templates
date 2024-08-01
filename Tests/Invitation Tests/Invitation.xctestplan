@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "04273A25-69E1-45B5-ADA2-20BCDDCCE72B",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "Invitation Tests",
+        "name" : "Invitation Tests"
+      }
+    }
+  ],
+  "version" : 1
+}

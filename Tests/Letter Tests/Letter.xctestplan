@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "E403573A-0CE9-40C5-9659-94DD19E16DB1",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "Letter Tests",
+        "name" : "Letter Tests"
+      }
+    }
+  ],
+  "version" : 1
+}
