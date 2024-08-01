@@ -46,7 +46,7 @@ import DocumentTemplates
 Generate an invoice with line items:
 
 ```swift
-import SwiftDocumentTemplates
+import DocumentTemplates
 
 let invoice = Invoice(
     sender: .init(name: "Your Company", address: ["123 Main St", "City", "Country"], phone: "123-456-7890", email: "billing@company.com", website: "www.company.com", kvk: "12345678", btw: "NL123456789B01", iban: "NL00BANK1234567890"),
@@ -70,7 +70,7 @@ let invoice = Invoice(
 Draft a formal letter:
 
 ```swift
-import SwiftDocumentTemplates
+import DocumentTemplates
 
 let sender: Letter.Sender = .init(
     name: "Your Company",
