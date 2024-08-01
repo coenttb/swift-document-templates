@@ -224,29 +224,33 @@ import SwiftUI
 #endif
 
 extension Invitation.Sender {
-    static let preview: Self = .init(
-        name: "Organisator B.V.",
-        address: [
-            "Straatnaam 1",
-            "1234 AB Stad",
-            "Nederland"
-        ],
-        phone: "+31 6 12345678",
-        email: "info@organisator.nl",
-        website: "www.organisator.nl"
-    )
+    package static var preview: Self {
+        .init(
+            name: "Organisator B.V.",
+            address: [
+                "Straatnaam 1",
+                "1234 AB Stad",
+                "Nederland"
+            ],
+            phone: "+31 6 12345678",
+            email: "info@organisator.nl",
+            website: "www.organisator.nl"
+        )
+    }
 }
 
 extension Invitation.Recipient {
-    static let preview: Self = .init(
-        id: "INV123456",
-        name: "Gast Naam",
-        address: [
-            "Adresweg 23",
-            "5678 CD Plaats",
-            "Nederland"
-        ]
-    )
+    package static var preview: Self {
+        .init(
+            id: "INV123456",
+            name: "Gast Naam",
+            address: [
+                "Adresweg 23",
+                "5678 CD Plaats",
+                "Nederland"
+            ]
+        )
+    }
 }
 
 extension Invitation {

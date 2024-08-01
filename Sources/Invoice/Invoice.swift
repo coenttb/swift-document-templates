@@ -471,33 +471,44 @@ extension Invoice.Row.Goed {
     public var totalVAT: Double { fatalError() }
 }
 
-extension Invoice.Sender {
-    package static let preview: Self = .init(
-        name: "Preview Invoice B.V.",
-        address: [
-            "Straat 1",
-            "3544 CV Utrecht",
-            "Nederland"
-        ],
-        phone: "+31 6 43901430",
-        email: "info@previewfactuur.nl",
-        website: "www.previewfactuur.nl",
-        kvk: "87657654",
-        btw: "BLBTW098765432",
-        iban: "NLBUNG12345678"
+extension TranslatedString {
+    public static let netherlands: Self = .init(
+        dutch: "Nederland",
+        english: "The Netherlands"
     )
 }
 
+extension Invoice.Sender {
+    package static var preview: Self {
+        .init(
+            name: "Preview Invoice B.V.",
+            address: [
+                "Straat 1",
+                "3544 CV Utrecht",
+                "\(TranslatedString.netherlands)"
+            ],
+            phone: "+31 6 43901430",
+            email: "info@previewfactuur.nl",
+            website: "www.previewfactuur.nl",
+            kvk: "87657654",
+            btw: "BLBTW098765432",
+            iban: "NLBUNG12345678"
+        )
+    }
+}
+
 extension Invoice.Recipient {
-    package static let preview: Self = .init(
-        id: "GFH12JK98J",
-        name: "Cliënt B.V.",
-        address: [
-            "Laan der Wegen 56",
-            "3555 HV Amsterdam",
-            "Nederland"
-        ]
-    )
+    package static var preview: Self {
+        .init(
+            id: "GFH12JK98J",
+            name: "Cliënt B.V.",
+            address: [
+                "Laan der Wegen 56",
+                "3555 HV Amsterdam",
+                "\(TranslatedString.netherlands)"
+            ]
+        )
+    }
 }
 
 extension Percentage {

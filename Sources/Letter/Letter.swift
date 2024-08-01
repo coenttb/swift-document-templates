@@ -57,14 +57,16 @@ extension Letter: HTML {
 }
 
 extension Letter {
-    static let preview: Self = .init(
-        sender: .preview,
-        recipient: .preview,
-        location: "Utrecht",
-        date: (sending: Date.now, signature: nil),
-        subject: "Letter") {
-            "Test content"
-        }
+    package static var preview: Self {
+        .init(
+            sender: .preview,
+            recipient: .preview,
+            location: "Utrecht",
+            date: (sending: Date.now, signature: nil),
+            subject: "Letter") {
+                "Test content"
+            }
+    }
 }
 
 #if canImport(SwiftUI)
