@@ -115,6 +115,7 @@ let invoice = Invoice(
     ]
 )
 ```
+![Invoice Example](Images/invoice.png)
 
 ### Letter
 
