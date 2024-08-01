@@ -106,12 +106,11 @@ let invoice = Invoice(
     sender: .init(name: "Your Company", address: ["123 Main St", "City", "Country"], phone: "123-456-7890", email: "billing@company.com", website: "www.company.com", kvk: "12345678", btw: "NL123456789B01", iban: "NL00BANK1234567890"),
     client: .init(id: "CUST001", name: "Client Name", address: ["789 Maple St", "City", "Country"]),
     invoiceNumber: "INV001",
-    invoiceDate: Date(),
-    expiryDate: Date().addingTimeInterval(86400 * 30),
+    invoiceDate: Date.now,
+    expiryDate: (Date.now + 30.days),
     metadata: [:],
     rows: [
-        .dienst(.init(amountOfHours: 10, hourlyRate: 100.0, btw: .procent21, description: "Consulting Services")),
-        .goed(.init(description: "Software License", quantity: 1, unit: "piece", rate: 500.0, vatPercentage: .procent21))
+        .service(.init(amountOfHours: 160, hourlyRate: 140.00, vat: 21%, description: "Consulting services"))
     ]
 )
 ```
