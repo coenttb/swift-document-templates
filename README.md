@@ -84,7 +84,7 @@ let recipient: Letter.Recipient = .init(
     address: ["456 Elm St", "City", "Country"]
 )
 
-let letter: some HTML = Letter(
+let letter = Letter(
     sender: sender,
     recipient: recipient,
     location: "Utrecht",
