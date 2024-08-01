@@ -4,11 +4,11 @@ Swift Document Templates is a Swift package that simplifies the generation of co
 
 ## Features
 
-- **Agenda**: Create structured agendas for meetings, outlining topics, speakers, and timings.
-- **Attendance List**: Maintain a record of attendees for meetings, events, or training sessions.
-- **Invitation**: Send professional invitations for events, meetings, or conferences.
 - **Invoice**: Generate detailed invoices with automatic calculations and custom metadata.
 - **Letter**: Draft formal letters with consistent formatting and customizable content.
+- **Agenda**: Create structured agendas for meetings, outlining topics, speakers, and timings. *(Under Construction)*
+- **Attendance List**: Maintain a record of attendees for meetings, events, or training sessions. *(Under Construction)*
+- **Invitation**: Send professional invitations for events, meetings, or conferences. *(Under Construction)*
 
 ## Installation
 
@@ -40,60 +40,6 @@ import DocumentTemplates
 ```
 
 ## Usage
-
-### Agenda
-
-Create a meeting agenda with a list of items:
-
-```swift
-import SwiftDocumentTemplates
-
-let agenda = Agenda(
-    title: "Project Kickoff Meeting",
-    date: Date(),
-    variant: .short,
-    items: [
-        .init(title: "Introduction", important: true),
-        .init(title: "Project Overview"),
-        .init(title: "Q&A")
-    ]
-)
-```
-
-### Attendance List
-
-Track attendance for an event:
-
-```swift
-import SwiftDocumentTemplates
-
-let attendanceList = AttendanceList(
-    title: "Weekly Team Meeting",
-    date: Date(),
-    attendees: [
-        .init(firstName: "John", lastName: "Doe", role: "Manager", signature: "JD"),
-        .init(firstName: "Jane", lastName: "Smith", role: "Developer")
-    ]
-)
-```
-
-### Invitation
-
-Send a formal invitation:
-
-```swift
-import SwiftDocumentTemplates
-
-let invitation = Invitation(
-    sender: .init(name: "Your Company", address: ["123 Main St", "City", "Country"], phone: "123-456-7890", email: "info@company.com", website: "www.company.com"),
-    recipient: .init(id: "INV123", name: "Jane Doe", address: ["456 Elm St", "City", "Country"]),
-    invitationNumber: "001",
-    invitationDate: Date(),
-    eventDate: Date().addingTimeInterval(86400 * 7),
-    location: "Company HQ",
-    metadata: [:]
-)
-```
 
 ### Invoice
 
@@ -155,6 +101,14 @@ let letter: some HTML = Letter(
 <p align="center">
     <img src="Images/letter.png" width="400" max-width="90%" alt="Letter" />
 </p>
+
+## Under Construction
+
+The following features are currently under development and will be available in future updates:
+
+- **Agenda**: Create structured agendas for meetings, outlining topics, speakers, and timings.
+- **Attendance List**: Maintain a record of attendees for meetings, events, or training sessions.
+- **Invitation**: Send professional invitations for events, meetings, or conferences.
 
 ## Contributing
 
