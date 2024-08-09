@@ -69,7 +69,7 @@ extension Letter {
     }
 }
 
-#if canImport(SwiftUI)
+#if os(macOS) && canImport(SwiftUI)
 import SwiftUI
 #Preview {
     HTMLPreview.modern {

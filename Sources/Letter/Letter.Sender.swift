@@ -127,7 +127,7 @@ extension Letter.Sender {
     }
 }
 
-#if canImport(SwiftUI)
+#if os(macOS) && canImport(SwiftUI)
 import SwiftUI
 #Preview {
     HTMLPreview {

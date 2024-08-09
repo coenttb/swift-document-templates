@@ -213,7 +213,7 @@ extension TranslatedString {
     static let eventInvitation = TranslatedString(dutch: "Evenement Uitnodiging", english: "Event Invitation")
 }
 
-#if canImport(SwiftUI)
+#if os(macOS) && canImport(SwiftUI)
 import SwiftUI
 #Preview {
     HTMLPreview.modern {
