@@ -69,12 +69,12 @@ extension Letter {
     }
 }
 
-#if os(macOS) && canImport(SwiftUI)
-import SwiftUI
-#Preview {
-    HTMLPreview.modern {
-        Letter.preview
-    }
-    .frame(width: 451, height: 698)
-}
-#endif
+//#if os(macOS) && canImport(SwiftUI)
+//import SwiftUI
+//#Preview {
+//    HTMLPreview.modern {
+//        Letter.preview
+//    }
+//    .frame(width: 451, height: 698)
+//}
+//#endif

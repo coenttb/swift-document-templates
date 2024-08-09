@@ -76,22 +76,22 @@ extension Agenda.Item: HTML {
     }
 }
 
-#if os(macOS) && canImport(SwiftUI)
- import SwiftUI
- #Preview {
-     HTMLPreview.modern {
-         Agenda(
-             title: "Title",
-             variant: .short,
-             items: [
-                 .init(title: "test", important: true),
-                 .init(title: "test"),
-                 .init(title: "test"),
-                 .init(title: "test", important: true),
-                 .init(title: "test")
-             ]
-         )
-     }
-    .frame(width: 400, height: 600)
- }
- #endif
+//#if os(macOS) && canImport(SwiftUI)
+// import SwiftUI
+// #Preview {
+//     HTMLPreview.modern {
+//         Agenda(
+//             title: "Title",
+//             variant: .short,
+//             items: [
+//                 .init(title: "test", important: true),
+//                 .init(title: "test"),
+//                 .init(title: "test"),
+//                 .init(title: "test", important: true),
+//                 .init(title: "test")
+//             ]
+//         )
+//     }
+//    .frame(width: 400, height: 600)
+// }
+// #endif

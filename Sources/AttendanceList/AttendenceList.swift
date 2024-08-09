@@ -172,12 +172,12 @@ extension AttendanceList {
     )
 }
 
-#if os(macOS) && canImport(SwiftUI)
-import SwiftUI
-#Preview {
-    HTMLPreview.modern {
-        AttendanceList.preview
-    }
-    .frame(width: 600, height: 800)
-}
-#endif
+//#if os(macOS) && canImport(SwiftUI)
+//import SwiftUI
+//#Preview {
+//    HTMLPreview.modern {
+//        AttendanceList.preview
+//    }
+//    .frame(width: 600, height: 800)
+//}
+//#endif

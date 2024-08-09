@@ -578,13 +578,13 @@ extension TranslatedString {
         )
     }
 }
-
-#if os(macOS) && canImport(SwiftUI)
-import SwiftUI
-#Preview {
-    HTMLPreview.modern {
-        Invoice.preview
-    }
-    .frame(width: 632, height: 750)
-}
-#endif
+//
+//#if os(macOS) && canImport(SwiftUI)
+//import SwiftUI
+//#Preview {
+//    HTMLPreview.modern {
+//        Invoice.preview
+//    }
+//    .frame(width: 632, height: 750)
+//}
+//#endif

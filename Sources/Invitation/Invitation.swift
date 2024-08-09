@@ -212,16 +212,16 @@ extension TranslatedString {
     static let location = TranslatedString(dutch: "Locatie", english: "Location")
     static let eventInvitation = TranslatedString(dutch: "Evenement Uitnodiging", english: "Event Invitation")
 }
-
-#if os(macOS) && canImport(SwiftUI)
-import SwiftUI
-#Preview {
-    HTMLPreview.modern {
-        Invitation.preview
-    }
-    .frame(width: 632, height: 750)
-}
-#endif
+//
+//#if os(macOS) && canImport(SwiftUI)
+//import SwiftUI
+//#Preview {
+//    HTMLPreview.modern {
+//        Invitation.preview
+//    }
+//    .frame(width: 632, height: 750)
+//}
+//#endif
 
 extension Invitation.Sender {
     package static var preview: Self {
