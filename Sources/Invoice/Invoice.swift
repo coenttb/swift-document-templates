@@ -12,7 +12,7 @@ import Languages
 import Letter
 import OrderedCollections
 import Percent
-import SwiftDate
+import Date
 
 public struct Invoice {
     let sender: Invoice.Sender

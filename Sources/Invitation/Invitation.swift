@@ -11,7 +11,7 @@ import Internal
 import Languages
 import Letter
 import OrderedCollections
-import SwiftDate
+import Date
 
 public struct Invitation {
     let sender: Invitation.Sender

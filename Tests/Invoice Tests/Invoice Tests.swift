@@ -13,7 +13,7 @@ import HtmlToPdf
 import Invoice
 import Languages
 import Locale
-import SwiftDate
+import Date
 import Testing
 import Percent
 

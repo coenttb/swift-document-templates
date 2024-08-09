@@ -22,7 +22,7 @@ extension Target.Dependency {
 
 extension Target.Dependency {
     static var dependencies: Self { .product(name: "Dependencies", package: "swift-dependencies") }
-    static var swiftDate: Self { .product(name: "SwiftDate", package: "SwiftDate") }
+    static var date: Self { .product(name: "Date", package: "swift-date") }
     static var languages: Self { .product(name: "Languages", package: "swift-language") }
     static var money: Self { .product(name: "Money", package: "swift-money") }
     static var percent: Self { .product(name: "Percent", package: "swift-percent") }
@@ -37,7 +37,7 @@ extension [Target.Dependency] {
             .languages,
             .html,
             .percent,
-            .swiftDate,
+            .date,
             .money
         ]
     }
@@ -45,9 +45,9 @@ extension [Target.Dependency] {
 
 extension [Package.Dependency] {
     static let `default`: Self = [
+        .package(url: "https://github.com/coenttb/swift-date.git", branch: "main"),
         .package(url: "https://github.com/coenttb/swift-html.git", branch: "main"),
         .package(url: "https://github.com/coenttb/swift-html-to-pdf.git", branch: "main"),
-        .package(url: "https://github.com/malcommac/SwiftDate.git", from: "7.0.0"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies.git", from: "1.3.6"),
         .package(url: "https://github.com/tenthijeboonkkamp/swift-language.git", branch: "main"),
         .package(url: "https://github.com/tenthijeboonkkamp/swift-money.git", branch: "main"),
