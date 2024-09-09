@@ -515,8 +515,8 @@ extension Percentage {
     public static let vat_regular_dutch: Self = .init(fraction: 0.21)
 }
 
-let systemClock = Clocks.system
-let x = systemClock.currentDay + .months(3)
+
+
 
 extension Invoice {
     package static var preview: Self {
@@ -581,13 +581,13 @@ extension TranslatedString {
         )
     }
 }
-//
-//#if os(macOS) && canImport(SwiftUI)
-//import SwiftUI
-//#Preview {
-//    HTMLPreview.modern {
-//        Invoice.preview
-//    }
-//    .frame(width: 632, height: 750)
-//}
-//#endif
+
+#if os(macOS) && canImport(SwiftUI)
+import SwiftUI
+#Preview {
+    HTMLPreview.modern {
+        Invoice.preview
+    }
+    .frame(width: 632, height: 750)
+}
+#endif
