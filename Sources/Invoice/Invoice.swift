@@ -515,6 +515,9 @@ extension Percentage {
     public static let vat_regular_dutch: Self = .init(fraction: 0.21)
 }
 
+let systemClock = Clocks.system
+let x = systemClock.currentDay + .months(3)
+
 extension Invoice {
     package static var preview: Self {
         .init(
@@ -522,7 +525,7 @@ extension Invoice {
             client: .preview,
             invoiceNumber: "1",
             invoiceDate: Date.now,
-            expiryDate: (Date.now + 1.months),
+            expiryDate: Date.now,
             metadata: [
                 .purchaseOrderNumber.capitalized(): "PO12345678",
                 .perEmail: "facturen@client.nl; naam@cliënt.nl"

@@ -253,6 +253,8 @@ extension Invitation.Recipient {
     }
 }
 
+let x: Date = (Clocks.system.currentDay + .weeks(2)).
+
 extension Invitation {
     package static var preview: Self {
         .init(
@@ -260,7 +262,7 @@ extension Invitation {
             recipient: .preview,
             invitationNumber: "001",
             invitationDate: Date.now,
-            eventDate: (Date.now + 2.weeks),
+            eventDate: .init(),
             location: "Eventlocatie",
             metadata: [
                 .init(dutch: "Dresscode", english: "Dress Code"): .init(dutch: "Zakelijk", english: "Business")
