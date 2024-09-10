@@ -49,9 +49,9 @@ extension [Package.Dependency] {
         .package(url: "https://github.com/coenttb/swift-html.git", branch: "main"),
         .package(url: "https://github.com/coenttb/swift-html-to-pdf.git", branch: "main"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies.git", from: "1.3.6"),
-        .package(url: "https://github.com/tenthijeboonkkamp/swift-language.git", branch: "main"),
-        .package(url: "https://github.com/tenthijeboonkkamp/swift-money.git", branch: "main"),
-        .package(url: "https://github.com/tenthijeboonkkamp/swift-percent.git", branch: "main")
+        .package(url: "https://github.com/coenttb/swift-language.git", branch: "main"),
+        .package(url: "https://github.com/coenttb/swift-money.git", branch: "main"),
+        .package(url: "https://github.com/coenttb/swift-percent.git", branch: "main")
     ]
 }
 
