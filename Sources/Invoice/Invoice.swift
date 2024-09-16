@@ -300,7 +300,7 @@ extension Invoice: HTML {
                                 }
                                     .inlineStyle("white-space", "nowrap")
                                     .inlineStyle("padding-right", "15px")
-                                td { "\(NumberFormatter.money.string(for: self.rows.total - self.rows.totalVAT)!)" }
+                                td { "\(NumberFormatter.money.string(for: self.rows.totalExcludingVAT)!)" }
                             }
 
                             tr {
@@ -312,7 +312,7 @@ extension Invoice: HTML {
 
                             tr {
                                 td { b { TranslatedString.totalAmount.capitalized } }
-                                td { b { "\(NumberFormatter.money.string(for: self.rows.total)!)" } }
+                                td { b { "\(NumberFormatter.money.string(for: self.rows.totalIncludingVAT)!)" } }
                             }
                         }
                     }
@@ -328,8 +328,8 @@ extension Invoice: HTML {
 
                     HTMLText("""
                     \(TranslatedString(
-                            dutch: "Wij verzoeken u vriendelijk het totaalbedrag van \(NumberFormatter.money.string(for: self.rows.total)!) uiterlijk \(expiry.formatted(usingLocaleDependency: true)) over te maken naar ",
-                            english: "Please transfer the total amount of \(NumberFormatter.money.string(for: self.rows.total)!) by \(expiry.formatted(usingLocaleDependency: true)), to "
+                            dutch: "Wij verzoeken u vriendelijk het totaalbedrag van \(NumberFormatter.money.string(for: self.rows.totalIncludingVAT)!) uiterlijk \(expiry.formatted(usingLocaleDependency: true)) over te maken naar ",
+                            english: "Please transfer the total amount of \(NumberFormatter.money.string(for: self.rows.totalIncludingVAT)!) by \(expiry.formatted(usingLocaleDependency: true)), to "
 
                         ))
                     """)
@@ -349,8 +349,8 @@ extension Invoice: HTML {
                 p {
                     HTMLText("""
                     \(TranslatedString(
-                            dutch: "Wij verzoeken u vriendelijk het totaalbedrag van \(NumberFormatter.money.string(for: self.rows.total)!) over te maken naar ",
-                            english: "Please transfer the total amount of \(NumberFormatter.money.string(for: self.rows.total)!)  to "
+                            dutch: "Wij verzoeken u vriendelijk het totaalbedrag van \(NumberFormatter.money.string(for: self.rows.totalIncludingVAT)!) over te maken naar ",
+                            english: "Please transfer the total amount of \(NumberFormatter.money.string(for: self.rows.totalIncludingVAT)!)  to "
 
                         ))
                     """)
@@ -427,10 +427,14 @@ extension Invoice.Row {
 }
 
 extension Array where Element == Invoice.Row {
-    public var total: Double {
+    public var totalExcludingVAT: Double {
         self.reduce(0.0) { partialResult, row in
             partialResult + row.total
         }
+    }
+    
+    public var totalIncludingVAT: Double {
+        totalExcludingVAT + totalVAT
     }
 
     public var totalVAT: Double {
