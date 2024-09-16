@@ -70,9 +70,9 @@ extension Package {
         return Package(
             name: "swift-document-templates",
             platforms: [
-                .macOS(.v13),
-                .iOS(.v16),
-                .macCatalyst(.v16)
+                .macOS(.v14),
+                .iOS(.v17),
+                .macCatalyst(.v17),
             ],
             products: [
                 [
