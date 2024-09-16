@@ -15,13 +15,13 @@ import Percent
 import Date
 
 public struct Invoice {
-    let sender: Invoice.Sender
-    let client: Invoice.Recipient
-    let invoiceNumber: String
-    let invoiceDate: Date
-    let expiryDate: Date?
-    let metadata: Invoice.Metadata
-    let rows: [Invoice.Row]
+    public let sender: Invoice.Sender
+    public let client: Invoice.Recipient
+    public let invoiceNumber: String
+    public let invoiceDate: Date
+    public let expiryDate: Date?
+    public let metadata: Invoice.Metadata
+    public let rows: [Invoice.Row]
 
     public init(
         sender: Invoice.Sender,
