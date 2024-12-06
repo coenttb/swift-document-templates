@@ -9,7 +9,7 @@ extension String {
     static let invitation: Self = "Invitation"
     static let invoice: Self = "Invoice"
     static let letter: Self = "Letter"
-    static let `internal`: Self = "Internal"
+
 }
 
 extension Target.Dependency {
@@ -17,7 +17,6 @@ extension Target.Dependency {
     static var invitation: Self { .target(name: .invitation) }
     static var invoice: Self { .target(name: .invoice) }
     static var letter: Self { .target(name: .letter) }
-    static var `internal`: Self { .target(name: .internal) }
 }
 
 extension Target.Dependency {
@@ -65,7 +64,6 @@ extension Package {
 
         let names = targets
             .map(\.name)
-            .filter { $0 != .internal }
 
         return Package(
             name: "swift-document-templates",
@@ -112,40 +110,29 @@ let package = Package.swift_document_templates(
         (
             name: .agenda,
             dependencies: [
-                .internal
             ]
         ),
 
         (
             name: .attendanceList,
             dependencies: [
-                .internal
-            ]
-        ),
-        (
-            name: .internal,
-            dependencies: [
-                .htmlToPdf
             ]
         ),
         (
             name: .invitation,
             dependencies: [
                 .letter,
-                .internal
             ]
         ),
         (
             name: .invoice,
             dependencies: [
-                .internal,
                 .letter
             ]
         ),
         (
             name: .letter,
             dependencies: [
-                .internal
             ]
         )
     ]

@@ -8,6 +8,7 @@
 import Foundation
 import CoenttbHTML
 import Languages
+import Internal
 
 extension Letter {
     public struct Header {
