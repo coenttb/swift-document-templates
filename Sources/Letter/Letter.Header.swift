@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import HTML
+import CoenttbHTML
 import Languages
 
 extension Letter {
@@ -59,13 +59,13 @@ extension Letter.Header: HTML {
 
         switch (location, date.sending) {
         case let (.some(location), .some(date)):
-            HTMLText("\(location), \(date.formatted(usingLocaleDependency: true, date: .long, time: .omitted))")
+            HTMLText("\(location), \(date.formatted(date: .long, time: .omitted).localized))")
             br()
         case let (.some(location), .none):
             HTMLText("\(location)")
             br()
         case let (.none, .some(date)):
-            HTMLText("\(date.formatted(usingLocaleDependency: true, date: .long, time: .omitted))")
+            HTMLText("\(date.formatted(date: .long, time: .omitted).localized))")
             br()
         case (.none, .none):
             HTMLEmpty()

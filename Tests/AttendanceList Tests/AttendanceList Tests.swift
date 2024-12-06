@@ -9,8 +9,8 @@ import AttendanceList
 import CSS
 import Dependencies
 import Foundation
-import HTML
-import HtmlToPdf
+import CoenttbHTML
+import CoenttbHtmlToPdf
 import Languages
 import Locale
 import Testing

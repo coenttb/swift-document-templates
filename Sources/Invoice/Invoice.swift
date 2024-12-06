@@ -1,12 +1,12 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Coen ten Thije Boonkkamp on 07/06/2022.
 //
 
 import Foundation
-import HTML
+import CoenttbHTML
 import Internal
 import Languages
 import Letter
@@ -22,7 +22,7 @@ public struct Invoice {
     public let expiryDate: Date?
     public let metadata: Invoice.Metadata
     public let rows: [Invoice.Row]
-
+    
     public init(
         sender: Invoice.Sender,
         client: Invoice.Recipient,
@@ -62,7 +62,7 @@ extension Invoice {
         public let kvk: String
         public let btw: String
         public let iban: String
-
+        
         public init(
             name: String,
             address: [String],
@@ -107,7 +107,7 @@ extension Invoice {
         public let name: String
         public let address: [String]
         public let metadata: Letter.Recipient.Metadata
-
+        
         public init(
             id: String,
             name: String,
@@ -147,148 +147,148 @@ extension Invoice: HTML {
                         h1 {
                             TranslatedString.invoice.capitalized
                         }
-
-                        .inlineStyle("margin-top", "0")
-                        .inlineStyle("margin-bottom", "0")
+                        
+                        .margin(top: 0)
+                        .margin(bottom: 0)
                     }
-                    .inlineStyle("vertical-align", "top")
-                    .inlineStyle("width", "100%")
-
+                    .verticalAlign(.top)
+                    .width(100.percent)
+                    
                     td {
                         table {
                             HTMLGroup {
                                 tr {
                                     td { b { TranslatedString.clientNumber.capitalized } }
-                                        .inlineStyle("padding-right", "15px")
+                                        .padding(right: 15.px)
                                     td { "\(self.client.id)" }
-
+                                    
                                 }
                                 tr {
                                     td { b { TranslatedString.invoiceNumber.capitalized } }
-                                        .inlineStyle("padding-right", "15px")
+                                        .padding(right: 15.px)
                                     td { "\(self.invoiceNumber)" }
-
+                                    
                                 }
                                 tr {
                                     td { b { TranslatedString.invoiceDate.capitalized } }
-                                        .inlineStyle("padding-right", "15px")
-
-                                    td { "\(self.invoiceDate.formatted(usingLocaleDependency: true, date: .long, time: .omitted))" }
-
+                                        .padding(right: 15.px)
+                                    
+                                    td { "\(self.invoiceDate.formatted(date: .long, time: .omitted).localized)" }
+                                    
                                 }
                             }
-                            .inlineStyle("vertical-align", "bottom")
-                            .inlineStyle("white-space", "nowrap")
-
+                            .verticalAlign(.bottom)
+                            .whiteSpace(.nowrap)
+                            
                         }
-
+                        
                     }
-
+                    
                 }
-                .inlineStyle("vertical-align", "bottom")
+                .verticalAlign(.bottom)
             }
-            .inlineStyle("border-collapse", "collapse")
-
+            .borderCollapse(.collapse)
+            
             br()
-
+            
             table {
-
+                
                 if let expiryDate = self.expiryDate {
                     tr {
                         td { TranslatedString.expiryDate.capitalized() }
-                        td { "\(expiryDate.formatted(usingLocaleDependency: true, date: .long, time: .omitted))" }
+                        td { "\(expiryDate.formatted(date: .long, time: .omitted).localized)" }
                     }
                 }
-
+                
                 HTMLForEach(metadata.map { $0 }) { (key, value) in
                     tr {
                         td { "\(key)" }
-                            .inlineStyle("padding-right", "15px")
+                            .padding(right: 15.px)
                         td { "\(value)" }
                     }
                 }
-
+                
             }
-            .inlineStyle("border-collapse", "collapse")
-
+            .borderCollapse(.collapse)
+            
             br()
             br()
-
+            
             table {
-
+                
                 thead {
                     tr {
                         td { b { TranslatedString.description.capitalized } }
-                            .inlineStyle("width", "100%")
-                            .inlineStyle("padding-right", "15px")
-
+                            .width(100.percent)
+                            .padding(right: 15.px)
+                        
                         td { b { TranslatedString.quantity.capitalized } }
-                            .inlineStyle("padding-right", "15px")
-
+                            .padding(right: 15.px)
+                        
                         td { b { TranslatedString.unit.capitalized } }
-                            .inlineStyle("padding-right", "15px")
-
+                            .padding(right: 15.px)
+                        
                         td { b { TranslatedString.rate.capitalized } }
-                            .inlineStyle("padding-right", "15px")
-
+                            .padding(right: 15.px)
+                        
                         td { b { TranslatedString.vatPercentage.uppercased() } }
-                            .inlineStyle("padding-right", "15px")
+                            .padding(right: 15.px)
                     }
                     .inlineStyle("border-bottom", "1px solid #000")
                 }
-
+                
                 HTMLForEach(self.rows) { row in
                     switch row {
                     case let .goed(goed):
                         tr {
                             td { "\(goed.description)" }
-                                .inlineStyle("padding-right", "15px")
-
+                                .padding(right: 15.px)
+                            
                             td { "\(goed.quantity)" }
-                                .inlineStyle("padding-right", "15px")
-
+                                .padding(right: 15.px)
+                            
                             td { TranslatedString.unit.capitalized() }
-                                .inlineStyle("padding-right", "15px")
-
-                            td { "\(NumberFormatter.money.string(for: goed.rate)!)" }
-                                .inlineStyle("padding-right", "15px")
-
+                                .padding(right: 15.px)
+                            
+                            td { "\(goed.rate.formatted(.euro))" }
+                                .padding(right: 15.px)
+                            
                             td { "\(goed.vatPercentage?.percent ?? 0%)" }
-                                .inlineStyle("padding-right", "15px")
+                                .padding(right: 15.px)
                         }
                     case let .service(dienst):
                         tr {
                             td { "\(dienst.description)" }
-                                .inlineStyle("padding-right", "15px")
-
+                                .padding(right: 15.px)
+                            
                             td { "\(dienst.amountOfHours)" }
-                                .inlineStyle("padding-right", "15px")
-
+                                .padding(right: 15.px)
+                            
                             td {
                                 dienst.amountOfHours <= 1 ? TranslatedString.hour.capitalized() : TranslatedString.hours.capitalized()
                             }
-                                .inlineStyle("padding-right", "15px")
-
-                            td { "\(NumberFormatter.money.string(for: dienst.hourlyRate)!)" }
-                                .inlineStyle("padding-right", "15px")
-
+                            .padding(right: 15.px)
+                            
+                            td { "\(dienst.hourlyRate.formatted(.euro))" }
+                                .padding(right: 15.px)
+                            
                             td { "\(dienst.vat ?? 0%)" }
-                                .inlineStyle("padding-right", "15px")
+                                .padding(right: 15.px)
                         }
                     }
                 }
             }
-            .inlineStyle("border-collapse", "separate")
-
+            .borderCollapse(.separate)
+            
             hr()
-
+            
             table {
                 tr {
                     td {
                         HTMLEmpty()
                     }
-                    .inlineStyle("width", "100%")
-
+                    .width(100.percent)
+                    
                     td {
                         table {
                             tr {
@@ -298,50 +298,50 @@ extension Invoice: HTML {
                                         english: "Amount excl. VAT"
                                     )
                                 }
-                                    .inlineStyle("white-space", "nowrap")
-                                    .inlineStyle("padding-right", "15px")
-                                td { "\(NumberFormatter.money.string(for: self.rows.totalExcludingVAT)!)" }
+                                .whiteSpace(.nowrap)
+                                .padding(right: 15.px)
+                                td { "\(self.rows.totalExcludingVAT.formatted(.euro))" }
                             }
-
+                            
                             tr {
                                 td { TranslatedString.vat.uppercased() }
-//                                    .inlineStyle("border-bottom", "3px double #000")
-                                td { "\(NumberFormatter.money.string(for: self.rows.totalVAT)!)" }
+                                //                                    .inlineStyle("border-bottom", "3px double #000")
+                                td { "\(self.rows.totalVAT.formatted(.euro))" }
                                     .inlineStyle("border-bottom", "3px double #000")
                             }
-
+                            
                             tr {
                                 td { b { TranslatedString.totalAmount.capitalized } }
-                                td { b { "\(NumberFormatter.money.string(for: self.rows.totalIncludingVAT)!)" } }
+                                td { b { "\(self.rows.totalIncludingVAT.formatted(.euro))" } }
                             }
                         }
                     }
                 }
             }
-            .inlineStyle("border-collapse", "collapse")
-
+            .borderCollapse(.collapse)
+            
             br()
             br()
-
+            
             if let expiry = expiryDate {
                 p {
-
+                    
                     HTMLText("""
                     \(TranslatedString(
-                            dutch: "Wij verzoeken u vriendelijk het totaalbedrag van \(NumberFormatter.money.string(for: self.rows.totalIncludingVAT)!) uiterlijk \(expiry.formatted(usingLocaleDependency: true)) over te maken naar ",
-                            english: "Please transfer the total amount of \(NumberFormatter.money.string(for: self.rows.totalIncludingVAT)!) by \(expiry.formatted(usingLocaleDependency: true)), to "
-
+                            dutch: "Wij verzoeken u vriendelijk het totaalbedrag van \(self.rows.totalIncludingVAT.formatted(.euro)) uiterlijk \(expiry.formatted(date: .long, time: .omitted).localized)) over te maken naar ",
+                            english: "Please transfer the total amount of \(self.rows.totalIncludingVAT.formatted(.euro)) by \(expiry.formatted(date: .long, time: .omitted).localized)), to "
+                    
                         ))
                     """)
                     HTMLText(self.sender.iban)
-                        .inlineStyle("white-space", "nowrap")
+                        .whiteSpace(.nowrap)
                     HTMLText("""
                     \(TranslatedString(
                         dutch: ", onder vermelding van ",
                         english: ", referencing "
                     ))
                     """)
-
+                    
                     "\(reference)"
                     "."
                 }
@@ -349,25 +349,33 @@ extension Invoice: HTML {
                 p {
                     HTMLText("""
                     \(TranslatedString(
-                            dutch: "Wij verzoeken u vriendelijk het totaalbedrag van \(NumberFormatter.money.string(for: self.rows.totalIncludingVAT)!) over te maken naar ",
-                            english: "Please transfer the total amount of \(NumberFormatter.money.string(for: self.rows.totalIncludingVAT)!)  to "
-
+                            dutch: "Wij verzoeken u vriendelijk het totaalbedrag van \(self.rows.totalIncludingVAT.formatted(.euro)) over te maken naar ",
+                            english: "Please transfer the total amount of \(self.rows.totalIncludingVAT.formatted(.euro))  to "
+                    
                         ))
                     """)
                     HTMLText(self.sender.iban)
-                        .inlineStyle("white-space", "nowrap")
+                        .whiteSpace(.nowrap)
                     HTMLText("""
                     \(TranslatedString(
                         dutch: ", onder vermelding van ",
                         english: ", referencing "
                     ))
                     """)
-
+                    
                     "\(reference)"
                     "."
                 }
             }
         }
+    }
+}
+
+extension FormatStyle where Self == FloatingPointFormatStyle<Double>.Currency {
+    static var euro: Self {
+        .currency(code: "EUR")
+            .precision(.fractionLength(2))
+            .locale(Locale(identifier: "nl_NL"))
     }
 }
 
@@ -399,7 +407,7 @@ extension Invoice.Row {
         let unit: String
         let rate: Double
         let vatPercentage: Invoice.BTW?
-
+        
         public init(description: String, quantity: Double, unit: String, rate: Double, vatPercentage: Invoice.BTW?) {
             self.description = description
             self.quantity = quantity
@@ -417,7 +425,7 @@ extension Invoice.Row {
         case let .goed(goed): return goed.total
         }
     }
-
+    
     public var totalVAT: Double {
         switch self {
         case let .service(dienst): return dienst.totalVAT
@@ -436,7 +444,7 @@ extension Array where Element == Invoice.Row {
     public var totalIncludingVAT: Double {
         totalExcludingVAT + totalVAT
     }
-
+    
     public var totalVAT: Double {
         self.reduce(0.0) { partialResult, row in
             partialResult + row.totalVAT
@@ -450,7 +458,7 @@ extension Invoice.Row {
         let hourlyRate: Double
         let vat: Percentage?
         let description: String
-
+        
         public init(
             amountOfHours: Double,
             hourlyRate: Double,

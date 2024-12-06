@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import HTML
+import CoenttbHTML
 import Internal
 import Languages
 import Letter
@@ -154,12 +154,12 @@ extension Invitation: HTML {
                                 tr {
                                     td { b { TranslatedString.invitationDate.capitalized } }
                                         .inlineStyle("padding-right", "15px")
-                                    td { "\(self.invitationDate.formatted(usingLocaleDependency: true, date: .long, time: .omitted))" }
+                                    td { "\(self.invitationDate.formatted(date: .long, time: .omitted).localized)" }
                                 }
                                 tr {
                                     td { b { TranslatedString.eventDate.capitalized } }
                                         .inlineStyle("padding-right", "15px")
-                                    td { "\(self.eventDate.formatted(usingLocaleDependency: true, date: .long, time: .omitted))" }
+                                    td { "\(self.eventDate.formatted(date: .long, time: .omitted).localized)" }
                                 }
                                 tr {
                                     td { b { TranslatedString.location.capitalized } }
@@ -195,8 +195,8 @@ extension Invitation: HTML {
             p {
                 HTMLText("""
                 \(TranslatedString(
-                        dutch: "We nodigen u van harte uit voor het evenement dat op \(self.eventDate.formatted(usingLocaleDependency: true)) plaatsvindt bij \(self.location).",
-                        english: "We cordially invite you to the event taking place on \(self.eventDate.formatted(usingLocaleDependency: true)) at \(self.location)."
+                        dutch: "We nodigen u van harte uit voor het evenement dat op \(self.eventDate.formatted(date: .long, time: .omitted).localized) plaatsvindt bij \(self.location).",
+                        english: "We cordially invite you to the event taking place on \(self.eventDate.formatted(date: .long, time: .omitted).localized)) at \(self.location)."
                     ))
                 """)
             }
@@ -253,7 +253,7 @@ extension Invitation.Recipient {
     }
 }
 
-let x: Date = (Clocks.system.currentDay + .weeks(2)).
+//let x: Date = (Clocks.system.currentDay + 2.weekOfYear)
 
 extension Invitation {
     package static var preview: Self {

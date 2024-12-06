@@ -26,8 +26,8 @@ extension Target.Dependency {
     static var languages: Self { .product(name: "Languages", package: "swift-language") }
     static var money: Self { .product(name: "Money", package: "swift-money") }
     static var percent: Self { .product(name: "Percent", package: "swift-percent") }
-    static var html: Self { .product(name: "HTML", package: "swift-html") }
-    static var htmlToPdf: Self { .product(name: "HtmlToPdf", package: "swift-html-to-pdf") }
+    static var html: Self { .product(name: "CoenttbHTML", package: "coenttb-html") }
+    static var htmlToPdf: Self { .product(name: "CoenttbHtmlToPdf", package: "coenttb-html") }
 }
 
 extension [Target.Dependency] {
@@ -45,8 +45,8 @@ extension [Target.Dependency] {
 
 extension [Package.Dependency] {
     static let `default`: Self = [
+        .package(url: "https://github.com/coenttb/coenttb-html.git", branch: "main"),
         .package(url: "https://github.com/coenttb/swift-date.git", branch: "main"),
-        .package(url: "https://github.com/coenttb/swift-html.git", branch: "main"),
         .package(url: "https://github.com/coenttb/swift-html-to-pdf.git", branch: "main"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies.git", from: "1.3.6"),
         .package(url: "https://github.com/coenttb/swift-language.git", branch: "main"),
