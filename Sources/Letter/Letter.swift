@@ -7,7 +7,7 @@
 
 import Foundation
 import CoenttbHTML
-import Internal
+
 import Languages
 
 public struct Letter {

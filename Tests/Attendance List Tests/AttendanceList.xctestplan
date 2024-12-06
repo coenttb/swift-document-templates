@@ -15,8 +15,8 @@
     {
       "target" : {
         "containerPath" : "container:",
-        "identifier" : "AttendanceList Tests",
-        "name" : "AttendanceList Tests"
+        "identifier" : "Attendance List Tests",
+        "name" : "Attendance List Tests"
       }
     }
   ],

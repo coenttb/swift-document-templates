@@ -5,7 +5,7 @@
 //  Created by Coen ten Thije Boonkkamp on 19/07/2024.
 //
 
-import AttendanceList
+import Attendance_List
 import CSS
 import Dependencies
 import Foundation
@@ -15,7 +15,7 @@ import Languages
 import Locale
 import Testing
 
-@Test("HtmlToPdf")
+@Test("Attendance List")
 func basldfva() async throws {
 
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
@@ -37,11 +37,11 @@ func basldfva() async throws {
                 $0.language = language
                 $0.locale = language.locale
             } operation: {
-                let invoice: some HTML = AttendanceList.preview
+                let attendanceList: some HTML = AttendanceList.preview
 
-                try await invoice.print(
+                try await attendanceList.print(
 
-                    title: "\(language) | \(title) | \(wrap)",
+                    title: "Attendance List \(language) | \(title) | \(wrap)",
                     to: directory,
                     wrapInHtmlDocument: {
                         switch wrap {

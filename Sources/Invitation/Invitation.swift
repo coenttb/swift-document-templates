@@ -7,7 +7,7 @@
 
 import Foundation
 import CoenttbHTML
-import Internal
+
 import Languages
 import Letter
 import OrderedCollections
@@ -137,44 +137,44 @@ extension Invitation: HTML {
                         h1 {
                             TranslatedString.invitation.capitalized
                         }
-                        .inlineStyle("margin-top", "0")
-                        .inlineStyle("margin-bottom", "0")
+                        .margin(top: 0)
+                        .margin(bottom: 0)
                     }
-                    .inlineStyle("vertical-align", "top")
-                    .inlineStyle("width", "100%")
+                    .verticalAlign(.top)
+                    .width(100.percent)
 
                     td {
                         table {
                             HTMLGroup {
                                 tr {
                                     td { b { TranslatedString.invitationNumber.capitalized } }
-                                        .inlineStyle("padding-right", "15px")
+                                        .padding(right: 15.px)
                                     td { "\(self.invitationNumber)" }
                                 }
                                 tr {
                                     td { b { TranslatedString.invitationDate.capitalized } }
-                                        .inlineStyle("padding-right", "15px")
+                                        .padding(right: 15.px)
                                     td { "\(self.invitationDate.formatted(date: .long, time: .omitted).localized)" }
                                 }
                                 tr {
                                     td { b { TranslatedString.eventDate.capitalized } }
-                                        .inlineStyle("padding-right", "15px")
+                                        .padding(right: 15.px)
                                     td { "\(self.eventDate.formatted(date: .long, time: .omitted).localized)" }
                                 }
                                 tr {
                                     td { b { TranslatedString.location.capitalized } }
-                                        .inlineStyle("padding-right", "15px")
+                                        .padding(right: 15.px)
                                     td { "\(self.location)" }
                                 }
                             }
-                            .inlineStyle("vertical-align", "bottom")
-                            .inlineStyle("white-space", "nowrap")
+                            .verticalAlign(.bottom)
+                            .whiteSpace(.nowrap)
                         }
                     }
                 }
-                .inlineStyle("vertical-align", "bottom")
+                .verticalAlign(.bottom)
             }
-            .inlineStyle("border-collapse", "collapse")
+            .borderCollapse(.collapse)
 
             br()
 
@@ -182,12 +182,12 @@ extension Invitation: HTML {
                 HTMLForEach(metadata.map { $0 }) { (key, value) in
                     tr {
                         td { "\(key)" }
-                            .inlineStyle("padding-right", "15px")
+                            .padding(right: 15.px)
                         td { "\(value)" }
                     }
                 }
             }
-            .inlineStyle("border-collapse", "collapse")
+            .borderCollapse(.collapse)
 
             br()
             br()
@@ -212,16 +212,7 @@ extension TranslatedString {
     static let location = TranslatedString(dutch: "Locatie", english: "Location")
     static let eventInvitation = TranslatedString(dutch: "Evenement Uitnodiging", english: "Event Invitation")
 }
-//
-//#if os(macOS) && canImport(SwiftUI)
-//import SwiftUI
-//#Preview {
-//    HTMLPreview.modern {
-//        Invitation.preview
-//    }
-//    .frame(width: 632, height: 750)
-//}
-//#endif
+
 
 extension Invitation.Sender {
     package static var preview: Self {
@@ -253,7 +244,6 @@ extension Invitation.Recipient {
     }
 }
 
-//let x: Date = (Clocks.system.currentDay + 2.weekOfYear)
 
 extension Invitation {
     package static var preview: Self {

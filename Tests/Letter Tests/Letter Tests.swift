@@ -13,14 +13,15 @@ import Languages
 import Letter
 import Testing
 
-@Test("HtmlToPdf")
-func basldfva() async throws {
+@Test("Letter")
+func letter() async throws {
 
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
 
     for language in [Language.english, .dutch] {
         try await withDependencies {
             $0.language = language
+            $0.locale = language.locale
         } operation: {
             let letter: some HTML = Letter.Header.preview
 

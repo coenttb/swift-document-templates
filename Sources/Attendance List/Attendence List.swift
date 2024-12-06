@@ -7,7 +7,7 @@
 
 import Foundation
 import CoenttbHTML
-import Internal
+
 import Languages
 import OrderedCollections
 
@@ -104,9 +104,8 @@ extension AttendanceList: HTML {
                 }.inlineStyle("padding-block", "15px")
             }
         }
-        .inlineStyle("width", "100%")
-        .inlineStyle("border-collapse", "collapse")
-        //            .inlineStyle("border", "1px solid black")
+        .width(100.percent)
+        .borderCollapse(.collapse)
 
     }
 }
@@ -124,30 +123,32 @@ extension AttendanceList.Attendee: HTML {
 }
 
 extension AttendanceList {
-    package static let preview: Self = AttendanceList(
-        title: "Attendance",
-        metadata: [
-            "date": "\(Date.now.formatted())",
-            "location": "Utrecht"
+    package static var preview: Self {
+        AttendanceList(
+            title: "Attendance",
+            metadata: [
+                "date": "\(Date.now.formatted(date: .long, time: .omitted).localized)",
+                "location": "Utrecht"
 
-        ],
-        attendees: [
-            .empty,
-            .empty,
-            .empty,
-            .empty,
-            .empty,
-            .empty,
-            .empty,
-            .empty,
-            .empty,
-            .empty,
-            .empty,
-            .empty,
-            .empty,
-            .empty
-        ]
-    )
+            ],
+            attendees: [
+                .empty,
+                .empty,
+                .empty,
+                .empty,
+                .empty,
+                .empty,
+                .empty,
+                .empty,
+                .empty,
+                .empty,
+                .empty,
+                .empty,
+                .empty,
+                .empty
+            ]
+        )
+    }
 }
 
 extension AttendanceList {

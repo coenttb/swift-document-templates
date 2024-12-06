@@ -8,7 +8,7 @@
 import Foundation
 import CoenttbHTML
 import Languages
-import Internal
+
 
 extension Letter {
     public struct Header {
@@ -60,7 +60,7 @@ extension Letter.Header: HTML {
 
         switch (location, date.sending) {
         case let (.some(location), .some(date)):
-            HTMLText("\(location), \(date.formatted(date: .long, time: .omitted).localized))")
+            HTMLText("\(location), \(date.formatted(date: .long, time: .omitted).localized)")
             br()
         case let (.some(location), .none):
             HTMLText("\(location)")

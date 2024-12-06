@@ -5,7 +5,7 @@ import PackageDescription
 
 extension String {
     static let agenda: Self = "Agenda"
-    static let attendanceList: Self = "AttendanceList"
+    static let attendanceList: Self = "Attendance List"
     static let invitation: Self = "Invitation"
     static let invoice: Self = "Invoice"
     static let letter: Self = "Letter"

@@ -6,5 +6,5 @@
 //
 
 //@_exported import Dependencies
-//@_exported import Internal
+//@_exported 
 @_exported import Letter

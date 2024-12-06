@@ -13,7 +13,7 @@ import CoenttbHtmlToPdf
 import Languages
 import Testing
 
-@Test("HtmlToPdf")
+@Test("Agenda")
 func basldfva() async throws {
 
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
