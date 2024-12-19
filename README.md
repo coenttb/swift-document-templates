@@ -110,6 +110,14 @@ The following features are currently under development and will be available in 
 - **Attendance List**: Maintain a record of attendees for meetings, events, or training sessions.
 - **Invitation**: Send professional invitations for events, meetings, or conferences.
 
+## Related projects
+
+* [coenttb/pointfree-html](https://www.github.com/coenttb/coenttb/pointfree-html): A Swift DSL for type-safe HTML forked from [pointfreeco/swift-html](https://www.github.com/pointfreeco/swift-html) and updated to the version on [pointfreeco/pointfreeco](https://github.com/pointfreeco/pointfreeco).
+* [swift-css](https://www.github.com/coenttb/swift-css): A Swift DSL for type-safe CSS.
+* [swift-html](https://www.github.com/coenttb/swift-html): A Swift DSL for type-safe HTML & CSS, integrating [swift-css](https://www.github.com/coenttb/swift-css) and [pointfree-html](https://www.github.com/coenttb/pointfree-html).
+* [swift-html-to-pdf](https://www.github.com/coenttb/swift-html-to-pdf): HtmlToPdf provides an easy-to-use interface for concurrently printing HTML to PDF on iOS and macOS.
+* [coenttb-html](https://www.github.com/coenttb/coenttb-html): Extends [swift-html](https://www.github.com/coenttb/swift-html) with additional functionality and integrations for HTML, Markdown, Email, and printing HTML to PDF.
+
 ## Contributing
 
 We welcome contributions to Swift Document Templates. If you find a bug or have a feature request, please open an issue on GitHub. For major changes, please open a discussion first to ensure your work aligns with the project's direction.
