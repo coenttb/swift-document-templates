@@ -1,0 +1,24 @@
+{
+  "configurations" : [
+    {
+      "id" : "8D0760F5-6AB5-48E3-A7A8-036B952BF601",
+      "name" : "Configuration 1",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:",
+        "identifier" : "Signature Page Tests",
+        "name" : "Signature Page Tests"
+      }
+    }
+  ],
+  "version" : 1
+}

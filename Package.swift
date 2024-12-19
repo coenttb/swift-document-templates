@@ -6,6 +6,7 @@ import PackageDescription
 extension String {
     static let agenda: Self = "Agenda"
     static let attendanceList: Self = "Attendance List"
+    static let signaturePage: Self = "Signature Page"
     static let invitation: Self = "Invitation"
     static let invoice: Self = "Invoice"
     static let letter: Self = "Letter"
@@ -17,6 +18,7 @@ extension Target.Dependency {
     static var invitation: Self { .target(name: .invitation) }
     static var invoice: Self { .target(name: .invoice) }
     static var letter: Self { .target(name: .letter) }
+    static var signaturePage: Self { .target(name: .signaturePage) }
 }
 
 extension Target.Dependency {
@@ -27,6 +29,7 @@ extension Target.Dependency {
     static var percent: Self { .product(name: "Percent", package: "swift-percent") }
     static var html: Self { .product(name: "CoenttbHTML", package: "coenttb-html") }
     static var htmlToPdf: Self { .product(name: "CoenttbHtmlToPdf", package: "coenttb-html") }
+    static var collections: Self { .product(name: "Collections", package: "swift-collections") }
 }
 
 extension [Target.Dependency] {
@@ -44,13 +47,14 @@ extension [Target.Dependency] {
 
 extension [Package.Dependency] {
     static let `default`: Self = [
+        .package(url: "https://github.com/apple/swift-collections.git", branch: "main"),
         .package(url: "https://github.com/coenttb/coenttb-html.git", branch: "main"),
         .package(url: "https://github.com/coenttb/swift-date.git", branch: "main"),
         .package(url: "https://github.com/coenttb/swift-html-to-pdf.git", branch: "main"),
-        .package(url: "https://github.com/pointfreeco/swift-dependencies.git", from: "1.3.6"),
         .package(url: "https://github.com/coenttb/swift-language.git", branch: "main"),
         .package(url: "https://github.com/coenttb/swift-money.git", branch: "main"),
-        .package(url: "https://github.com/coenttb/swift-percent.git", branch: "main")
+        .package(url: "https://github.com/coenttb/swift-percent.git", branch: "main"),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies.git", from: "1.3.6"),
     ]
 }
 
@@ -134,6 +138,12 @@ let package = Package.swift_document_templates(
             name: .letter,
             dependencies: [
             ]
-        )
+        ),
+        (
+            name: .signaturePage,
+            dependencies: [
+                .collections
+            ]
+        ),
     ]
 )
