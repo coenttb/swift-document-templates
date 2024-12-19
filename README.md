@@ -112,10 +112,11 @@ The following features are currently under development and will be available in 
 
 ## Related projects
 
-* [coenttb/pointfree-html](https://www.github.com/coenttb/swift-css): A Swift DSL for type-safe HTML forked from [pointfreeco/swift-html](https://www.github.com/pointfreeco/swift-html) and updated to the version on [pointfreeco/pointfreeco](https://github.com/pointfreeco/pointfreeco).
-* [coenttb/swift-css](https://www.github.com/coenttb/swift-css): A Swift DSL for type-safe CSS.
-* [coenttb/swift-html](https://www.github.com/coenttb/swift-html): A Swift DSL for type-safe HTML & CSS, integrating [swift-css](https://www.github.com/coenttb/swift-css) and [coenttb/pointfree-html](https://www.github.com/coenttb/pointfree-html).
-* [coenttb/swift-languages](https://www.github.com/coenttb/swift-languages): A cross-platform translation library written in Swift.
+* [coenttb/pointfree-html](https://www.github.com/coenttb/coenttb/pointfree-html): A Swift DSL for type-safe HTML forked from [pointfreeco/swift-html](https://www.github.com/pointfreeco/swift-html) and updated to the version on [pointfreeco/pointfreeco](https://github.com/pointfreeco/pointfreeco).
+* [swift-css](https://www.github.com/coenttb/swift-css): A Swift DSL for type-safe CSS.
+* [swift-html](https://www.github.com/coenttb/swift-html): A Swift DSL for type-safe HTML & CSS, integrating [swift-css](https://www.github.com/coenttb/swift-css) and [pointfree-html](https://www.github.com/coenttb/pointfree-html).
+* [swift-html-to-pdf](https://www.github.com/coenttb/swift-html-to-pdf): HtmlToPdf provides an easy-to-use interface for concurrently printing HTML to PDF on iOS and macOS.
+* [coenttb-html](https://www.github.com/coenttb/coenttb-html): Extends [swift-html](https://www.github.com/coenttb/swift-html) with additional functionality and integrations for HTML, Markdown, Email, and printing HTML to PDF.
 
 ## Contributing
 
