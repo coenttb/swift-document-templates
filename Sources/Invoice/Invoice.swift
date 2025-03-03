@@ -328,8 +328,8 @@ extension Invoice: HTML {
                     
                     HTMLText("""
                     \(TranslatedString(
-                            dutch: "Wij verzoeken u vriendelijk het totaalbedrag van \(self.rows.totalIncludingVAT.formatted(.euro)) uiterlijk \(expiry.formatted(date: .long, time: .omitted).localized)) over te maken naar ",
-                            english: "Please transfer the total amount of \(self.rows.totalIncludingVAT.formatted(.euro)) by \(expiry.formatted(date: .long, time: .omitted).localized)), to "
+                            dutch: "Wij verzoeken u vriendelijk het totaalbedrag van \(self.rows.totalIncludingVAT.formatted(.euro)) uiterlijk \(expiry.formatted(date: .long, time: .omitted).localized) over te maken naar ",
+                            english: "Please transfer the total amount of \(self.rows.totalIncludingVAT.formatted(.euro)) by \(expiry.formatted(date: .long, time: .omitted).localized), to "
                     
                         ))
                     """)
