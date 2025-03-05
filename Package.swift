@@ -10,6 +10,7 @@ extension String {
     static let invitation: Self = "Invitation"
     static let invoice: Self = "Invoice"
     static let letter: Self = "Letter"
+    static let documentUtilities: Self = "Document Utilities"
 
 }
 
@@ -19,6 +20,7 @@ extension Target.Dependency {
     static var invoice: Self { .target(name: .invoice) }
     static var letter: Self { .target(name: .letter) }
     static var signaturePage: Self { .target(name: .signaturePage) }
+    static var documentUtilities: Self { .target(name: .documentUtilities) }
 }
 
 extension Target.Dependency {
@@ -114,35 +116,47 @@ let package = Package.swift_document_templates(
         (
             name: .agenda,
             dependencies: [
+                .documentUtilities
             ]
         ),
 
         (
             name: .attendanceList,
             dependencies: [
+                .documentUtilities
             ]
         ),
         (
             name: .invitation,
             dependencies: [
                 .letter,
+                .documentUtilities
             ]
         ),
         (
             name: .invoice,
             dependencies: [
-                .letter
+                .letter,
+                .documentUtilities,
             ]
         ),
         (
             name: .letter,
             dependencies: [
+                .documentUtilities,
             ]
         ),
         (
             name: .signaturePage,
             dependencies: [
-                .collections
+                .collections,
+                .documentUtilities,
+            ]
+        ),
+        (
+            name: .documentUtilities,
+            dependencies: [
+                .languages
             ]
         ),
     ]
