@@ -11,15 +11,9 @@ import CoenttbHTML
 import Languages
 
 public struct Agenda {
-    public var title: String
-    public var date: Date?
-    public var variant: Agenda.Variant
     public var items: [Agenda.Item]
 
-    public init(title: String, date: Date? = nil, variant: Agenda.Variant, items: [Agenda.Item]) {
-        self.title = title
-        self.date = date
-        self.variant = variant
+    public init(items: [Agenda.Item]) {
         self.items = items
     }
 }
@@ -27,43 +21,55 @@ public struct Agenda {
 extension Agenda {
     public struct Item {
         let title: String
-        let important: Bool
 
-        public init(title: String, important: Bool = false) {
+        public init(
+            title: String
+        ) {
             self.title = title
-            self.important = important
         }
     }
 }
-extension Agenda {
+extension Agenda.View {
     public enum Variant {
         case short
         case full(subtitle: String, bodyHeader: String)
     }
 }
 
-extension Agenda: HTML {
-    public var body: some HTML {
-        if !items.isEmpty {
-            h1 {
-                TranslatedString(
-                    dutch: "Agenda",
-                    english: "Agenda"
-                )
-            }
-
-            h2 {
-                TranslatedString(
-                    dutch: "Onderwerpen",
-                    english: "Subjects"
-                )
-            }
-
-            ul {
-                for item in items {
-                    li { HTMLText(item.title) }
-                        .inlineStyle("color", item.important ? "red" : nil)
+extension Agenda {
+    public struct View: HTML {
+        let agenda: Agenda
+        let variant: Agenda.View.Variant = .short
+        
+        public var body: some HTML {
+            
+            if !agenda.items.isEmpty {
+                h1 {
+                    TranslatedString(
+                        dutch: "Agenda",
+                        english: "Agenda"
+                    )
                 }
+
+                h2 {
+                    TranslatedString(
+                        dutch: "Onderwerpen",
+                        english: "Topics"
+                    )
+                }
+
+                ul {
+                    for item in agenda.items {
+                        li { HTMLText(item.title) }
+                    }
+                }
+            }
+            
+            switch variant {
+            case .short:
+                HTMLEmpty()
+            case .full(subtitle: let subtitle, bodyHeader: let bodyHeader):
+                HTMLEmpty()
             }
         }
     }
@@ -72,11 +78,10 @@ extension Agenda: HTML {
 extension Agenda.Item: HTML {
     public var body: some HTML {
         li { HTMLText(self.title) }
-            .inlineStyle("color", self.important ? "red" : nil)
     }
 }
 
-//#if os(macOS) && canImport(SwiftUI)
+//#if canImport(SwiftUI)
 // import SwiftUI
 // #Preview {
 //     HTMLPreview.modern {
