@@ -10,23 +10,24 @@ import OrderedCollections
 import Languages
 import CoenttbHTML
 import TranslatedString
+import Date
 
 public struct SignaturePage {
     public let title: TranslatedString
     public let subtitle: TranslatedString?
-    public let signatoryGroups: [SignatoryGroup]
+    public let signatories: [Signatory]
     public let displayMode: DisplayMode
     
-    /// Create a signature page with signatory groups
+    /// Create a signature page with signatories
     public init(
         title: TranslatedString = .signatures,
         subtitle: TranslatedString? = nil,
-        signatoryGroups: [SignatoryGroup],
+        signatories: [Signatory],
         displayMode: DisplayMode = .groupedBySignatory
     ) {
         self.title = title
         self.subtitle = subtitle
-        self.signatoryGroups = signatoryGroups
+        self.signatories = signatories
         self.displayMode = displayMode
     }
 }
@@ -73,107 +74,17 @@ extension SignaturePage: HTML {
     private func renderGroupedView() -> AnyHTML {
         AnyHTML(
             div {
-                HTMLForEach(signatoryGroups) { signatoryGroup in
-                    div {
-                        // Signatory group header
-                        h3 {
-                            signatoryGroup.name
-                        }
-                        
-                        // Metadata if present
-                        if !signatoryGroup.metadata.isEmpty {
-                            table {
-                                HTMLForEach(signatoryGroup.metadata.map { $0 }) { key, value in
-                                    tr {
-                                        td {
-                                            key.map { $0.capitalizingFirstLetter() }
-                                        }
-                                        .width(120.px)
-                                        .padding(right: 15.px)
-                                        
-                                        td {
-                                            value
-                                        }
-                                    }
-                                }
-                            }
-                            .margin(bottom: 15.px)
-                            .borderCollapse(.collapse)
-                        }
-                        
-                        // Signer blocks
-                        HTMLForEach(signatoryGroup.signers) { signer in
-                            SignerBlock(
-                                signer: signer,
-                                date: .now,
-                                location: "Amsterdam"
-                            )
-                        }
-                    }
-                    .margin(bottom: 30.px)
-                }
-            }
-        )
-    }
-    
-    private func renderSeparateView() -> AnyHTML {
-        AnyHTML(
-            div {
-                HTMLForEach(signatoryGroups) { signatoryGroup in
-                    div {
-                        h3 {
-                            signatoryGroup.name
-                        }
-                        
-                        // Metadata if present
-                        if !signatoryGroup.metadata.isEmpty {
-                            table {
-                                HTMLForEach(signatoryGroup.metadata.map { $0 }) { key, value in
-                                    tr {
-                                        td {
-                                            key.map { $0.capitalizingFirstLetter() }
-                                        }
-                                        .width(120.px)
-                                        .padding(right: 15.px)
-                                        
-                                        td {
-                                            value
-                                        }
-                                    }
-                                }
-                            }
-                            .margin(bottom: 15.px)
-                            .borderCollapse(.collapse)
-                        }
-                        
-                        HTMLForEach(signatoryGroup.signers) { signer in
-                            SignerBlock(
-                                signer: signer
-                            )
-                        }
-                    }
-                    .margin(bottom: 40.px)
-                    .padding(20.px)
-                    .border(.all(width: 1.px, style: .solid, color: .hex("ccc")))
-                }
-            }
-        )
-    }
-    
-    private func renderColumnsView() -> AnyHTML {
-        AnyHTML(
-            div {
-                div {
-                    HTMLForEach(signatoryGroups) { signatoryGroup in
+                HTMLForEach(signatories) { signatory in
+                    switch signatory {
+                    case .group(let name, let individuals, let metadata):
                         div {
-                            h3 {
-                                signatoryGroup.name
-                            }
+                            // Signatory group header
+                            h3 { name }
                             
                             // Metadata if present
-                            if !signatoryGroup.metadata.isEmpty {
+                            if !metadata.isEmpty {
                                 table {
-                                    HTMLForEach(signatoryGroup.metadata.map { $0 }) { key, value in
+                                    HTMLForEach(metadata.map { $0 }) { key, value in
                                         tr {
                                             td {
                                                 key.map { $0.capitalizingFirstLetter() }
@@ -191,14 +102,129 @@ extension SignaturePage: HTML {
                                 .borderCollapse(.collapse)
                             }
                             
-                            HTMLForEach(signatoryGroup.signers) { signer in
-                                SignerBlock(
-                                    signer: signer
+                            // Person blocks
+                            HTMLForEach(individuals) { person in
+                                Signatory.Person.Block(
+                                    person: person
                                 )
                             }
                         }
-                        .padding(10.px)
-//                        .width(calc: "50% - 20px")
+                        .margin(bottom: 30.px)
+                        
+                    case .individual(let name, let metadata):
+                        // For individual signers, render the signer block directly without a group header
+                        Signatory.Person.Block(
+                            person: .init(name: name, metadata: metadata)
+                        )
+                        .margin(bottom: 30.px)
+                    }
+                }
+            }
+        )
+    }
+    
+    private func renderSeparateView() -> AnyHTML {
+        AnyHTML(
+            div {
+                HTMLForEach(signatories) { signatory in
+                    switch signatory {
+                    case .group(let name, let individuals, let metadata):
+                        div {
+                            h3 { name }
+                            
+                            // Metadata if present
+                            if !metadata.isEmpty {
+                                table {
+                                    HTMLForEach(metadata.map { $0 }) { key, value in
+                                        tr {
+                                            td {
+                                                TranslatedString(key.english).map { $0.capitalizingFirstLetter() }
+                                            }
+                                            .width(120.px)
+                                            .padding(right: 15.px)
+                                            
+                                            td {
+                                                value
+                                            }
+                                        }
+                                    }
+                                }
+                                .margin(bottom: 15.px)
+                                .borderCollapse(.collapse)
+                            }
+                            
+                            HTMLForEach(individuals) { person in
+                                Signatory.Person.Block(person: person)
+                            }
+                        }
+                        .margin(bottom: 40.px)
+                        .padding(20.px)
+                        .border(.all(width: 1.px, style: .solid, color: .hex("ccc")))
+                        
+                    case .individual(let name, let metadata):
+                        // For individual signers, render in a container without a header
+                        div {
+                            Signatory.Person.Block(
+                                person: .init(name: name, metadata: metadata)
+                            )
+                        }
+                        .margin(bottom: 40.px)
+                        .padding(20.px)
+                        .border(.all(width: 1.px, style: .solid, color: .hex("ccc")))
+                    }
+                }
+            }
+        )
+    }
+    
+    private func renderColumnsView() -> AnyHTML {
+        AnyHTML(
+            div {
+                div {
+                    HTMLForEach(signatories) { signatory in
+                        switch signatory {
+                        case .group(let name, let individuals, let metadata):
+                            div {
+                                h3 { name }
+                                
+                                // Metadata if present
+                                if !metadata.isEmpty {
+                                    table {
+                                        HTMLForEach(metadata.map { $0 }) { key, value in
+                                            tr {
+                                                td {
+                                                    TranslatedString(key.english).map { $0.capitalizingFirstLetter() }
+                                                }
+                                                .width(120.px)
+                                                .padding(right: 15.px)
+                                                
+                                                td {
+                                                    value
+                                                }
+                                            }
+                                        }
+                                    }
+                                    .margin(bottom: 15.px)
+                                    .borderCollapse(.collapse)
+                                }
+                                
+                                HTMLForEach(individuals) { person in
+                                    Signatory.Person.Block(person: person)
+                                }
+                            }
+                            .padding(10.px)
+//                            .width(calc: "50% - 20px")
+                            
+                        case .individual(let name, let metadata):
+                            // For individual signers, render in a column without a header
+                            div {
+                                Signatory.Person.Block(
+                                    person: .init(name: name, metadata: metadata)
+                                )
+                            }
+                            .padding(10.px)
+//                            .width(calc: "50% - 20px")
+                        }
                     }
                 }
                 .display(.flex)
@@ -219,16 +245,39 @@ extension SignaturePage {
                 dutch: "Ondergetekenden verklaren akkoord te zijn met de voorwaarden",
                 english: "The Parties have caused this agreement to be duly signed by the undersigned authorised representatives in separate signature pages the day and year first above written"
             ),
-            signatoryGroups: [
-                SignatoryGroup.preview,
-                .init(
+            signatories: [
+                // A company with multiple signers
+                Signatory.preview,
+                
+                // A company with one signer
+                .group(
                     name: TranslatedString(
                         dutch: "TechCorp B.V.",
                         english: "TechCorp Inc."
-                    ),
-                    role: .buyer,
+                    ), 
                     signers: [
-                        .naturalPerson(.init(name: "Sarah Johnson", position: "CTO"))
+                        .init(name: "Sarah Johnson", position: "CTO")
+                    ],
+                    metadata: [.role: .buyer]
+                ),
+                
+                // Individual with position and metadata
+                .individual(
+                    name: "Coen ten Thije Boonkkamp", 
+                    position: "Developer",
+                    metadata: [.dateOfBirth: "1980-01-01"]
+                ),
+                
+                // Simple individual with just a name
+                .individual(
+                    name: "Another Individual Signer",
+                    metadata: [
+                        .date: .init(
+                            Date.now.formatted(
+                            date: .complete,
+                            time: .omitted
+                        )
+                        )
                     ]
                 )
             ],
@@ -241,7 +290,11 @@ extension SignaturePage {
 #if os(macOS) && canImport(SwiftUI)
 import SwiftUI
 #Preview {
-    HTMLPreview.modern {
+    prepareDependencies {
+        $0.language = .dutch
+    }
+    
+    return HTMLPreview.modern {
         SignaturePage.preview
     }
     .frame(width: 632, height: 750)

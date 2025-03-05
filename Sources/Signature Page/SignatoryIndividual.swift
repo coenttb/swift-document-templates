@@ -1,5 +1,5 @@
 //
-//  Signer.swift
+//  SignatoryIndividual.swift
 //
 //  Created by Claude on 06/12/2024.
 //
@@ -9,34 +9,37 @@ import OrderedCollections
 import Languages
 
 /// Represents a single signer entity - either a natural person or legal entity
-public enum Signer: Hashable, Codable {
-    case naturalPerson(NaturalPerson)
-    case legalEntity(LegalEntity)
-    
-    var name: String {
-        switch self {
-        case .naturalPerson(let naturalPerson):
-            naturalPerson.name
-        case .legalEntity(let legalEntity):
-            legalEntity.name
+extension Signatory {
+    public enum Individual: Hashable, Codable {
+        case naturalPerson(NaturalPerson)
+        case legalEntity(LegalEntity)
+        
+        var name: String {
+            switch self {
+            case .naturalPerson(let naturalPerson):
+                naturalPerson.name
+            case .legalEntity(let legalEntity):
+                legalEntity.name
+            }
         }
     }
 }
 
-extension Signer {
-    public typealias Metadata = OrderedDictionary<TranslatedString, String>
+
+extension Signatory.Individual {
+    public typealias Metadata = OrderedDictionary<TranslatedString, TranslatedString>
 }
 
-extension Signer {
+extension Signatory.Individual {
     public struct NaturalPerson: Hashable, Codable {
         public let name: String
-        public let metadata: Signer.Metadata
-        public let representatives: [Signer.Representative]
+        public let metadata: Signatory.Individual.Metadata
+        public let representatives: [Signatory.Individual.Representative]
         
         public init(
             name: String,
-            metadata: Signer.Metadata = [:],
-            representatives: [Signer.Representative] = []
+            metadata: Signatory.Individual.Metadata = [:],
+            representatives: [Signatory.Individual.Representative] = []
         ) {
             self.name = name
             self.metadata = metadata
@@ -45,16 +48,16 @@ extension Signer {
     }
 }
 
-extension Signer {
+extension Signatory.Individual {
     public struct LegalEntity: Hashable, Codable {
         public let name: String
-        public let metadata: Signer.Metadata
-        public let representatives: [Signer.Representative]
+        public let metadata: Signatory.Individual.Metadata
+        public let representatives: [Signatory.Individual.Representative]
         
         public init(
             name: String,
-            metadata: Signer.Metadata = [:],
-            representatives: [Signer.Representative]
+            metadata: Signatory.Individual.Metadata = [:],
+            representatives: [Signatory.Individual.Representative]
         ) {
             self.name = name
             self.metadata = metadata
@@ -63,13 +66,13 @@ extension Signer {
     }
 }
 
-extension Signer {
+extension Signatory.Individual {
     public struct Representative: Hashable, Codable {
-        public let signer: Signer
+        public let signer: Signatory.Individual
         public let capacity: Representative.Capacity
         
         public init(
-            signer: Signer,
+            signer: Signatory.Individual,
             capacity: Representative.Capacity
         ) {
             self.signer = signer
@@ -77,23 +80,22 @@ extension Signer {
         }
         public typealias Capacity = TranslatedString
     }
-    
 }
 
-extension Signer.Representative.Capacity {
+extension Signatory.Individual.Representative.Capacity {
     public static let director: Self = "director"
     public static let attorney: Self = TranslatedString(dutch: "Gemachtigde", english: "Attorney")
     public static let agent: Self = TranslatedString(dutch: "Agent", english: "Agent")
 }
 
-extension Signer.NaturalPerson {
+extension Signatory.Individual.NaturalPerson {
     public init(
         name: String,
-        title: String? = nil,
-        position: String? = nil,
-        dateOfBirth: String? = nil
+        title: TranslatedString? = nil,
+        position: TranslatedString? = nil,
+        dateOfBirth: TranslatedString? = nil
     ) {
-        var metadata: Signer.Metadata = [:]
+        var metadata: Signatory.Individual.Metadata = [:]
         if let title { metadata[.title] = title }
         if let position { metadata[.position] = position }
         if let dateOfBirth { metadata[.dateOfBirth] = dateOfBirth }
@@ -102,15 +104,8 @@ extension Signer.NaturalPerson {
     }
 }
 
-extension TranslatedString {
-    public static let title = TranslatedString(dutch: "Titel", english: "Title")
-    public static let position = TranslatedString(dutch: "Functie", english: "Position")
-    public static let registrationNumber = TranslatedString(dutch: "KvK-nummer", english: "Registration Number")
-    public static let dateOfBirth = TranslatedString(dutch: "Geboortedatum", english: "Date of Birth")
-    public static let role = TranslatedString(dutch: "Rol", english: "Role")
-}
 
-extension Signer {
+extension Signatory.Individual {
     static var simple: Self {
         .legalEntity(
             .init(
