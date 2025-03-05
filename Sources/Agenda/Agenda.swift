@@ -41,6 +41,10 @@ extension Agenda {
         let agenda: Agenda
         let variant: Agenda.View.Variant = .short
         
+        public init(agenda: Agenda) {
+            self.agenda = agenda
+        }
+        
         public var body: some HTML {
             
             if !agenda.items.isEmpty {
