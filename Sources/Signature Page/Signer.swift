@@ -1,5 +1,5 @@
 //
-//  Signatory.swift
+//  Signer.swift
 //
 //  Created by Claude on 06/12/2024.
 //
@@ -8,7 +8,8 @@ import Foundation
 import OrderedCollections
 import Languages
 
-public enum Signatory: Hashable, Codable {
+/// Represents a single signer entity - either a natural person or legal entity
+public enum Signer: Hashable, Codable {
     case naturalPerson(NaturalPerson)
     case legalEntity(LegalEntity)
     
@@ -22,35 +23,20 @@ public enum Signatory: Hashable, Codable {
     }
 }
 
-extension Signatory {
+extension Signer {
     public typealias Metadata = OrderedDictionary<TranslatedString, String>
 }
 
-extension Signatory {
+extension Signer {
     public struct NaturalPerson: Hashable, Codable {
         public let name: String
-        public let metadata: Signatory.Metadata
+        public let metadata: Signer.Metadata
+        public let representatives: [Signer.Representative]
         
         public init(
             name: String,
-            metadata: Signatory.Metadata = [:]
-        ) {
-            self.name = name
-            self.metadata = metadata
-        }
-    }
-}
-
-extension Signatory {
-    public struct LegalEntity: Hashable, Codable {
-        public let name: String
-        public let metadata: Signatory.Metadata
-        public let representatives: [Signatory.Representative]
-        
-        public init(
-            name: String,
-            metadata: Signatory.Metadata = [:],
-            representatives: [Signatory.Representative]
+            metadata: Signer.Metadata = [:],
+            representatives: [Signer.Representative] = []
         ) {
             self.name = name
             self.metadata = metadata
@@ -59,16 +45,34 @@ extension Signatory {
     }
 }
 
-extension Signatory {
+extension Signer {
+    public struct LegalEntity: Hashable, Codable {
+        public let name: String
+        public let metadata: Signer.Metadata
+        public let representatives: [Signer.Representative]
+        
+        public init(
+            name: String,
+            metadata: Signer.Metadata = [:],
+            representatives: [Signer.Representative]
+        ) {
+            self.name = name
+            self.metadata = metadata
+            self.representatives = representatives
+        }
+    }
+}
+
+extension Signer {
     public struct Representative: Hashable, Codable {
-        public let signatory: Signatory
+        public let signer: Signer
         public let capacity: Representative.Capacity
         
         public init(
-            signatory: Signatory,
+            signer: Signer,
             capacity: Representative.Capacity
         ) {
-            self.signatory = signatory
+            self.signer = signer
             self.capacity = capacity
         }
         public typealias Capacity = TranslatedString
@@ -76,18 +80,20 @@ extension Signatory {
     
 }
 
-extension Signatory.Representative.Capacity {
+extension Signer.Representative.Capacity {
     public static let director: Self = "director"
+    public static let attorney: Self = TranslatedString(dutch: "Gemachtigde", english: "Attorney")
+    public static let agent: Self = TranslatedString(dutch: "Agent", english: "Agent")
 }
 
-extension Signatory.NaturalPerson {
+extension Signer.NaturalPerson {
     public init(
         name: String,
         title: String? = nil,
         position: String? = nil,
         dateOfBirth: String? = nil
     ) {
-        var metadata: Signatory.Metadata = [:]
+        var metadata: Signer.Metadata = [:]
         if let title { metadata[.title] = title }
         if let position { metadata[.position] = position }
         if let dateOfBirth { metadata[.dateOfBirth] = dateOfBirth }
@@ -101,20 +107,21 @@ extension TranslatedString {
     public static let position = TranslatedString(dutch: "Functie", english: "Position")
     public static let registrationNumber = TranslatedString(dutch: "KvK-nummer", english: "Registration Number")
     public static let dateOfBirth = TranslatedString(dutch: "Geboortedatum", english: "Date of Birth")
+    public static let role = TranslatedString(dutch: "Rol", english: "Role")
 }
 
-extension Signatory {
+extension Signer {
     static var simple: Self {
         .legalEntity(
             .init(
                 name: "Coen B.V.",
                 representatives: [
                     .init(
-                        signatory: .naturalPerson(.init(name: "Coen ten Thije Boonkkamp")),
+                        signer: .naturalPerson(.init(name: "Coen ten Thije Boonkkamp")),
                         capacity: "Director"
                     ),
                     .init(
-                        signatory: .naturalPerson(.init(name: "Coen ten Thije Boonkkamp")),
+                        signer: .naturalPerson(.init(name: "Coen ten Thije Boonkkamp")),
                         capacity: "Director"
                     ),
                 ]
@@ -122,7 +129,7 @@ extension Signatory {
         )
     }
     static var chainPreview: Self {
-        // BV3 (signatory) -> BV2 (director) -> BV1 (director) -> Natural Person (director)
+        // BV3 (signer) -> BV2 (director) -> BV1 (director) -> Natural Person (director)
         .legalEntity(
             LegalEntity(
                 name: "BV3",
@@ -135,19 +142,19 @@ extension Signatory {
                 ],
                 representatives: [
                     .init(
-                        signatory: .legalEntity(
+                        signer: .legalEntity(
                             LegalEntity(
                                 name: "BV2",
                                 metadata: [.registrationNumber: "22222222"],
                                 representatives: [
                                     .init(
-                                        signatory: .legalEntity(
+                                        signer: .legalEntity(
                                             LegalEntity(
                                                 name: "BV1",
                                                 metadata: [.registrationNumber: "11111111"],
                                                 representatives: [
                                                     .init(
-                                                        signatory: .naturalPerson(
+                                                        signer: .naturalPerson(
                                                             NaturalPerson(
                                                                 name: "John Smith",
                                                                 metadata: [
