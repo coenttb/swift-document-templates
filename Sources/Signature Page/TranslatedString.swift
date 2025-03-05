@@ -32,6 +32,16 @@ extension TranslatedString {
         dutch: "In hoedanigheid van",
         english: "In capacity of"
     )
+    
+    public static let date = TranslatedString(
+        dutch: "datum",
+        english: "date"
+    )
+    
+    public static let location = TranslatedString(
+        dutch: "locatie",
+        english: "location"
+    )
 }
 
 

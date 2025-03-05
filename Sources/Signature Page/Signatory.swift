@@ -104,6 +104,23 @@ extension TranslatedString {
 }
 
 extension Signatory {
+    static var simple: Self {
+        .legalEntity(
+            .init(
+                name: "Coen B.V.",
+                representatives: [
+                    .init(
+                        signatory: .naturalPerson(.init(name: "Coen ten Thije Boonkkamp")),
+                        capacity: "Director"
+                    ),
+                    .init(
+                        signatory: .naturalPerson(.init(name: "Coen ten Thije Boonkkamp")),
+                        capacity: "Director"
+                    ),
+                ]
+            )
+        )
+    }
     static var chainPreview: Self {
         // BV3 (signatory) -> BV2 (director) -> BV1 (director) -> Natural Person (director)
         .legalEntity(

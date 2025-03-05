@@ -24,6 +24,21 @@ public struct SignatoryBlock {
         self.signatory = signatory
         self.metadata = metadata
     }
+    
+    public init(
+        title: TranslatedString? = nil,
+        signatory: Signatory,
+        date: Date,
+        location: TranslatedString,
+        other metadata: SignaturePage.Metadata = [:]
+    ) {
+        self.title = title
+        self.signatory = signatory
+        var metadata = metadata
+        metadata[.date.capitalizingFirstLetter()] = .init(date.formatted(date: .numeric, time: .omitted))
+        metadata[.location.capitalizingFirstLetter()] = location
+        self.metadata = metadata
+    }
 }
 
 extension SignatoryBlock: HTML {
@@ -41,30 +56,6 @@ extension SignatoryBlock: HTML {
             tr {
                 td {
                     renderSignatoryContent(signatory, isTopLevel: true)
-                }
-            }
-            
-            // Block-specific metadata
-            if !metadata.isEmpty {
-                tr {
-                    td {
-                        table {
-                            HTMLForEach(metadata.map { $0 }) { key, value in
-                                tr {
-                                    td {
-                                         key
-                                    }
-                                    .padding(right: 15.px)
-                                    
-                                    td {
-                                        value
-                                    }
-                                }
-                            }
-                        }
-                        .borderCollapse(.collapse)
-                        .padding(top: 10.px)
-                    }
                 }
             }
         }
@@ -90,24 +81,48 @@ extension SignatoryBlock: HTML {
                 person.name
             }
             
-            if !person.metadata.isEmpty {
-                table {
+            // Create combined table for all metadata
+            table {
+                // Person metadata (title, position, etc.)
+                if !person.metadata.isEmpty {
                     HTMLForEach(person.metadata.map { $0 }) { key, value in
                         tr {
                             td {
-                                key
+                                key.map { $0.capitalizingFirstLetter() }
                             }
-                            .padding(right: 10.px)
+                            .width(80.px)
+                            .padding(right: 15.px)
+                            .verticalAlign(.top)
                             
                             td {
                                 value
                             }
+                            .verticalAlign(.top)
                         }
                     }
                 }
-                .borderCollapse(.collapse)
-                .padding(top: 5.px)
+                
+                // Block metadata (date, location) for top-level signatories
+                if isTopLevel && !metadata.isEmpty {
+                    HTMLForEach(metadata.map { $0 }) { key, value in
+                        tr {
+                            td {
+                                key
+                            }
+                            .width(80.px)
+                            .padding(right: 15.px)
+                            .verticalAlign(.top)
+                            
+                            td {
+                                value
+                            }
+                            .verticalAlign(.top)
+                        }
+                    }
+                }
             }
+            .borderCollapse(.collapse)
+            .padding(top: 5.px)
             
             // Add signature line for natural persons
             if isTopLevel {
@@ -130,31 +145,72 @@ extension SignatoryBlock: HTML {
                 b { entity.name }
             }
             
-            // Entity metadata
+            // Entity metadata in a table with fixed column width
             if !entity.metadata.isEmpty {
                 table {
                     HTMLForEach(entity.metadata.map { $0 }) { key, value in
                         tr {
                             td {
-                                key
+                                key.map { $0.capitalizingFirstLetter() }
                             }
-                            .padding(right: 10.px)
+                            .width(80.px)
+                            .padding(right: 15.px)
+                            .verticalAlign(.top)
                             
-                            td { value }
+                            td {
+                                value
+                            }
+                            .verticalAlign(.top)
                         }
                     }
                 }
                 .borderCollapse(.collapse)
-                .padding(vertical: 5.px)
+                .padding(top: 5.px)
             }
             
             // Representatives with signature lines
             HTMLForEach(entity.representatives) { representative in
                 div {
                     renderSignatoryContent(representative.signatory, isTopLevel: false)
-                    TranslatedString.inCapacityOf
-                    " "
-                    representative.capacity
+                    
+                    // Combined table for capacity (title) and metadata
+                    table {
+                        // Capacity (title) in a table row
+                        tr {
+                            td {
+                                "Title"
+                            }
+                            .width(80.px)
+                            .padding(right: 15.px)
+                            .verticalAlign(.top)
+                            
+                            td {
+                                representative.capacity
+                            }
+                            .verticalAlign(.top)
+                        }
+                        
+                        // Block metadata (date/location) before signature line
+                        if isTopLevel && !metadata.isEmpty {
+                            HTMLForEach(metadata.map { $0 }) { key, value in
+                                tr {
+                                    td {
+                                        key
+                                    }
+                                    .width(80.px)
+                                    .padding(right: 15.px)
+                                    .verticalAlign(.top)
+                                    
+                                    td {
+                                        value
+                                    }
+                                    .verticalAlign(.top)
+                                }
+                            }
+                        }
+                    }
+                    .borderCollapse(.collapse)
+                    .padding(top: 5.px)
                     
                     // Signature line per representative
                     div {
