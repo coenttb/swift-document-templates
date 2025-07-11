@@ -52,11 +52,11 @@ extension SignaturePage: HTML {
     public var body: some HTML {
         div {
             h2 { title }
-                .margin(bottom: subtitle != nil ? 5.px : 20.px)
+                .margin(bottom: subtitle != nil ? .px(5) : .px(20))
             
             if let subtitle {
                 p { subtitle }
-                    .margin(bottom: 20.px)
+                    .margin(bottom: .px(20))
             }
 
             switch displayMode {
@@ -68,7 +68,7 @@ extension SignaturePage: HTML {
                 renderColumnsView()
             }
         }
-        .padding(20.px)
+        .padding(.px(20))
     }
     
     private func renderGroupedView() -> AnyHTML {
@@ -89,8 +89,8 @@ extension SignaturePage: HTML {
                                             td {
                                                 key.map { $0.capitalizingFirstLetter() }
                                             }
-                                            .width(120.px)
-                                            .padding(right: 15.px)
+                                            .width(.px(120))
+                                            .padding(right: .px(15))
                                             
                                             td {
                                                 value
@@ -98,7 +98,7 @@ extension SignaturePage: HTML {
                                         }
                                     }
                                 }
-                                .margin(bottom: 15.px)
+                                .margin(bottom: .px(15))
                                 .borderCollapse(.collapse)
                             }
                             
@@ -109,14 +109,14 @@ extension SignaturePage: HTML {
                                 )
                             }
                         }
-                        .margin(bottom: 30.px)
+                        .margin(bottom: .px(30))
                         
                     case .individual(let name, let metadata):
                         // For individual signers, render the signer block directly without a group header
                         Signatory.Person.Block(
                             person: .init(name: name, metadata: metadata)
                         )
-                        .margin(bottom: 30.px)
+                        .margin(bottom: .px(30))
                     }
                 }
             }
@@ -140,8 +140,8 @@ extension SignaturePage: HTML {
                                             td {
                                                 TranslatedString(key.english).map { $0.capitalizingFirstLetter() }
                                             }
-                                            .width(120.px)
-                                            .padding(right: 15.px)
+                                            .width(.px(120))
+                                            .padding(right: .px(15))
                                             
                                             td {
                                                 value
@@ -149,7 +149,7 @@ extension SignaturePage: HTML {
                                         }
                                     }
                                 }
-                                .margin(bottom: 15.px)
+                                .margin(bottom: .px(15))
                                 .borderCollapse(.collapse)
                             }
                             
@@ -157,9 +157,14 @@ extension SignaturePage: HTML {
                                 Signatory.Person.Block(person: person)
                             }
                         }
-                        .margin(bottom: 40.px)
-                        .padding(20.px)
-                        .border(.all(width: 1.px, style: .solid, color: .hex("ccc")))
+                        .margin(bottom: .px(40))
+                        .padding(.px(20))
+                        .border(
+                            .top, .bottom, .left, .right,
+                            width: .px(1),
+                            style: .solid,
+                            color: .init(light: .hex("ccc")),
+                        )
                         
                     case .individual(let name, let metadata):
                         // For individual signers, render in a container without a header
@@ -168,9 +173,14 @@ extension SignaturePage: HTML {
                                 person: .init(name: name, metadata: metadata)
                             )
                         }
-                        .margin(bottom: 40.px)
-                        .padding(20.px)
-                        .border(.all(width: 1.px, style: .solid, color: .hex("ccc")))
+                        .margin(bottom: .px(40))
+                        .padding(.px(20))
+                        .border(
+                            .top, .bottom, .left, .right,
+                            width: .px(1),
+                            style: .solid,
+                            color: .init(light: .hex("ccc")),
+                        )
                     }
                 }
             }
@@ -195,8 +205,8 @@ extension SignaturePage: HTML {
                                                 td {
                                                     TranslatedString(key.english).map { $0.capitalizingFirstLetter() }
                                                 }
-                                                .width(120.px)
-                                                .padding(right: 15.px)
+                                                .width(.px(120))
+                                                .padding(right: .px(15))
                                                 
                                                 td {
                                                     value
@@ -204,7 +214,7 @@ extension SignaturePage: HTML {
                                             }
                                         }
                                     }
-                                    .margin(bottom: 15.px)
+                                    .margin(bottom: .px(15))
                                     .borderCollapse(.collapse)
                                 }
                                 
@@ -212,7 +222,7 @@ extension SignaturePage: HTML {
                                     Signatory.Person.Block(person: person)
                                 }
                             }
-                            .padding(10.px)
+                            .padding(.px(10))
 //                            .width(calc: "50% - 20px")
                             
                         case .individual(let name, let metadata):
@@ -222,7 +232,7 @@ extension SignaturePage: HTML {
                                     person: .init(name: name, metadata: metadata)
                                 )
                             }
-                            .padding(10.px)
+                            .padding(.px(10))
 //                            .width(calc: "50% - 20px")
                         }
                     }
@@ -230,8 +240,8 @@ extension SignaturePage: HTML {
                 .display(.flex)
                 .flexDirection(.row)
                 .flexWrap(.wrap)
-                .rowGap(20.px)
-                .columnGap(.length(20.px))
+                .rowGap(.px(20))
+                .columnGap(.length(.px(20)))
             }
         )
     }
@@ -294,7 +304,7 @@ import SwiftUI
         $0.language = .dutch
     }
     
-    return HTMLPreview.modern {
+    return HTMLDocument {
         SignaturePage.preview
     }
     .frame(width: 632, height: 750)

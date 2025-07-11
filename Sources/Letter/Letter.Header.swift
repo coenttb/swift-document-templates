@@ -39,48 +39,50 @@ extension Letter {
 }
 
 extension Letter.Header: HTML {
+    @HTMLBuilder
     public var body: some HTML {
-        table {
-            tr {
-                td {
-                    recipient
-                }
-                .inlineStyle("vertical-align", "top")
-                .inlineStyle("width", "100%")
-
-                td {
-                    sender
-                }
-                .inlineStyle("vertical-align", "top")
-            }
-
-        }
-        .inlineStyle("width", "100%")
-        .inlineStyle("border-collapse", "collapse")
-
-        switch (location, date.sending) {
-        case let (.some(location), .some(date)):
-            HTMLText("\(location), \(date.formatted(date: .long, time: .omitted).localized)")
-            br()
-        case let (.some(location), .none):
-            HTMLText("\(location)")
-            br()
-        case let (.none, .some(date)):
-            HTMLText("\(date.formatted(date: .long, time: .omitted).localized))")
-            br()
-        case (.none, .none):
-            HTMLEmpty()
-        }
-
-        if let subject {
-            TranslatedString(
-                dutch: "betreft",
-                english: "subject"
-            ).capitalizingFirstLetter()
-            ": "
-            "\(subject)"
-            br()
-        }
+        HTMLEmpty()
+//        table {
+//            tr {
+//                td {
+//                    recipient
+//                }
+//                .inlineStyle("vertical-align", "top")
+//                .inlineStyle("width", "100%")
+//
+//                td {
+//                    sender
+//                }
+//                .inlineStyle("vertical-align", "top")
+//            }
+//
+//        }
+//        .inlineStyle("width", "100%")
+//        .inlineStyle("border-collapse", "collapse")
+//
+//        switch (location, date.sending) {
+//        case let (.some(location), .some(date)):
+//            HTMLText("\(location), \(date.formatted(date: .long, time: .omitted).localized)")
+//            br()()
+//        case let (.some(location), .none):
+//            HTMLText("\(location)")
+//            br()()
+//        case let (.none, .some(date)):
+//            HTMLText("\(date.formatted(date: .long, time: .omitted).localized))")
+//            br()()
+//        case (.none, .none):
+//            HTMLEmpty()
+//        }
+//
+//        if let subject {
+//            TranslatedString(
+//                dutch: "betreft",
+//                english: "subject"
+//            ).capitalizingFirstLetter()
+//            ": "
+//            "\(subject)"
+//            br()()
+//        }
     }
 }
 
@@ -100,7 +102,7 @@ extension Letter.Header {
 #if os(macOS) && canImport(SwiftUI)
 import SwiftUI
 #Preview {
-    HTMLPreview.modern {
+    HTMLDocument {
         Letter.Header.preview
     }
     .frame(width: 451, height: 698)

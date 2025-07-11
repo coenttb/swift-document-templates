@@ -73,9 +73,9 @@ func basldfva() async throws -> Void {
                     wrapInHtmlDocument: {
                         switch wrap {
                         case .minimal:
-                            HTMLPreview.minimal
+                            HTMLDocument.minimal
                         case .modern:
-                            HTMLPreview.modern
+                            HTMLDocument
                             
                         }
                     }()

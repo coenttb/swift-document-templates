@@ -7,7 +7,6 @@
 
 import Foundation
 import CoenttbHTML
-
 import Languages
 import OrderedCollections
 
@@ -72,11 +71,10 @@ extension Letter.Recipient {
 extension Letter.Recipient: HTML {
     public var body: some HTML {
         b { "\(self.name)" }
-
-        br()
+        br()()
         HTMLForEach(self.address) { line in
             "\(line)"
-            br()
+            br()()
         }
         table {
             HTMLForEach(self.metadata.map { $0 }) { (key, value) in

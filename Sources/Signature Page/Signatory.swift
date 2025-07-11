@@ -161,8 +161,8 @@ extension Signatory {
                                     td {
                                         key.map { $0.capitalizingFirstLetter() }
                                     }
-                                    .width(style.metadataColumnWidth.px)
-                                    .padding(right: 15.px)
+                                    .width(.px(.init(style.metadataColumnWidth)))
+                                    .padding(right: .px(15))
                                     .verticalAlign(.top)
                                     
                                     td {
@@ -178,8 +178,8 @@ extension Signatory {
                                     td {
                                         key
                                     }
-                                    .width(style.metadataColumnWidth.px)
-                                    .padding(right: 15.px)
+                                    .width(.px(.init(style.metadataColumnWidth)))
+                                    .padding(right: .px(15))
                                     .verticalAlign(.top)
                                     
                                     td {
@@ -190,17 +190,17 @@ extension Signatory {
                             }
                         }
                         .borderCollapse(.collapse)
-                        .padding(top: 5.px)
+                        .padding(top: .px(5))
                     }
                     
                     // Signature line
                     div {
                         String(repeating: "_", count: 40)
                     }
-                    .padding(vertical: 30.px)
-                    .maxWidth(300.px)
+                    .padding(vertical: .px(30), horizontal: nil)
+                    .maxWidth(.px(300))
                 }
-                .margin(bottom: 15.px)
+                .margin(bottom: .px(15))
             }
             
             /// Styling options for the individual signatory block

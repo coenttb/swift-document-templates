@@ -7,7 +7,6 @@
 
 import Foundation
 import CoenttbHTML
-
 import Languages
 import OrderedCollections
 
@@ -49,6 +48,8 @@ extension AttendanceList.Attendee {
     static let empty: Self = .init(firstName: "", lastName: "", role: "")
 }
 
+
+
 extension AttendanceList: HTML {
     public var body: some HTML {
         h1 {
@@ -73,7 +74,7 @@ extension AttendanceList: HTML {
             }
         }
 
-        br()
+        br()()
 
         table {
             tr {
@@ -104,7 +105,7 @@ extension AttendanceList: HTML {
                 }.inlineStyle("padding-block", "15px")
             }
         }
-        .width(100.percent)
+        .width(.percent(100))
         .borderCollapse(.collapse)
 
     }
@@ -176,7 +177,7 @@ extension AttendanceList {
 //#if os(macOS) && canImport(SwiftUI)
 //import SwiftUI
 //#Preview {
-//    HTMLPreview.modern {
+//    HTMLDocument {
 //        AttendanceList.preview
 //    }
 //    .frame(width: 600, height: 800)

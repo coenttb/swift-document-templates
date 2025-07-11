@@ -71,7 +71,7 @@ func asda() async throws {
             try await letter.print(
                 title: "Github Letter \(language)",
                 to: directory,
-                wrapInHtmlDocument: HTMLPreview.modern
+                wrapInHtmlDocument: HTMLDocument
             )
         }
     }

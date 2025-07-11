@@ -70,8 +70,8 @@ func testInvitation() async throws {
                 to: directory,
                 wrapInHtmlDocument: {
                     switch wrap {
-                    case .minimal: HTMLPreview.minimal
-                    case .modern: HTMLPreview.modern
+                    case .minimal: HTMLDocument.minimal
+                    case .modern: HTMLDocument
                     }
                 }()
             )

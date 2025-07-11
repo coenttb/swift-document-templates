@@ -51,7 +51,7 @@ extension Letter: HTML {
             date: self.date,
             subject: self.subject
         )
-        br()
+        br()()
         _body
     }
 }
@@ -72,7 +72,7 @@ extension Letter {
 //#if os(macOS) && canImport(SwiftUI)
 //import SwiftUI
 //#Preview {
-//    HTMLPreview.modern {
+//    HTMLDocument {
 //        Letter.preview
 //    }
 //    .frame(width: 451, height: 698)

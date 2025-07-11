@@ -85,7 +85,7 @@ extension Letter.Sender: HTML {
                 td {
                     HTMLForEach(self.address) { line in
                         small { "\(line)" }
-                        br()
+                        br()()
                     }
                 }
             }
@@ -130,7 +130,7 @@ extension Letter.Sender {
 #if os(macOS) && canImport(SwiftUI)
 import SwiftUI
 #Preview {
-    HTMLPreview {
+    HTMLDocument {
         Letter.Sender.preview
     }
     .frame(width: 451, height: 698)

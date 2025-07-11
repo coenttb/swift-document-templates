@@ -31,7 +31,7 @@ func singleNaturalPerson() async throws {
         try await block.print(
             title: "Signatory Block Single Natural Person",
             to: directory,
-            wrapInHtmlDocument: HTMLPreview.modern
+            wrapInHtmlDocument: HTMLDocument
         )
     }
 }
@@ -64,7 +64,7 @@ func singleLEWithOneRepresentative() async throws {
         try await block.print(
             title: "Signatory Block Legal Entity Single Representative",
             to: directory,
-            wrapInHtmlDocument: HTMLPreview.modern
+            wrapInHtmlDocument: HTMLDocument
         )
     }
 }
@@ -103,7 +103,7 @@ func singleLEWithTwoRepresentatives() async throws {
         try await block.print(
             title: "Signatory Block Legal Entity Two Representatives",
             to: directory,
-            wrapInHtmlDocument: HTMLPreview.modern
+            wrapInHtmlDocument: HTMLDocument
         )
     }
 }
@@ -148,7 +148,7 @@ func managementCompanyStructure() async throws {
         try await block.print(
             title: "Signatory Block Management Company Structure",
             to: directory,
-            wrapInHtmlDocument: HTMLPreview.modern
+            wrapInHtmlDocument: HTMLDocument
         )
     }
 }
@@ -176,7 +176,7 @@ func naturalPersonWithMetadata() async throws {
         try await block.print(
             title: "Signatory Block Natural Person with Metadata",
             to: directory,
-            wrapInHtmlDocument: HTMLPreview.modern
+            wrapInHtmlDocument: HTMLDocument
         )
     }
 }
@@ -212,7 +212,7 @@ func legalEntityWithProxyHolder() async throws {
         try await block.print(
             title: "Signatory Block Legal Entity with Proxy Holder",
             to: directory,
-            wrapInHtmlDocument: HTMLPreview.modern
+            wrapInHtmlDocument: HTMLDocument
         )
     }
 }
@@ -249,7 +249,7 @@ func legalEntityWithRegistrationDetails() async throws {
         try await block.print(
             title: "Signatory Block Legal Entity with Registration Details",
             to: directory,
-            wrapInHtmlDocument: HTMLPreview.modern
+            wrapInHtmlDocument: HTMLDocument
         )
     }
 }

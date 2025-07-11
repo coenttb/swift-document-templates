@@ -6,7 +6,6 @@
 //
 
 import Attendance_List
-import CSS
 import Dependencies
 import Foundation
 import CoenttbHTML
@@ -45,8 +44,8 @@ func basldfva() async throws {
                     to: directory,
                     wrapInHtmlDocument: {
                         switch wrap {
-                        case .minimal: HTMLPreview.minimal
-                        case .modern: HTMLPreview.modern
+                        case .minimal: /*HTMLDocument.minimal*/ fatalError()
+                        case .modern: /*HTMLDocument*/ fatalError()
                         }
                     }()
                 )

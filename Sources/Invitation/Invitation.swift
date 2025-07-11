@@ -7,7 +7,6 @@
 
 import Foundation
 import CoenttbHTML
-
 import Languages
 import Letter
 import OrderedCollections
@@ -131,75 +130,76 @@ extension Invitation: HTML {
             date: (sending: self.invitationDate, signature: nil),
             subject: "\(TranslatedString.eventInvitation)"
         ) {
-            table {
-                tr {
-                    td {
-                        h1 {
-                            TranslatedString.invitation.capitalized
-                        }
-                        .margin(top: 0)
-                        .margin(bottom: 0)
-                    }
-                    .verticalAlign(.top)
-                    .width(100.percent)
+            HTMLEmpty()
+//            table {
+//                tr {
+//                    td {
+//                        h1 {
+//                            TranslatedString.invitation.capitalized
+//                        }
+//                        .margin(top: 0)
+//                        .margin(bottom: 0)
+//                    }
+//                    .verticalAlign(.top)
+//                    .width(.percent(100))
+//
+//                    td {
+//                        table {
+//                            HTMLGroup {
+//                                tr {
+//                                    td { b { TranslatedString.invitationNumber.capitalized } }
+//                                        .padding(right: .px(15))
+//                                    td { "\(self.invitationNumber)" }
+//                                }
+//                                tr {
+//                                    td { b { TranslatedString.invitationDate.capitalized } }
+//                                        .padding(right: .px(15))
+//                                    td { "\(self.invitationDate.formatted(date: .long, time: .omitted).localized)" }
+//                                }
+//                                tr {
+//                                    td { b { TranslatedString.eventDate.capitalized } }
+//                                        .padding(right: .px(15))
+//                                    td { "\(self.eventDate.formatted(date: .long, time: .omitted).localized)" }
+//                                }
+//                                tr {
+//                                    td { b { TranslatedString.location.capitalized } }
+//                                        .padding(right: .px(15))
+//                                    td { "\(self.location)" }
+//                                }
+//                            }
+//                            .verticalAlign(.bottom)
+//                            .whiteSpace(.nowrap)
+//                        }
+//                    }
+//                }
+//                .verticalAlign(.bottom)
+//            }
+//            .borderCollapse(.collapse)
+//
+//            br()()
+//
+//            table {
+//                HTMLForEach(metadata.map { $0 }) { (key, value) in
+//                    tr {
+//                        td { "\(key)" }
+//                            .padding(right: .px(15))
+//                        td { "\(value)" }
+//                    }
+//                }
+//            }
+//            .borderCollapse(.collapse)
+//
+//            br()()
+//            br()()
 
-                    td {
-                        table {
-                            HTMLGroup {
-                                tr {
-                                    td { b { TranslatedString.invitationNumber.capitalized } }
-                                        .padding(right: 15.px)
-                                    td { "\(self.invitationNumber)" }
-                                }
-                                tr {
-                                    td { b { TranslatedString.invitationDate.capitalized } }
-                                        .padding(right: 15.px)
-                                    td { "\(self.invitationDate.formatted(date: .long, time: .omitted).localized)" }
-                                }
-                                tr {
-                                    td { b { TranslatedString.eventDate.capitalized } }
-                                        .padding(right: 15.px)
-                                    td { "\(self.eventDate.formatted(date: .long, time: .omitted).localized)" }
-                                }
-                                tr {
-                                    td { b { TranslatedString.location.capitalized } }
-                                        .padding(right: 15.px)
-                                    td { "\(self.location)" }
-                                }
-                            }
-                            .verticalAlign(.bottom)
-                            .whiteSpace(.nowrap)
-                        }
-                    }
-                }
-                .verticalAlign(.bottom)
-            }
-            .borderCollapse(.collapse)
-
-            br()
-
-            table {
-                HTMLForEach(metadata.map { $0 }) { (key, value) in
-                    tr {
-                        td { "\(key)" }
-                            .padding(right: 15.px)
-                        td { "\(value)" }
-                    }
-                }
-            }
-            .borderCollapse(.collapse)
-
-            br()
-            br()
-
-            p {
-                HTMLText("""
-                \(TranslatedString(
-                        dutch: "We nodigen u van harte uit voor het evenement dat op \(self.eventDate.formatted(date: .long, time: .omitted).localized) plaatsvindt bij \(self.location).",
-                        english: "We cordially invite you to the event taking place on \(self.eventDate.formatted(date: .long, time: .omitted).localized)) at \(self.location)."
-                    ))
-                """)
-            }
+//            p {
+//                HTMLText("""
+//                \(TranslatedString(
+//                        dutch: "We nodigen u van harte uit voor het evenement dat op \(self.eventDate.formatted(date: .long, time: .omitted).localized) plaatsvindt bij \(self.location).",
+//                        english: "We cordially invite you to the event taking place on \(self.eventDate.formatted(date: .long, time: .omitted).localized)) at \(self.location)."
+//                    ))
+//                """)
+//            }
         }
     }
 }

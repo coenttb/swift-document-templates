@@ -63,7 +63,7 @@ extension Agenda {
                 }
 
                 ul {
-                    for item in agenda.items {
+                    HTMLForEach(agenda.items) { item in
                         li { HTMLText(item.title) }
                     }
                 }
@@ -88,7 +88,7 @@ extension Agenda.Item: HTML {
 //#if canImport(SwiftUI)
 // import SwiftUI
 // #Preview {
-//     HTMLPreview.modern {
+//     HTMLDocument {
 //         Agenda(
 //             title: "Title",
 //             variant: .short,
