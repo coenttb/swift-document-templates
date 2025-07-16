@@ -7,8 +7,8 @@
 
 import Foundation
 import HTML
-import PointFreeHtmlLanguages
 import Languages
+import PointFreeHtmlLanguages
 
 public struct Agenda {
     public var items: [Agenda.Item]
@@ -40,13 +40,13 @@ extension Agenda {
     public struct View: HTML {
         let agenda: Agenda
         let variant: Agenda.View.Variant = .short
-        
+
         public init(agenda: Agenda) {
             self.agenda = agenda
         }
-        
+
         public var body: some HTML {
-            
+
             if !agenda.items.isEmpty {
                 h1 {
                     TranslatedString(
@@ -68,7 +68,7 @@ extension Agenda {
                     }
                 }
             }
-            
+
             switch variant {
             case .short:
                 HTMLEmpty()
@@ -85,7 +85,7 @@ extension Agenda.Item: HTML {
     }
 }
 
-//#if canImport(SwiftUI)
+// #if canImport(SwiftUI)
 // import SwiftUI
 // #Preview {
 //     HTMLDocument {

@@ -59,7 +59,7 @@ extension [Package.Dependency] {
         .package(url: "https://github.com/coenttb/swift-language.git", branch: "main"),
         .package(url: "https://github.com/coenttb/swift-money.git", branch: "main"),
         .package(url: "https://github.com/coenttb/swift-percent.git", branch: "main"),
-        .package(url: "https://github.com/pointfreeco/swift-dependencies.git", from: "1.3.6"),
+        .package(url: "https://github.com/pointfreeco/swift-dependencies.git", from: "1.3.6")
     ]
 }
 
@@ -79,7 +79,7 @@ extension Package {
             platforms: [
                 .macOS(.v14),
                 .iOS(.v17),
-                .macCatalyst(.v17),
+                .macCatalyst(.v17)
             ],
             products: [
                 [
@@ -140,20 +140,20 @@ let package = Package.swift_document_templates(
             name: .invoice,
             dependencies: [
                 .letter,
-                .documentUtilities,
+                .documentUtilities
             ]
         ),
         (
             name: .letter,
             dependencies: [
-                .documentUtilities,
+                .documentUtilities
             ]
         ),
         (
             name: .signaturePage,
             dependencies: [
                 .collections,
-                .documentUtilities,
+                .documentUtilities
             ]
         ),
         (
@@ -161,6 +161,6 @@ let package = Package.swift_document_templates(
             dependencies: [
                 .languages
             ]
-        ),
+        )
     ]
 )

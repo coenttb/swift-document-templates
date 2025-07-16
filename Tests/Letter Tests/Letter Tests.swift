@@ -5,10 +5,10 @@
 //  Created by Coen ten Thije Boonkkamp on 19/07/2024.
 //
 
+import CoenttbHtmlToPdf
 import Dependencies
 import Foundation
 import HTML
-import CoenttbHtmlToPdf
 import Languages
 import Letter
 import Testing
@@ -47,7 +47,7 @@ func asda() async throws {
         name: "Recipient Name",
         address: ["456 Elm St", "City", "Country"]
     )
-    
+
     let letter: some HTML = Letter(
         sender: sender,
         recipient: recipient,
@@ -60,7 +60,7 @@ func asda() async throws {
         p { "Best regards," }
         p { "coenttb" }
     }
-    
+
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
 
     for language in [Language.english, .dutch] {

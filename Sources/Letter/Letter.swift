@@ -7,8 +7,8 @@
 
 import Foundation
 import HTML
-import PointFreeHtmlLanguages
 import Languages
+import PointFreeHtmlLanguages
 
 public struct Letter {
     let sender: Letter.Sender
@@ -69,12 +69,12 @@ extension Letter {
     }
 }
 
-//#if os(macOS) && canImport(SwiftUI)
-//import SwiftUI
-//#Preview {
+// #if os(macOS) && canImport(SwiftUI)
+// import SwiftUI
+// #Preview {
 //    HTMLDocument {
 //        Letter.preview
 //    }
 //    .frame(width: 451, height: 698)
-//}
-//#endif
+// }
+// #endif

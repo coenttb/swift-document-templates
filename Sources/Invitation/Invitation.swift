@@ -5,13 +5,13 @@
 //  Created by Coen ten Thije Boonkkamp on August 1, 2024.
 //
 
+import Date
 import Foundation
 import HTML
-import PointFreeHtmlLanguages
 import Languages
 import Letter
 import OrderedCollections
-import Date
+import PointFreeHtmlLanguages
 
 public struct Invitation {
     let sender: Invitation.Sender
@@ -214,7 +214,6 @@ extension TranslatedString {
     static let eventInvitation = TranslatedString(dutch: "Evenement Uitnodiging", english: "Event Invitation")
 }
 
-
 extension Invitation.Sender {
     package static var preview: Self {
         .init(
@@ -244,7 +243,6 @@ extension Invitation.Recipient {
         )
     }
 }
-
 
 extension Invitation {
     package static var preview: Self {

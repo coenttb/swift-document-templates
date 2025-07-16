@@ -7,9 +7,9 @@
 
 import Foundation
 import HTML
-import PointFreeHtmlLanguages
 import Languages
 import OrderedCollections
+import PointFreeHtmlLanguages
 
 public struct AttendanceList {
     public var title: String
@@ -48,8 +48,6 @@ extension AttendanceList {
 extension AttendanceList.Attendee {
     static let empty: Self = .init(firstName: "", lastName: "", role: "")
 }
-
-
 
 extension AttendanceList: HTML {
     public var body: some HTML {
@@ -175,12 +173,12 @@ extension AttendanceList {
     )
 }
 
-//#if os(macOS) && canImport(SwiftUI)
-//import SwiftUI
-//#Preview {
+// #if os(macOS) && canImport(SwiftUI)
+// import SwiftUI
+// #Preview {
 //    HTMLDocument {
 //        AttendanceList.preview
 //    }
 //    .frame(width: 600, height: 800)
-//}
-//#endif
+// }
+// #endif

@@ -5,43 +5,42 @@
 //  Created by Coen ten Thije Boonkkamp on 19/07/2024.
 //
 
+import CoenttbHtmlToPdf
 import CSS
+import Date
 import Dependencies
 import Foundation
 import HTML
-import CoenttbHtmlToPdf
 import Invoice
 import Languages
 import Locale
-import Date
-import Testing
 import Percent
+import Testing
 
 @Test("HtmlToPdf")
-func basldfva() async throws -> Void {
-    
+func basldfva() async throws {
+
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
     print(directory)
-    
+
     let invoice_title: TranslatedString = .init(
         dutch: "Factuur",
         english: "Invoice"
     )
-    
+
     enum Style {
         case minimal, modern
     }
-    
+
     for wrap in [Style.minimal, .modern] {
         for language in [Language.english, .dutch] {
-            
-            
+
             try await withDependencies {
                 $0.language = language
                 $0.locale = language.locale
                 $0.calendar = .autoupdatingCurrent
             } operation: {
-                
+
                 let invoice: some HTML = Invoice(
                     sender: .init(
                         name: "Your Company",
@@ -66,7 +65,7 @@ func basldfva() async throws -> Void {
                         .service(.init(amountOfHours: 160, hourlyRate: 140.00, vat: 21%, description: "Consulting services"))
                     ]
                 )
-                
+
                 try await invoice.print(
                     title: "\(language) | \(invoice_title) | \(wrap)",
                     to: directory,
@@ -76,7 +75,7 @@ func basldfva() async throws -> Void {
                             HTMLDocument.minimal
                         case .modern:
                             HTMLDocument
-                            
+
                         }
                     }()
                 )
@@ -84,5 +83,3 @@ func basldfva() async throws -> Void {
         }
     }
 }
-
-

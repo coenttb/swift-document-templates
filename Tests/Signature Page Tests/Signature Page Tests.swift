@@ -5,25 +5,24 @@
 //  Created by Coen ten Thije Boonkkamp on 06/12/2024.
 //
 
-
-import Foundation
-import Testing
-import Dependencies
-import Languages
-import HTML
 import CoenttbHtmlToPdf
+import Dependencies
+import Foundation
+import HTML
+import Languages
 import Signature_Page
+import Testing
 
 @Test("Single Natural Person")
 func singleNaturalPerson() async throws {
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
-    
+
     let block = SignatoryBlock(
         signatory: .naturalPerson(
             .init(name: "John Smith")
         )
     )
-    
+
     try await withDependencies {
         $0.language = .english
         $0.locale = Language.english.locale
@@ -39,7 +38,7 @@ func singleNaturalPerson() async throws {
 @Test("Single Legal Entity with One Representative")
 func singleLEWithOneRepresentative() async throws {
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
-    
+
     let company = "Example Company B.V."
     let block = SignatoryBlock(
         signatory: .legalEntity(
@@ -56,7 +55,7 @@ func singleLEWithOneRepresentative() async throws {
             )
         )
     )
-    
+
     try await withDependencies {
         $0.language = .english
         $0.locale = Language.english.locale
@@ -72,7 +71,7 @@ func singleLEWithOneRepresentative() async throws {
 @Test("Legal Entity with Two Representatives")
 func singleLEWithTwoRepresentatives() async throws {
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
-    
+
     let company = "Example Company B.V."
     let block = SignatoryBlock(
         signatory: .legalEntity(
@@ -95,7 +94,7 @@ func singleLEWithTwoRepresentatives() async throws {
             )
         )
     )
-    
+
     try await withDependencies {
         $0.language = .english
         $0.locale = Language.english.locale
@@ -111,10 +110,10 @@ func singleLEWithTwoRepresentatives() async throws {
 @Test("Management Company Structure")
 func managementCompanyStructure() async throws {
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
-    
+
     let operatingCompany = "Operating Company B.V."
     let managementCompany = "Management B.V."
-    
+
     let block = SignatoryBlock(
         signatory: .legalEntity(
             .init(
@@ -140,7 +139,7 @@ func managementCompanyStructure() async throws {
             )
         )
     )
-    
+
     try await withDependencies {
         $0.language = .english
         $0.locale = Language.english.locale
@@ -156,7 +155,7 @@ func managementCompanyStructure() async throws {
 @Test("Natural Person with Metadata")
 func naturalPersonWithMetadata() async throws {
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
-    
+
     let block = SignatoryBlock(
         signatory: .naturalPerson(
             .init(
@@ -168,7 +167,7 @@ func naturalPersonWithMetadata() async throws {
             )
         )
     )
-    
+
     try await withDependencies {
         $0.language = .english
         $0.locale = Language.english.locale
@@ -184,7 +183,7 @@ func naturalPersonWithMetadata() async throws {
 @Test("Legal Entity with Proxy Holder")
 func legalEntityWithProxyHolder() async throws {
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
-    
+
     let company = "Example Company B.V."
     let block = SignatoryBlock(
         signatory: .legalEntity(
@@ -204,7 +203,7 @@ func legalEntityWithProxyHolder() async throws {
             )
         )
     )
-    
+
     try await withDependencies {
         $0.language = .english
         $0.locale = Language.english.locale
@@ -220,7 +219,7 @@ func legalEntityWithProxyHolder() async throws {
 @Test("Legal Entity with Registration Details")
 func legalEntityWithRegistrationDetails() async throws {
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
-    
+
     let company = "Example Company B.V."
     let block = SignatoryBlock(
         signatory: .legalEntity(
@@ -241,7 +240,7 @@ func legalEntityWithRegistrationDetails() async throws {
             )
         )
     )
-    
+
     try await withDependencies {
         $0.language = .english
         $0.locale = Language.english.locale

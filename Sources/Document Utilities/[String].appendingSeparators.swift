@@ -19,7 +19,7 @@ extension [String] {
             let element = self[0]
             return [element.hasSuffix(lastSeparator.description) ? element : element + lastSeparator.description]
         }
-        
+
         return enumerated().map { index, element in
             switch index {
             case count - 1:

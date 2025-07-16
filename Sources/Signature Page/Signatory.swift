@@ -5,19 +5,19 @@
 //
 
 import Foundation
-import OrderedCollections
-import Languages
 import HTML
+import Languages
+import OrderedCollections
 import PointFreeHtmlLanguages
 
 /// Represents a signatory to an agreement, which may be a group of signers or an individual
 public enum Signatory: Hashable, Codable {
     /// A group of signers (e.g. a company with representatives)
     case group(name: TranslatedString, signers: [Person], metadata: Metadata)
-    
+
     /// A single individual signing for themselves (no group header displayed)
     case individual(name: TranslatedString, metadata: Metadata)
-    
+
 }
 
 extension Signatory {
@@ -30,7 +30,7 @@ extension Signatory {
             return name
         }
     }
-    
+
     /// Access the people that make up the signatory
     public var people: [Person] {
         switch self {
@@ -41,7 +41,7 @@ extension Signatory {
             return [Person(name: name, metadata: metadata)]
         }
     }
-    
+
     /// Access the metadata of the signatory
     public var metadata: Metadata {
         switch self {
@@ -51,7 +51,7 @@ extension Signatory {
             return metadata
         }
     }
-    
+
     /// Convenience initializer for a signatory group
     public init(
         name: TranslatedString,
@@ -60,7 +60,7 @@ extension Signatory {
     ) {
         self = .group(name: name, signers: signers, metadata: metadata)
     }
-    
+
     /// Convenience initializer for a signatory group with a single Person
     public init(
         name: TranslatedString,
@@ -69,7 +69,7 @@ extension Signatory {
     ) {
         self = .group(name: name, signers: [signer], metadata: metadata)
     }
-    
+
     /// Convenience initializer that includes role
     public init(
         name: TranslatedString,
@@ -81,7 +81,7 @@ extension Signatory {
         metadata[.role] = role
         self = .group(name: name, signers: signers, metadata: metadata)
     }
-    
+
     /// Create an individual signatory with the given name
     public static func individual(
         name: String,
@@ -98,7 +98,7 @@ extension Signatory {
     public struct Person: Hashable, Codable {
         public let name: TranslatedString
         public let metadata: Metadata
-        
+
         public init(
             name: TranslatedString,
             metadata: Metadata = [:]
@@ -106,7 +106,7 @@ extension Signatory {
             self.name = name
             self.metadata = metadata
         }
-        
+
         /// Create a person with title and position
         public init(
             name: TranslatedString,
@@ -118,16 +118,16 @@ extension Signatory {
             if let title { metadata[.title] = title }
             if let position { metadata[.position] = position }
             if let dateOfBirth { metadata[.dateOfBirth] = .init(dateOfBirth.formatted(date: .numeric, time: .omitted)) }
-            
+
             self.init(name: name, metadata: metadata)
         }
-        
+
         /// Rendering block for a person
         public struct Block: HTML {
             private let person: Person
             private let metadata: SignaturePage.Metadata
             private let style: Style
-            
+
             public init(
                 person: Person,
                 date: Date? = nil,
@@ -137,7 +137,7 @@ extension Signatory {
             ) {
                 self.person = person
                 self.style = style
-                
+
                 var combinedMetadata = metadata
                 if let date {
                     combinedMetadata[.date.capitalizingFirstLetter()] = .init(date.formatted(date: .numeric, time: .omitted))
@@ -147,12 +147,12 @@ extension Signatory {
                 }
                 self.metadata = combinedMetadata
             }
-            
+
             public var body: some HTML {
                 div {
                     // Person name
                     b { person.name }
-                    
+
                     // Combined metadata
                     if !person.metadata.isEmpty || !metadata.isEmpty {
                         table {
@@ -165,14 +165,14 @@ extension Signatory {
                                     .width(.px(.init(style.metadataColumnWidth)))
                                     .padding(right: .px(15))
                                     .verticalAlign(.top)
-                                    
+
                                     td {
                                         value
                                     }
                                     .verticalAlign(.top)
                                 }
                             }
-                            
+
                             // Date/location metadata
                             HTMLForEach(metadata.map { $0 }) { key, value in
                                 tr {
@@ -182,7 +182,7 @@ extension Signatory {
                                     .width(.px(.init(style.metadataColumnWidth)))
                                     .padding(right: .px(15))
                                     .verticalAlign(.top)
-                                    
+
                                     td {
                                         value
                                     }
@@ -193,7 +193,7 @@ extension Signatory {
                         .borderCollapse(.collapse)
                         .padding(top: .px(5))
                     }
-                    
+
                     // Signature line
                     div {
                         String(repeating: "_", count: 40)
@@ -203,15 +203,15 @@ extension Signatory {
                 }
                 .margin(bottom: .px(15))
             }
-            
+
             /// Styling options for the individual signatory block
             public struct Style {
                 public let metadataColumnWidth: Int
-                
+
                 public init(metadataColumnWidth: Int = 120) {
                     self.metadataColumnWidth = metadataColumnWidth
                 }
-                
+
                 public static let `default` = Style()
             }
         }
@@ -221,7 +221,6 @@ extension Signatory {
 extension Signatory {
     public typealias Metadata = OrderedDictionary<TranslatedString, TranslatedString>
 }
-
 
 // Preview examples
 extension Signatory {
@@ -241,7 +240,7 @@ extension Signatory {
             ]
         )
     }
-    
+
     static var individualExample: Self {
         .individual(
             name: "Coen ten Thije Boonkkamp",
