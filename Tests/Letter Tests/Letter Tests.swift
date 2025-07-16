@@ -7,7 +7,7 @@
 
 import Dependencies
 import Foundation
-import CoenttbHTML
+import HTML
 import CoenttbHtmlToPdf
 import Languages
 import Letter
@@ -71,7 +71,7 @@ func asda() async throws {
             try await letter.print(
                 title: "Github Letter \(language)",
                 to: directory,
-                wrapInHtmlDocument: HTMLDocument
+                wrapInHtmlDocument: HTMLDocument.init(body:)
             )
         }
     }

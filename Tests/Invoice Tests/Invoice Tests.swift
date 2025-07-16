@@ -8,7 +8,7 @@
 import CSS
 import Dependencies
 import Foundation
-import CoenttbHTML
+import HTML
 import CoenttbHtmlToPdf
 import Invoice
 import Languages

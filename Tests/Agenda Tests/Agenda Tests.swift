@@ -8,7 +8,7 @@
 import Agenda
 import Dependencies
 import Foundation
-import CoenttbHTML
+import HTML
 import CoenttbHtmlToPdf
 import Languages
 import Testing

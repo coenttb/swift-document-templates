@@ -11,7 +11,7 @@ import Dependencies
 import Languages
 import Date
 import Invitation
-import CoenttbHTML
+import HTML
 import CoenttbHtmlToPdf
 
 @Test("Invitation")

@@ -8,7 +8,7 @@
 import Foundation
 import OrderedCollections
 import Languages
-import CoenttbHTML
+import HTML
 import TranslatedString
 import Date
 

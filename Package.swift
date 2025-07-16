@@ -11,7 +11,6 @@ extension String {
     static let invoice: Self = "Invoice"
     static let letter: Self = "Letter"
     static let documentUtilities: Self = "Document Utilities"
-
 }
 
 extension Target.Dependency {
@@ -29,8 +28,9 @@ extension Target.Dependency {
     static var languages: Self { .product(name: "Languages", package: "swift-language") }
     static var money: Self { .product(name: "Money", package: "swift-money") }
     static var percent: Self { .product(name: "Percent", package: "swift-percent") }
-    static var html: Self { .product(name: "CoenttbHTML", package: "coenttb-html") }
-    static var htmlToPdf: Self { .product(name: "CoenttbHtmlToPdf", package: "coenttb-html") }
+    static var html: Self { .product(name: "HTML", package: "swift-html") }
+    static var htmlToPdf: Self { .product(name: "PointFreeHtmlToPdf", package: "pointfree-html-to-pdf") }
+    static var htmlLanguages: Self { .product(name: "PointFreeHtmlLanguages", package: "pointfree-html-languages") }
     static var collections: Self { .product(name: "Collections", package: "swift-collections") }
 }
 
@@ -40,6 +40,7 @@ extension [Target.Dependency] {
             .dependencies,
             .languages,
             .html,
+            .htmlLanguages,
             .percent,
             .date,
             .money
@@ -50,8 +51,10 @@ extension [Target.Dependency] {
 extension [Package.Dependency] {
     static let `default`: Self = [
         .package(url: "https://github.com/apple/swift-collections.git", branch: "main"),
-        .package(url: "https://github.com/coenttb/coenttb-html.git", branch: "main"),
+        .package(url: "https://github.com/coenttb/pointfree-html-to-pdf.git", branch: "main"),
+        .package(url: "https://github.com/coenttb/pointfree-html-languages.git", branch: "main"),
         .package(url: "https://github.com/coenttb/swift-date.git", branch: "main"),
+        .package(url: "https://github.com/coenttb/swift-html.git", branch: "main"),
         .package(url: "https://github.com/coenttb/swift-html-to-pdf.git", branch: "main"),
         .package(url: "https://github.com/coenttb/swift-language.git", branch: "main"),
         .package(url: "https://github.com/coenttb/swift-money.git", branch: "main"),

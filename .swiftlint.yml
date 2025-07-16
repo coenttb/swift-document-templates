@@ -25,6 +25,7 @@ opt_in_rules:
   - legacy_random
   - no_extension_access_modifier
   - colon
+  - trailing_comma
   
 included:
   - Package.swift
