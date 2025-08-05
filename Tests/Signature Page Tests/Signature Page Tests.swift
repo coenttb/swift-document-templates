@@ -10,27 +10,26 @@ import Dependencies
 import Foundation
 import HTML
 import Translating
-import Signature_Page
+@testable import Signature_Page
 import Testing
 
 @Test("Single Natural Person")
 func singleNaturalPerson() async throws {
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
 
-    let block = SignatoryBlock(
-        signatory: .naturalPerson(
-            .init(name: "John Smith")
-        )
+    let block = Signatory.Person.Block(
+        person: Signatory.Person(name: TranslatedString("John Smith"))
     )
 
     try await withDependencies {
         $0.language = .english
         $0.locale = Language.english.locale
     } operation: {
-        try await block.print(
-            title: "Signatory Block Single Natural Person",
-            to: directory
-        )
+        try await HTMLDocument { block }
+            .print(
+                title: "Signatory Block Single Natural Person",
+                to: directory
+            )
     }
 }
 
@@ -39,30 +38,31 @@ func singleLEWithOneRepresentative() async throws {
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
 
     let company = "Example Company B.V."
-    let block = SignatoryBlock(
-        signatory: .legalEntity(
-            .init(
-                name: company,
-                representatives: [
-                    .init(
-                        signatory: .naturalPerson(
-                            .init(name: "John Smith")
-                        ),
-                        capacity: .director + " of \(company)"
-                    )
-                ]
+    let signatory = Signatory(
+        name: TranslatedString(company),
+        signers: [
+            Signatory.Person(
+                name: TranslatedString("John Smith"),
+                position: TranslatedString(
+                    dutch: "Directeur van \(company)",
+                    english: "Director of \(company)"
+                )
             )
-        )
+        ]
+    )
+    let page = SignaturePage(
+        signatories: [signatory]
     )
 
     try await withDependencies {
         $0.language = .english
         $0.locale = Language.english.locale
     } operation: {
-        try await block.print(
-            title: "Signatory Block Legal Entity Single Representative",
-            to: directory
-        )
+        try await HTMLDocument { page }
+            .print(
+                title: "Signatory Block Legal Entity Single Representative",
+                to: directory
+            )
     }
 }
 
@@ -71,36 +71,38 @@ func singleLEWithTwoRepresentatives() async throws {
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
 
     let company = "Example Company B.V."
-    let block = SignatoryBlock(
-        signatory: .legalEntity(
-            .init(
-                name: company,
-                representatives: [
-                    .init(
-                        signatory: .naturalPerson(
-                            .init(name: "John Smith")
-                        ),
-                        capacity: .director + " of \(company)"
-                    ),
-                    .init(
-                        signatory: .naturalPerson(
-                            .init(name: "Lisa Wayne")
-                        ),
-                        capacity: .director + " of \(company)"
-                    )
-                ]
+    let signatory = Signatory(
+        name: TranslatedString(company),
+        signers: [
+            Signatory.Person(
+                name: TranslatedString("John Smith"),
+                position: TranslatedString(
+                    dutch: "Directeur van \(company)",
+                    english: "Director of \(company)"
+                )
+            ),
+            Signatory.Person(
+                name: TranslatedString("Lisa Wayne"),
+                position: TranslatedString(
+                    dutch: "Directeur van \(company)",
+                    english: "Director of \(company)"
+                )
             )
-        )
+        ]
+    )
+    let page = SignaturePage(
+        signatories: [signatory]
     )
 
     try await withDependencies {
         $0.language = .english
         $0.locale = Language.english.locale
     } operation: {
-        try await block.print(
-            title: "Signatory Block Legal Entity Two Representatives",
-            to: directory
-        )
+        try await HTMLDocument { page }
+            .print(
+                title: "Signatory Block Legal Entity Two Representatives",
+                to: directory
+            )
     }
 }
 
@@ -111,40 +113,47 @@ func managementCompanyStructure() async throws {
     let operatingCompany = "Operating Company B.V."
     let managementCompany = "Management B.V."
 
-    let block = SignatoryBlock(
-        signatory: .legalEntity(
-            .init(
-                name: operatingCompany,
-                representatives: [
-                    .init(
-                        signatory: .legalEntity(
-                            .init(
-                                name: managementCompany,
-                                representatives: [
-                                    .init(
-                                        signatory: .naturalPerson(
-                                            .init(name: "John Smith")
-                                        ),
-                                        capacity: .director + " of \(managementCompany)"
-                                    )
-                                ]
-                            )
-                        ),
-                        capacity: .director + " of \(operatingCompany)"
-                    )
-                ]
+    // Create the management company signatory
+    let managementSignatory = Signatory(
+        name: TranslatedString(managementCompany),
+        signers: [
+            Signatory.Person(
+                name: TranslatedString("John Smith"),
+                position: TranslatedString(
+                    dutch: "Directeur van \(managementCompany)",
+                    english: "Director of \(managementCompany)"
+                )
             )
-        )
+        ]
+    )
+
+    // Create the operating company signatory
+    let operatingSignatory = Signatory(
+        name: TranslatedString(operatingCompany),
+        signers: [
+            Signatory.Person(
+                name: TranslatedString("\(managementCompany)"),
+                position: TranslatedString(
+                    dutch: "Directeur van \(operatingCompany)",
+                    english: "Director of \(operatingCompany)"
+                )
+            )
+        ]
+    )
+
+    let page = SignaturePage(
+        signatories: [operatingSignatory, managementSignatory]
     )
 
     try await withDependencies {
         $0.language = .english
         $0.locale = Language.english.locale
     } operation: {
-        try await block.print(
-            title: "Signatory Block Management Company Structure",
-            to: directory
-        )
+        try await HTMLDocument { page }
+            .print(
+                title: "Signatory Block Management Company Structure",
+                to: directory
+            )
     }
 }
 
@@ -152,15 +161,12 @@ func managementCompanyStructure() async throws {
 func naturalPersonWithMetadata() async throws {
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
 
-    let block = SignatoryBlock(
-        signatory: .naturalPerson(
-            .init(
-                name: "Dr. John Smith",
-                metadata: [
-//                    .title: "PhD",
-                    .position: "Chief Scientific Officer"
-                ]
-            )
+    let block = Signatory.Person.Block(
+        person: Signatory.Person(
+            name: TranslatedString("Dr. John Smith"),
+            metadata: [
+                .position: TranslatedString("Chief Scientific Officer")
+            ]
         )
     )
 
@@ -168,10 +174,11 @@ func naturalPersonWithMetadata() async throws {
         $0.language = .english
         $0.locale = Language.english.locale
     } operation: {
-        try await block.print(
-            title: "Signatory Block Natural Person with Metadata",
-            to: directory
-        )
+        try await HTMLDocument { block }
+            .print(
+                title: "Signatory Block Natural Person with Metadata",
+                to: directory
+            )
     }
 }
 
@@ -180,33 +187,31 @@ func legalEntityWithProxyHolder() async throws {
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
 
     let company = "Example Company B.V."
-    let block = SignatoryBlock(
-        signatory: .legalEntity(
-            .init(
-                name: company,
-                representatives: [
-                    .init(
-                        signatory: .naturalPerson(
-                            .init(name: "Jane Doe")
-                        ),
-                        capacity: TranslatedString(
-                            dutch: "Gevolmachtigde van \(company)",
-                            english: "Proxy holder of \(company)"
-                        )
-                    )
-                ]
+    let signatory = Signatory(
+        name: TranslatedString(company),
+        signers: [
+            Signatory.Person(
+                name: TranslatedString("Jane Doe"),
+                position: TranslatedString(
+                    dutch: "Gevolmachtigde van \(company)",
+                    english: "Proxy holder of \(company)"
+                )
             )
-        )
+        ]
+    )
+    let page = SignaturePage(
+        signatories: [signatory]
     )
 
     try await withDependencies {
         $0.language = .english
         $0.locale = Language.english.locale
     } operation: {
-        try await block.print(
-            title: "Signatory Block Legal Entity with Proxy Holder",
-            to: directory
-        )
+        try await HTMLDocument { page }
+            .print(
+                title: "Signatory Block Legal Entity with Proxy Holder",
+                to: directory
+            )
     }
 }
 
@@ -215,33 +220,34 @@ func legalEntityWithRegistrationDetails() async throws {
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
 
     let company = "Example Company B.V."
-    let block = SignatoryBlock(
-        signatory: .legalEntity(
-            .init(
-                name: company,
-                metadata: [
-                    .registrationNumber: "12345678",
-                    .init(dutch: "Vestigingsadres", english: "Business Address"): "Amsterdam"
-                ],
-                representatives: [
-                    .init(
-                        signatory: .naturalPerson(
-                            .init(name: "John Smith")
-                        ),
-                        capacity: .director + " of \(company)"
-                    )
-                ]
+    let signatory = Signatory(
+        name: TranslatedString(company),
+        signers: [
+            Signatory.Person(
+                name: TranslatedString("John Smith"),
+                position: TranslatedString(
+                    dutch: "Directeur van \(company)",
+                    english: "Director of \(company)"
+                )
             )
-        )
+        ],
+        metadata: [
+            .registrationNumber: TranslatedString("12345678"),
+            TranslatedString(dutch: "Vestigingsadres", english: "Business Address"): TranslatedString("Amsterdam")
+        ]
+    )
+    let page = SignaturePage(
+        signatories: [signatory]
     )
 
     try await withDependencies {
         $0.language = .english
         $0.locale = Language.english.locale
     } operation: {
-        try await block.print(
-            title: "Signatory Block Legal Entity with Registration Details",
-            to: directory
-        )
+        try await HTMLDocument { page }
+            .print(
+                title: "Signatory Block Legal Entity with Registration Details",
+                to: directory
+            )
     }
 }
