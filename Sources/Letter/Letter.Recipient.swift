@@ -75,7 +75,7 @@ extension Letter.Recipient: HTML {
         br()()
         HTMLForEach(self.address) { line in
             "\(line)"
-            br()()
+            br()
         }
         table {
             HTMLForEach(self.metadata.map { $0 }) { (key, value) in

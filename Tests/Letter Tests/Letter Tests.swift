@@ -5,7 +5,7 @@
 //  Created by Coen ten Thije Boonkkamp on 19/07/2024.
 //
 
-import CoenttbHtmlToPdf
+import PointFreeHTMLToPDF
 import Dependencies
 import Foundation
 import HTML
@@ -43,6 +43,7 @@ func asda() async throws {
         email: "info@company.com",
         website: "www.company.com"
     )
+    
     let recipient: Letter.Recipient = .init(
         name: "Recipient Name",
         address: ["456 Elm St", "City", "Country"]
@@ -55,7 +56,7 @@ func asda() async throws {
         date: (sending: Date.now, signature: nil),
         subject: "Subject of the Letter"
     ) {
-        "Dear \(recipient.name),"
+        p { "Dear Coen," }
         p { "I hope this finds you well." }
         p { "Best regards," }
         p { "coenttb" }
@@ -70,8 +71,7 @@ func asda() async throws {
         } operation: {
             try await letter.print(
                 title: "Github Letter \(language)",
-                to: directory,
-                wrapInHtmlDocument: HTMLDocument.init(body:)
+                to: directory
             )
         }
     }

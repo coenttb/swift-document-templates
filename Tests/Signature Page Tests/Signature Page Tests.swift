@@ -5,7 +5,7 @@
 //  Created by Coen ten Thije Boonkkamp on 06/12/2024.
 //
 
-import CoenttbHtmlToPdf
+import PointFreeHTMLToPDF
 import Dependencies
 import Foundation
 import HTML
@@ -29,8 +29,7 @@ func singleNaturalPerson() async throws {
     } operation: {
         try await block.print(
             title: "Signatory Block Single Natural Person",
-            to: directory,
-            wrapInHtmlDocument: HTMLDocument
+            to: directory
         )
     }
 }
@@ -62,8 +61,7 @@ func singleLEWithOneRepresentative() async throws {
     } operation: {
         try await block.print(
             title: "Signatory Block Legal Entity Single Representative",
-            to: directory,
-            wrapInHtmlDocument: HTMLDocument
+            to: directory
         )
     }
 }
@@ -101,8 +99,7 @@ func singleLEWithTwoRepresentatives() async throws {
     } operation: {
         try await block.print(
             title: "Signatory Block Legal Entity Two Representatives",
-            to: directory,
-            wrapInHtmlDocument: HTMLDocument
+            to: directory
         )
     }
 }
@@ -146,8 +143,7 @@ func managementCompanyStructure() async throws {
     } operation: {
         try await block.print(
             title: "Signatory Block Management Company Structure",
-            to: directory,
-            wrapInHtmlDocument: HTMLDocument
+            to: directory
         )
     }
 }
@@ -174,8 +170,7 @@ func naturalPersonWithMetadata() async throws {
     } operation: {
         try await block.print(
             title: "Signatory Block Natural Person with Metadata",
-            to: directory,
-            wrapInHtmlDocument: HTMLDocument
+            to: directory
         )
     }
 }
@@ -210,8 +205,7 @@ func legalEntityWithProxyHolder() async throws {
     } operation: {
         try await block.print(
             title: "Signatory Block Legal Entity with Proxy Holder",
-            to: directory,
-            wrapInHtmlDocument: HTMLDocument
+            to: directory
         )
     }
 }
@@ -247,8 +241,7 @@ func legalEntityWithRegistrationDetails() async throws {
     } operation: {
         try await block.print(
             title: "Signatory Block Legal Entity with Registration Details",
-            to: directory,
-            wrapInHtmlDocument: HTMLDocument
+            to: directory
         )
     }
 }

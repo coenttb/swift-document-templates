@@ -7,7 +7,7 @@
 
 import Foundation
 
-import TranslatedString
+import Translating
 
 extension TranslatedString {
     public static let invoiceNumber: Self = .init(

@@ -5,15 +5,13 @@
 //  Created by Coen ten Thije Boonkkamp on 19/07/2024.
 //
 
-import CoenttbHtmlToPdf
-import CSS
+import PointFreeHTMLToPDF
 import DateExtensions
 import Dependencies
 import Foundation
 import HTML
 import Invoice
 import Translating
-import Locale
 import Percent
 import Testing
 
@@ -65,20 +63,21 @@ func basldfva() async throws {
                         .service(.init(amountOfHours: 160, hourlyRate: 140.00, vat: 21%, description: "Consulting services"))
                     ]
                 )
-
-                try await invoice.print(
-                    title: "\(language) | \(invoice_title) | \(wrap)",
-                    to: directory,
-                    wrapInHtmlDocument: {
-                        switch wrap {
-                        case .minimal:
-                            HTMLDocument.minimal
-                        case .modern:
-                            HTMLDocument
-
-                        }
-                    }()
-                )
+                
+                switch wrap {
+                case .minimal:
+                    try await HTMLDocument { invoice }
+                        .print(
+                            title: "\(language) | \(invoice_title) | \(wrap)",
+                            to: directory
+                        )
+                case .modern:
+                    try await HTMLDocument { invoice }
+                        .print(
+                            title: "\(language) | \(invoice_title) | \(wrap)",
+                            to: directory
+                        )
+                }
             }
         }
     }

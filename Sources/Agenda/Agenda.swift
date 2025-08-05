@@ -79,6 +79,12 @@ extension Agenda {
     }
 }
 
+extension Agenda: HTML {
+    public var body: some HTML {
+        Agenda.View(agenda: self)
+    }
+}
+
 extension Agenda.Item: HTML {
     public var body: some HTML {
         li { HTMLText(self.title) }

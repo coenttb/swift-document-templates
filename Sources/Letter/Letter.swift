@@ -51,7 +51,7 @@ extension Letter: HTML {
             date: self.date,
             subject: self.subject
         )
-        br()()
+        br()
         _body
     }
 }

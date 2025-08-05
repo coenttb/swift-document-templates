@@ -6,7 +6,7 @@
 //
 
 import Agenda
-import CoenttbHtmlToPdf
+import PointFreeHTMLToPDF
 import Dependencies
 import Foundation
 import HTML
@@ -23,21 +23,19 @@ func basldfva() async throws {
         try await withDependencies {
             $0.language = language
         } operation: {
-            let agenda = Agenda(
-                title: "Agenda Title",
-                variant: .short,
+            let agenda: Agenda = .init(
                 items: [
                     .init(
                         title: "\(TranslatedString(dutch: "Nederlands", english: "English"))"
                     ),
-                    .init(title: "test", important: true),
+                    .init(title: "test"),
                     .init(title: "test"),
                     .init(title: "test"),
                     .init(title: "test"),
                     .init(title: "test")
                 ]
             )
-
+            
             try await agenda.print(
                 title: "Agenda \(language)",
                 to: directory
