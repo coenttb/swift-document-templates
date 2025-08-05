@@ -24,13 +24,14 @@ extension Target.Dependency {
 
 extension Target.Dependency {
     static var dependencies: Self { .product(name: "Dependencies", package: "swift-dependencies") }
-    static var date: Self { .product(name: "Date", package: "swift-date") }
-    static var languages: Self { .product(name: "Languages", package: "swift-language") }
+    static var typesFoundation: Self { .product(name: "TypesFoundation", package: "swift-types-foundation") }
+    static var translating: Self { .product(name: "Translating", package: "swift-translating") }
+    static var translations: Self { .product(name: "Translations", package: "swift-translating") }
     static var money: Self { .product(name: "Money", package: "swift-money") }
     static var percent: Self { .product(name: "Percent", package: "swift-percent") }
     static var html: Self { .product(name: "HTML", package: "swift-html") }
-    static var htmlToPdf: Self { .product(name: "PointFreeHtmlToPdf", package: "pointfree-html-to-pdf") }
-    static var htmlLanguages: Self { .product(name: "PointFreeHtmlLanguages", package: "pointfree-html-languages") }
+    static var htmlToPdf: Self { .product(name: "PointFreeHTMLToPDF", package: "pointfree-html-to-pdf") }
+    static var htmlLanguages: Self { .product(name: "PointFreeHTMLTranslating", package: "pointfree-html-translating") }
     static var collections: Self { .product(name: "Collections", package: "swift-collections") }
 }
 
@@ -38,11 +39,11 @@ extension [Target.Dependency] {
     static var shared: Self {
         [
             .dependencies,
-            .languages,
+            .translating,
             .html,
             .htmlLanguages,
             .percent,
-            .date,
+            .typesFoundation,
             .money
         ]
     }
@@ -51,12 +52,12 @@ extension [Target.Dependency] {
 extension [Package.Dependency] {
     static let `default`: Self = [
         .package(url: "https://github.com/apple/swift-collections.git", branch: "main"),
-        .package(url: "https://github.com/coenttb/pointfree-html-to-pdf.git", branch: "main"),
-        .package(url: "https://github.com/coenttb/pointfree-html-languages.git", branch: "main"),
-        .package(url: "https://github.com/coenttb/swift-date.git", branch: "main"),
-        .package(url: "https://github.com/coenttb/swift-html.git", branch: "main"),
-        .package(url: "https://github.com/coenttb/swift-html-to-pdf.git", branch: "main"),
-        .package(url: "https://github.com/coenttb/swift-language.git", branch: "main"),
+        .package(url: "https://github.com/coenttb/pointfree-html-to-pdf.git", from: "0.0.1"),
+        .package(url: "https://github.com/coenttb/pointfree-html-translating.git", from: "0.0.1"),
+        .package(url: "https://github.com/coenttb/swift-types-foundation.git", branch: "main"),
+        .package(url: "https://github.com/coenttb/swift-html.git", from: "0.0.1"),
+        .package(url: "https://github.com/coenttb/swift-html-to-pdf.git", from: "0.0.1"),
+        .package(url: "https://github.com/coenttb/swift-translating.git", from: "0.0.1"),
         .package(url: "https://github.com/coenttb/swift-money.git", branch: "main"),
         .package(url: "https://github.com/coenttb/swift-percent.git", branch: "main"),
         .package(url: "https://github.com/pointfreeco/swift-dependencies.git", from: "1.3.6")
@@ -159,7 +160,8 @@ let package = Package.swift_document_templates(
         (
             name: .documentUtilities,
             dependencies: [
-                .languages
+                .translating,
+                .translations
             ]
         )
     ]

@@ -7,8 +7,8 @@
 
 import Foundation
 import HTML
-import Languages
-import PointFreeHtmlLanguages
+import Translating
+import PointFreeHTMLTranslating
 
 public struct Agenda {
     public var items: [Agenda.Item]

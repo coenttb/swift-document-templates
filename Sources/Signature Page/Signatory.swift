@@ -6,9 +6,9 @@
 
 import Foundation
 import HTML
-import Languages
+import Translating
 import OrderedCollections
-import PointFreeHtmlLanguages
+import PointFreeHTMLTranslating
 
 /// Represents a signatory to an agreement, which may be a group of signers or an individual
 public enum Signatory: Hashable, Codable {

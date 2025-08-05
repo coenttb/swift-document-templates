@@ -7,10 +7,10 @@
 
 import Foundation
 import OrderedCollections
-import Languages
+import Translating
 import HTML
 import TranslatedString
-import Date
+import DateExtensions
 
 public struct SignaturePage {
     public let title: TranslatedString

@@ -9,7 +9,7 @@ import CoenttbHtmlToPdf
 import Dependencies
 import Foundation
 import HTML
-import Languages
+import Translating
 import Signature_Page
 import Testing
 

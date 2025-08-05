@@ -7,8 +7,8 @@
 
 import Foundation
 import HTML
-import Languages
-import PointFreeHtmlLanguages
+import Translating
+import PointFreeHTMLTranslating
 
 public struct Letter {
     let sender: Letter.Sender

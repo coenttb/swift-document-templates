@@ -5,7 +5,7 @@
 //  Created by Coen ten Thije Boonkkamp on 06/12/2024.
 //
 
-import Languages
+import Translating
 
 extension TranslatedString {
     public static let signatures = TranslatedString(

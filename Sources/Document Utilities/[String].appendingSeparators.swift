@@ -6,7 +6,8 @@
 //
 
 import Foundation
-import Languages
+import Translating
+import Translations
 
 extension [String] {
     public func appendingSeparators(

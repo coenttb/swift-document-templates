@@ -5,13 +5,13 @@
 //  Created by Coen ten Thije Boonkkamp on August 1, 2024.
 //
 
-import Date
+import DateExtensions
 import Foundation
 import HTML
-import Languages
+import Translating
 import Letter
 import OrderedCollections
-import PointFreeHtmlLanguages
+import PointFreeHTMLTranslating
 
 public struct Invitation {
     let sender: Invitation.Sender

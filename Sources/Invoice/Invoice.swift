@@ -5,14 +5,14 @@
 //  Created by Coen ten Thije Boonkkamp on 07/06/2022.
 //
 
-import Date
+import DateExtensions
 import Foundation
 import HTML
-import Languages
+import Translating
 import Letter
 import OrderedCollections
 import Percent
-import PointFreeHtmlLanguages
+import PointFreeHTMLTranslating
 
 public struct Invoice {
     public let sender: Invoice.Sender
@@ -173,7 +173,7 @@ extension Invoice: HTML {
                                     td { b { TranslatedString.invoiceDate.capitalized } }
                                         .padding(right: .px(15))
 
-                                    td { "\(self.invoiceDate.formatted(date: .long, time: .omitted).localized)" }
+                                    td { "\(self.invoiceDate.formatted(date: .long, time: .omitted, translated: true))" }
 
                                 }
                             }
@@ -196,7 +196,7 @@ extension Invoice: HTML {
                 if let expiryDate = self.expiryDate {
                     tr {
                         td { TranslatedString.expiryDate.capitalized() }
-                        td { "\(expiryDate.formatted(date: .long, time: .omitted).localized)" }
+                        td { "\(expiryDate.formatted(date: .long, time: .omitted, translated: true))" }
                     }
                 }
 
@@ -328,8 +328,8 @@ extension Invoice: HTML {
 
                     HTMLText("""
                     \(TranslatedString(
-                            dutch: "Wij verzoeken u vriendelijk het totaalbedrag van \(self.rows.totalIncludingVAT.formatted(.euro)) uiterlijk \(expiry.formatted(date: .long, time: .omitted).localized) over te maken naar ",
-                            english: "Please transfer the total amount of \(self.rows.totalIncludingVAT.formatted(.euro)) by \(expiry.formatted(date: .long, time: .omitted).localized), to "
+                            dutch: "Wij verzoeken u vriendelijk het totaalbedrag van \(self.rows.totalIncludingVAT.formatted(.euro)) uiterlijk \(expiry.formatted(date: .long, time: .omitted, translated: true)) over te maken naar ",
+                            english: "Please transfer the total amount of \(self.rows.totalIncludingVAT.formatted(.euro)) by \(expiry.formatted(date: .long, time: .omitted, translated: true)), to "
 
                         ))
                     """)

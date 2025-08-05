@@ -7,9 +7,9 @@
 
 import Foundation
 import HTML
-import Languages
+import Translating
 import OrderedCollections
-import PointFreeHtmlLanguages
+import PointFreeHTMLTranslating
 
 extension TranslatedString {
     public static let perEmail: Self = .init(

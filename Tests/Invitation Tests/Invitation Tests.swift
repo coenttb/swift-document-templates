@@ -6,12 +6,12 @@
 //
 
 import CoenttbHtmlToPdf
-import Date
+import DateExtensions
 import Dependencies
 import Foundation
 import HTML
 import Invitation
-import Languages
+import Translating
 import Testing
 
 @Test("Invitation")

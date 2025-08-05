@@ -7,12 +7,12 @@
 
 import CoenttbHtmlToPdf
 import CSS
-import Date
+import DateExtensions
 import Dependencies
 import Foundation
 import HTML
 import Invoice
-import Languages
+import Translating
 import Locale
 import Percent
 import Testing

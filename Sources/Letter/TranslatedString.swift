@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import Languages
+import Translating
 
 extension TranslatedString {
     public static let address: Self = .init(

@@ -10,7 +10,7 @@ import CoenttbHtmlToPdf
 import Dependencies
 import Foundation
 import HTML
-import Languages
+import Translating
 import Testing
 
 @Test("Agenda")

@@ -7,9 +7,10 @@
 
 import Foundation
 import HTML
-import Languages
+import Translating
 import OrderedCollections
-import PointFreeHtmlLanguages
+import PointFreeHTMLTranslating
+import DateExtensions
 
 public struct AttendanceList {
     public var title: String
@@ -127,7 +128,7 @@ extension AttendanceList {
         AttendanceList(
             title: "Attendance",
             metadata: [
-                "date": "\(Date.now.formatted(date: .long, time: .omitted).localized)",
+                "date": "\(Date.now.formatted(date: .long, time: .omitted, translated: true))",
                 "location": "Utrecht"
 
             ],
