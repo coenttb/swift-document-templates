@@ -5,22 +5,22 @@
 //  Created by Claude on 06/12/2024.
 //
 
-import PointFreeHTMLToPDF
 import DateExtensions
 import Dependencies
 import Foundation
 import HTML
 import Invitation
-import Translating
+import PointFreeHTMLToPDF
 import Testing
+import Translating
 
 @Test("Invitation")
 func testInvitation() async throws {
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
     print(directory)
-    
+
     let testDate = Date(timeIntervalSince1970: 1735689600) // January 1, 2025
-    
+
     enum Style {
         case minimal
         case modern
@@ -64,7 +64,7 @@ func testInvitation() async throws {
                             TranslatedString(dutch: "19:00", english: "7:00 PM")
                     ]
                 )
-                
+
                 try await HTMLDocument { invitation }
                     .print(
                         title: "Invitation \(language) | \(wrap)",

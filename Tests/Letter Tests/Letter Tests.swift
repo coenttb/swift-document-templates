@@ -5,13 +5,13 @@
 //  Created by Coen ten Thije Boonkkamp on 19/07/2024.
 //
 
-import PointFreeHTMLToPDF
 import Dependencies
 import Foundation
 import HTML
-import Translating
 import Letter
+import PointFreeHTMLToPDF
 import Testing
+import Translating
 
 @Test("Letter")
 func letter() async throws {
@@ -43,7 +43,7 @@ func asda() async throws {
         email: "info@company.com",
         website: "www.company.com"
     )
-    
+
     let recipient: Letter.Recipient = .init(
         name: "Recipient Name",
         address: ["456 Elm St", "City", "Country"]

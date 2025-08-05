@@ -6,12 +6,12 @@
 //
 
 import Agenda
-import PointFreeHTMLToPDF
 import Dependencies
 import Foundation
 import HTML
-import Translating
+import PointFreeHTMLToPDF
 import Testing
+import Translating
 
 @Test("Agenda")
 func basldfva() async throws {
@@ -35,7 +35,7 @@ func basldfva() async throws {
                     .init(title: "test")
                 ]
             )
-            
+
             try await agenda.print(
                 title: "Agenda \(language)",
                 to: directory

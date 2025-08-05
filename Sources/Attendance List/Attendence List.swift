@@ -5,12 +5,12 @@
 //  Created by [Your Name] on [Date].
 //
 
+import DateExtensions
 import Foundation
 import HTML
-import Translating
 import OrderedCollections
 import PointFreeHTMLTranslating
-import DateExtensions
+import Translating
 
 public struct AttendanceList {
     public var title: String

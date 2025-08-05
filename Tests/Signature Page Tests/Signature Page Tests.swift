@@ -5,13 +5,13 @@
 //  Created by Coen ten Thije Boonkkamp on 06/12/2024.
 //
 
-import PointFreeHTMLToPDF
 import Dependencies
 import Foundation
 import HTML
-import Translating
+import PointFreeHTMLToPDF
 @testable import Signature_Page
 import Testing
+import Translating
 
 @Test("Single Natural Person")
 func singleNaturalPerson() async throws {

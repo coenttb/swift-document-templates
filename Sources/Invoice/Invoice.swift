@@ -8,11 +8,11 @@
 import DateExtensions
 import Foundation
 import HTML
-import Translating
 import Letter
 import OrderedCollections
 import Percent
 import PointFreeHTMLTranslating
+import Translating
 
 public struct Invoice {
     public let sender: Invoice.Sender

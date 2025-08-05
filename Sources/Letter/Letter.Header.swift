@@ -7,8 +7,8 @@
 
 import Foundation
 import HTML
-import Translating
 import PointFreeHTMLTranslating
+import Translating
 
 extension Letter {
     public struct Header {

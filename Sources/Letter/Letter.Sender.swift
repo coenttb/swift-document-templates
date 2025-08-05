@@ -7,9 +7,9 @@
 
 import Foundation
 import HTML
-import Translating
 import OrderedCollections
 import PointFreeHTMLTranslating
+import Translating
 
 extension Letter {
     public struct Sender: Hashable, Equatable, Codable {
