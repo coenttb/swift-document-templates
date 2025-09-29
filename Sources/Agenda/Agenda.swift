@@ -54,7 +54,6 @@ extension Agenda {
                         english: "Agenda"
                     )
                 }
-                .breakBefore(.page)
 
                 h2 {
                     TranslatedString(
