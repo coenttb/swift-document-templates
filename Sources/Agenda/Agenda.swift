@@ -54,6 +54,7 @@ extension Agenda {
                         english: "Agenda"
                     )
                 }
+                .breakBefore(.page)
 
                 h2 {
                     TranslatedString(
@@ -65,6 +66,7 @@ extension Agenda {
                 ul {
                     HTMLForEach(agenda.items) { item in
                         li { HTMLText(item.title) }
+                            
                     }
                 }
             }
@@ -110,3 +112,6 @@ extension Agenda.Item: HTML {
 //    .frame(width: 400, height: 600)
 // }
 // #endif
+
+
+

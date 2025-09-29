@@ -54,7 +54,7 @@ extension [Package.Dependency] {
         .package(url: "https://github.com/apple/swift-collections.git", from: "1.1.6"),
         .package(url: "https://github.com/coenttb/pointfree-html-to-pdf.git", from: "0.0.1"),
         .package(url: "https://github.com/coenttb/pointfree-html-translating.git", from: "0.0.1"),
-        .package(url: "https://github.com/coenttb/swift-types-foundation.git", branch: "main"),
+        .package(url: "https://github.com/coenttb/swift-types-foundation.git", from: "0.0.1"),
         .package(url: "https://github.com/coenttb/swift-html.git", from: "0.0.1"),
         .package(url: "https://github.com/coenttb/swift-html-to-pdf.git", from: "0.0.1"),
         .package(url: "https://github.com/coenttb/swift-translating.git", from: "0.0.1"),

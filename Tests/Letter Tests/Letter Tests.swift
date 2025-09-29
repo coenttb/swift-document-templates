@@ -69,7 +69,7 @@ func asda() async throws {
             $0.language = language
             $0.locale = language.locale
         } operation: {
-            try await letter.print(
+            try await HTMLDocument { letter }.print(
                 title: "Github Letter \(language)",
                 to: directory
             )

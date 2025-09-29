@@ -36,7 +36,7 @@ func basldfva() async throws {
                 ]
             )
 
-            try await agenda.print(
+            try await HTMLDocument { agenda }.print(
                 title: "Agenda \(language)",
                 to: directory
             )
