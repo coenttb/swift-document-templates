@@ -1,18 +1,29 @@
-# Swift Document Templates
+# swift-document-templates
 
-Swift Document Templates is a Swift package that enables the data-driven creation of common business documents. Designed for ease of use and automation, it leverages Swift's powerful type system and modern syntax to ensure accuracy and consistency. Whether you're generating an invoice, an agenda, or a letter, Swift Document Templates has you covered.
+[![CI](https://github.com/coenttb/swift-document-templates/workflows/CI/badge.svg)](https://github.com/coenttb/swift-document-templates/actions/workflows/ci.yml)
+![Development Status](https://img.shields.io/badge/status-active--development-blue.svg)
+
+A Swift package for data-driven generation of common business documents including invoices, letters, agendas, attendance lists, invitations, and signature pages.
+
+## Overview
+
+swift-document-templates provides type-safe Swift models and HTML-based rendering for business documents. Built on swift-html's DSL, it enables programmatic document generation with multi-language support via swift-translating, and PDF export capabilities through pointfree-html-to-pdf.
 
 ## Features
 
-- **Invoice**: Generate detailed invoices with automatic calculations and custom metadata.
-- **Letter**: Draft formal letters with consistent formatting and customizable content.
-- **Agenda**: Create structured agendas for meetings, outlining topics, speakers, and timings. *(Under Construction)*
-- **Attendance List**: Maintain a record of attendees for meetings, events, or training sessions. *(Under Construction)*
-- **Invitation**: Send professional invitations for events, meetings, or conferences. *(Under Construction)*
+- **Invoice**: Generate invoices with line items, VAT calculations, and customizable metadata
+- **Letter**: Create formal business letters with structured sender/recipient information
+- **Agenda**: Build meeting agendas with topics, speakers, and timings
+- **Attendance List**: Track attendees for meetings, events, or training sessions
+- **Invitation**: Generate professional event invitations
+- **Signature Page**: Create signature blocks for natural persons, legal entities, and complex organizational structures
+- **Multi-language support**: Dutch and English translations built-in via swift-translating
+- **Type-safe HTML**: All documents rendered using swift-html's compile-time-checked DSL
+- **PDF export**: Direct conversion to PDF via pointfree-html-to-pdf integration
 
 ## Installation
 
-To install Swift Document Templates, add the following line to your `Package.swift` file:
+Add swift-document-templates to your package dependencies:
 
 ```swift
 dependencies: [
@@ -20,11 +31,12 @@ dependencies: [
 ]
 ```
 
-You can then make Swift Document Templates available to your package's target by including DocumentTemplates in the dependencies of any target in your package, as follows:
+Then add the product to your target:
+
 ```swift
 targets: [
     .target(
-        name: "TheNameOfYourTarget",
+        name: "YourTarget",
         dependencies: [
             .product(name: "DocumentTemplates", package: "swift-document-templates")
         ]
@@ -32,31 +44,42 @@ targets: [
 ]
 ```
 
-Finally, import DocumentTemplates in your .swift file(s), as follows:
-```swift
-import DocumentTemplates
+## Quick Start
 
-...your swift code...
-```
-
-## Usage
-
-### Invoice
-
-Generate an invoice with line items:
+### Invoice Example
 
 ```swift
 import DocumentTemplates
+import DateExtensions
+import Percent
 
 let invoice = Invoice(
-    sender: .init(name: "Your Company", address: ["123 Main St", "City", "Country"], phone: "123-456-7890", email: "billing@company.com", website: "www.company.com", kvk: "12345678", btw: "NL123456789B01", iban: "NL00BANK1234567890"),
-    client: .init(id: "CUST001", name: "Client Name", address: ["789 Maple St", "City", "Country"]),
+    sender: .init(
+        name: "Your Company",
+        address: ["123 Main St", "City", "Country"],
+        phone: "123-456-7890",
+        email: "billing@company.com",
+        website: "www.company.com",
+        kvk: "12345678",
+        btw: "NL123456789B01",
+        iban: "NL00BANK1234567890"
+    ),
+    client: .init(
+        id: "CUST001",
+        name: "Client Name",
+        address: ["789 Maple St", "City", "Country"]
+    ),
     invoiceNumber: "INV001",
     invoiceDate: Date.now,
     expiryDate: (Date.now + 30.days),
     metadata: [:],
     rows: [
-        .service(.init(amountOfHours: 160, hourlyRate: 140.00, vat: 21%, description: "Consulting services"))
+        .service(.init(
+            amountOfHours: 160,
+            hourlyRate: 140.00,
+            vat: 21%,
+            description: "Consulting services"
+        ))
     ]
 )
 ```
@@ -65,9 +88,7 @@ let invoice = Invoice(
     <img src="Images/invoice.png" width="400" max-width="90%" alt="Invoice" />
 </p>
 
-### Letter
-
-Draft a formal letter:
+### Letter Example
 
 ```swift
 import DocumentTemplates
@@ -79,6 +100,7 @@ let sender: Letter.Sender = .init(
     email: "info@company.com",
     website: "www.company.com"
 )
+
 let recipient: Letter.Recipient = .init(
     name: "Recipient Name",
     address: ["456 Elm St", "City", "Country"]
@@ -94,7 +116,7 @@ let letter = Letter(
     "Dear \(recipient.name),"
     p { "I hope this finds you well." }
     p { "Best regards," }
-    p { "coenttb" }
+    p { "Your Name" }
 }
 ```
 
@@ -102,30 +124,118 @@ let letter = Letter(
     <img src="Images/letter.png" width="400" max-width="90%" alt="Letter" />
 </p>
 
-## Under Construction
+## Usage Examples
 
-The following features are currently under development and will be available in future updates:
+### Agenda
 
-- **Agenda**: Create structured agendas for meetings, outlining topics, speakers, and timings.
-- **Attendance List**: Maintain a record of attendees for meetings, events, or training sessions.
-- **Invitation**: Send professional invitations for events, meetings, or conferences.
+Create meeting agendas with topics:
 
-## Related projects
+```swift
+import Agenda
 
-* [coenttb/pointfree-html](https://www.github.com/coenttb/coenttb/pointfree-html): A Swift DSL for type-safe HTML forked from [pointfreeco/swift-html](https://www.github.com/pointfreeco/swift-html) and updated to the version on [pointfreeco/pointfreeco](https://github.com/pointfreeco/pointfreeco).
-* [swift-css](https://www.github.com/coenttb/swift-css): A Swift DSL for type-safe CSS.
-* [swift-html](https://www.github.com/coenttb/swift-html): A Swift DSL for type-safe HTML & CSS, integrating [swift-css](https://www.github.com/coenttb/swift-css) and [pointfree-html](https://www.github.com/coenttb/pointfree-html).
-* [swift-html-to-pdf](https://www.github.com/coenttb/swift-html-to-pdf): HtmlToPdf provides an easy-to-use interface for concurrently printing HTML to PDF on iOS and macOS.
-* [coenttb-html](https://www.github.com/coenttb/coenttb-html): Extends [swift-html](https://www.github.com/coenttb/swift-html) with additional functionality and integrations for HTML, Markdown, Email, and printing HTML to PDF.
+let agenda = Agenda(
+    items: [
+        .init(title: "Opening Remarks"),
+        .init(title: "Q1 Financial Results"),
+        .init(title: "Strategic Planning Discussion")
+    ]
+)
+```
 
-## Contributing
+### Attendance List
 
-We welcome contributions to Swift Document Templates. If you find a bug or have a feature request, please open an issue on GitHub. For major changes, please open a discussion first to ensure your work aligns with the project's direction.
+Track event participants:
+
+```swift
+import AttendanceList
+
+let attendanceList = AttendanceList(
+    title: "Annual Conference",
+    metadata: [:],
+    attendees: [
+        .init(firstName: "John", lastName: "Doe", role: "Manager"),
+        .init(firstName: "Jane", lastName: "Smith", role: "Director")
+    ]
+)
+```
+
+### Invitation
+
+Generate event invitations:
+
+```swift
+import Invitation
+
+let invitation = Invitation(
+    sender: .init(
+        name: "Your Company",
+        address: ["123 Main St", "City"],
+        phone: "123-456-7890",
+        email: "events@company.com",
+        website: "www.company.com"
+    ),
+    recipient: .init(
+        id: "RECIP001",
+        name: "Guest Name",
+        address: ["456 Guest St", "City"]
+    ),
+    invitationNumber: "INV-2024-001",
+    invitationDate: Date.now,
+    eventDate: Date.now,
+    location: "Conference Center",
+    metadata: [:]
+)
+```
+
+### Signature Page
+
+Create signature blocks with Signatory enum:
+
+```swift
+import SignaturePage
+
+// Single individual
+let individual = Signatory.individual(
+    name: "John Doe",
+    title: .init(dutch: "Directeur", english: "Director"),
+    metadata: [:]
+)
+
+// Group of signers
+let group = Signatory(
+    name: .init(dutch: "Bedrijf B.V.", english: "Company B.V."),
+    signers: [
+        .init(name: .init("Jane Smith"), metadata: [:]),
+        .init(name: .init("Bob Johnson"), metadata: [:])
+    ],
+    metadata: [:]
+)
+```
+
+## Platform Support
+
+- macOS 14.0+
+- iOS 17.0+
+- Mac Catalyst 17.0+
+
+## Related Packages
+
+- [coenttb/pointfree-html](https://github.com/coenttb/pointfree-html): A Swift DSL for type-safe HTML forked from [pointfreeco/swift-html](https://github.com/pointfreeco/swift-html) and updated to the version on [pointfreeco/pointfreeco](https://github.com/pointfreeco/pointfreeco).
+- [coenttb/swift-html](https://github.com/coenttb/swift-html): A Swift DSL for type-safe HTML & CSS, integrating [swift-css](https://github.com/coenttb/swift-css) and [pointfree-html](https://github.com/coenttb/pointfree-html).
+- [coenttb/swift-html-to-pdf](https://github.com/coenttb/swift-html-to-pdf): Convert HTML to PDF on iOS and macOS with concurrent WebKit rendering.
+- [coenttb/pointfree-html-to-pdf](https://github.com/coenttb/pointfree-html-to-pdf): A library for converting HTML to PDFs using WebKit.
+- [coenttb/swift-translating](https://github.com/coenttb/swift-translating): Multi-language support for Swift applications.
+- [coenttb/swift-percent](https://github.com/coenttb/swift-percent): Type-safe percentage calculations in Swift.
+- [coenttb/swift-money](https://github.com/coenttb/swift-money): Type-safe monetary value handling.
 
 ## License
 
-Swift Document Templates is available under the [LICENSE](LICENSE).
+This package is licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for details.
+
+## Contributing
+
+Contributions are welcome. Please open an issue to discuss significant changes before submitting a pull request.
 
 ## Contact
 
-For questions or feedback, you can reach me at coen@tenthijeboonkkamp.nl.
+For questions or feedback, reach out at coen@tenthijeboonkkamp.nl or visit [coenttb.com](https://coenttb.com).
