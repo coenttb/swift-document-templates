@@ -10,7 +10,6 @@ import Foundation
 import HTML
 import Letter
 import OrderedCollections
-import PointFreeHTMLTranslating
 import Translating
 
 public struct Invitation {

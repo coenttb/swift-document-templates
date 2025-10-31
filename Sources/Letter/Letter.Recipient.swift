@@ -8,7 +8,6 @@
 import Foundation
 import HTML
 import OrderedCollections
-import PointFreeHTMLTranslating
 import Translating
 
 extension TranslatedString {

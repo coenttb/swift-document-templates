@@ -7,7 +7,6 @@
 
 import Foundation
 import HTML
-import PointFreeHTMLTranslating
 import Translating
 
 public struct Letter {

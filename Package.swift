@@ -30,7 +30,6 @@ extension Target.Dependency {
     static var percent: Self { .product(name: "Percent", package: "swift-percent") }
     static var html: Self { .product(name: "HTML", package: "swift-html") }
     static var htmlToPdf: Self { .product(name: "HtmlToPdf", package: "swift-html-to-pdf") }
-    static var htmlLanguages: Self { .product(name: "PointFreeHTMLTranslating", package: "pointfree-html-translating") }
     static var collections: Self { .product(name: "Collections", package: "swift-collections") }
 }
 
@@ -40,7 +39,6 @@ extension [Target.Dependency] {
             .dependencies,
             .translating,
             .html,
-            .htmlLanguages,
             .percent,
             .typesFoundation,
             .money
@@ -52,9 +50,12 @@ extension [Package.Dependency] {
     static var `default`: Self {
         [
             .package(url: "https://github.com/apple/swift-collections.git", from: "1.1.6"),
-            .package(url: "https://github.com/coenttb/pointfree-html-translating.git", from: "0.0.1"),
             .package(url: "https://github.com/coenttb/swift-types-foundation.git", from: "0.0.1"),
-            .package(url: "https://github.com/coenttb/swift-html.git", from: "0.0.1"),
+            .package(
+                url: "https://github.com/coenttb/swift-html.git",
+                from: "0.10.0",
+                traits: ["Translating"]
+            ),
             .package(
                 url: "https://github.com/coenttb/swift-html-to-pdf.git",
                 from: "1.0.0",
