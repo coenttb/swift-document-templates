@@ -220,13 +220,21 @@ let group = Signatory(
 
 ## Related Packages
 
-- [coenttb/pointfree-html](https://github.com/coenttb/pointfree-html): A Swift DSL for type-safe HTML forked from [pointfreeco/swift-html](https://github.com/pointfreeco/swift-html) and updated to the version on [pointfreeco/pointfreeco](https://github.com/pointfreeco/pointfreeco).
-- [coenttb/swift-html](https://github.com/coenttb/swift-html): A Swift DSL for type-safe HTML & CSS, integrating [swift-css](https://github.com/coenttb/swift-css) and [pointfree-html](https://github.com/coenttb/pointfree-html).
-- [coenttb/swift-html-to-pdf](https://github.com/coenttb/swift-html-to-pdf): Convert HTML to PDF on iOS and macOS with concurrent WebKit rendering.
-- [coenttb/pointfree-html-to-pdf](https://github.com/coenttb/pointfree-html-to-pdf): A library for converting HTML to PDFs using WebKit.
-- [coenttb/swift-translating](https://github.com/coenttb/swift-translating): Multi-language support for Swift applications.
-- [coenttb/swift-percent](https://github.com/coenttb/swift-percent): Type-safe percentage calculations in Swift.
-- [coenttb/swift-money](https://github.com/coenttb/swift-money): Type-safe monetary value handling.
+### Dependencies
+
+- [pointfree-html-to-pdf](https://github.com/coenttb/pointfree-html-to-pdf): A Swift package integrating pointfree-html with swift-html-to-pdf.
+- [pointfree-html-translating](https://github.com/coenttb/pointfree-html-translating): A Swift package integrating pointfree-html with swift-translating.
+- [swift-html](https://github.com/coenttb/swift-html): The Swift library for domain-accurate and type-safe HTML & CSS.
+- [swift-html-to-pdf](https://github.com/coenttb/swift-html-to-pdf): The Swift package for printing HTML to PDF.
+- [swift-money](https://github.com/coenttb/swift-money): A Swift package with foundational types for currency and monetary calculations.
+- [swift-percent](https://github.com/coenttb/swift-percent): A Swift package with foundational types for percentages.
+- [swift-translating](https://github.com/coenttb/swift-translating): A Swift package for inline translations.
+- [swift-types-foundation](https://github.com/coenttb/swift-types-foundation): A Swift package bundling essential type-safe packages for domain modeling.
+
+### Third-Party Dependencies
+
+- [pointfreeco/swift-dependencies](https://github.com/pointfreeco/swift-dependencies): A dependency management library for controlling dependencies in Swift.
+- [apple/swift-collections](https://github.com/apple/swift-collections): Commonly used data structures for Swift.
 
 ## License
 
