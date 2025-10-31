@@ -1,6 +1,6 @@
 //
 //  File.swift
-//  
+//
 //
 //  Created by Coen ten Thije Boonkkamp on 27/11/2020.
 //
@@ -10,85 +10,85 @@ import HTML
 import Translating
 
 public struct Agenda {
-    public var items: [Agenda.Item]
+  public var items: [Agenda.Item]
 
-    public init(items: [Agenda.Item]) {
-        self.items = items
-    }
+  public init(items: [Agenda.Item]) {
+    self.items = items
+  }
 }
 
 extension Agenda {
-    public struct Item {
-        let title: String
+  public struct Item {
+    let title: String
 
-        public init(
-            title: String
-        ) {
-            self.title = title
-        }
+    public init(
+      title: String
+    ) {
+      self.title = title
     }
+  }
 }
 extension Agenda.View {
-    public enum Variant {
-        case short
-        case full(subtitle: String, bodyHeader: String)
-    }
+  public enum Variant {
+    case short
+    case full(subtitle: String, bodyHeader: String)
+  }
 }
 
 extension Agenda {
-    public struct View: HTML {
-        let agenda: Agenda
-        let variant: Agenda.View.Variant = .short
+  public struct View: HTML {
+    let agenda: Agenda
+    let variant: Agenda.View.Variant = .short
 
-        public init(agenda: Agenda) {
-            self.agenda = agenda
-        }
-
-        public var body: some HTML {
-
-            if !agenda.items.isEmpty {
-                h1 {
-                    TranslatedString(
-                        dutch: "Agenda",
-                        english: "Agenda"
-                    )
-                }
-
-                h2 {
-                    TranslatedString(
-                        dutch: "Onderwerpen",
-                        english: "Topics"
-                    )
-                }
-
-                ul {
-                    HTMLForEach(agenda.items) { item in
-                        li { HTMLText(item.title) }
-                            
-                    }
-                }
-            }
-
-            switch variant {
-            case .short:
-                HTMLEmpty()
-            case .full(subtitle: _, bodyHeader: _):
-                HTMLEmpty()
-            }
-        }
+    public init(agenda: Agenda) {
+      self.agenda = agenda
     }
+
+    public var body: some HTML {
+
+      if !agenda.items.isEmpty {
+        h1 {
+          TranslatedString(
+            dutch: "Agenda",
+            english: "Agenda"
+          )
+        }
+
+        h2 {
+          TranslatedString(
+            dutch: "Onderwerpen",
+            english: "Topics"
+          )
+        }
+
+        ul {
+          HTMLForEach(agenda.items) { item in
+            li { HTMLText(item.title) }
+
+          }
+        }
+      }
+
+      switch variant {
+      case .short:
+        HTMLEmpty()
+      case .full(subtitle: _, bodyHeader: _):
+        HTMLEmpty()
+      }
+    }
+  }
 }
 
 extension Agenda: HTML {
-    public var body: some HTML {
-        Agenda.View(agenda: self)
-    }
+  public var body: some HTML {
+    Agenda.View(agenda: self)
+  }
 }
 
 extension Agenda.Item: HTML {
-    public var body: some HTML {
-        li { HTMLText(self.title) }
-    }
+  public var body: some HTML {
+    li { HTMLText(self.title) }
+  }
 }
 
 // #if canImport(SwiftUI)
@@ -110,6 +110,3 @@ extension Agenda.Item: HTML {
 //    .frame(width: 400, height: 600)
 // }
 // #endif
-
-
-
