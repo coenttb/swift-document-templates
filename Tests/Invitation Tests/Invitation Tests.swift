@@ -10,12 +10,14 @@ import Dependencies
 import Foundation
 import HTML
 import Invitation
-import PointFreeHTMLToPDF
+import HtmlToPdf
 import Testing
 import Translating
 
 @Test("Invitation")
 func testInvitation() async throws {
+    @Dependency(\.pdf) var pdf
+
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
     print(directory)
 
@@ -65,11 +67,9 @@ func testInvitation() async throws {
                     ]
                 )
 
-                try await HTMLDocument { invitation }
-                    .print(
-                        title: "Invitation \(language) | \(wrap)",
-                        to: directory
-                    )
+                let filename = "Invitation \(language) | \(wrap).pdf"
+                let fileURL = directory.appendingPathComponent(filename)
+                try await pdf.render(html: HTMLDocument { invitation }, to: fileURL)
             }
         }
     }

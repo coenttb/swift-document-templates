@@ -8,13 +8,15 @@
 import Dependencies
 import Foundation
 import HTML
-import PointFreeHTMLToPDF
+import HtmlToPdf
 @testable import Signature_Page
 import Testing
 import Translating
 
 @Test("Single Natural Person")
 func singleNaturalPerson() async throws {
+    (.pdf) var pdf
+
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
 
     let block = Signatory.Person.Block(
@@ -25,16 +27,16 @@ func singleNaturalPerson() async throws {
         $0.language = .english
         $0.locale = Language.english.locale
     } operation: {
-        try await HTMLDocument { block }
-            .print(
-                title: "Signatory Block Single Natural Person",
-                to: directory
-            )
+        let filename = "Signatory Block Single Natural Person.pdf"
+                let fileURL = directory.appendingPathComponent(filename)
+                try await pdf.render(html: HTMLDocument { block }, to: fileURL)
     }
 }
 
 @Test("Single Legal Entity with One Representative")
 func singleLEWithOneRepresentative() async throws {
+    (.pdf) var pdf
+
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
 
     let company = "Example Company B.V."
@@ -58,16 +60,16 @@ func singleLEWithOneRepresentative() async throws {
         $0.language = .english
         $0.locale = Language.english.locale
     } operation: {
-        try await HTMLDocument { page }
-            .print(
-                title: "Signatory Block Legal Entity Single Representative",
-                to: directory
-            )
+        let filename = "Signatory Block Legal Entity Single Representative.pdf"
+                let fileURL = directory.appendingPathComponent(filename)
+                try await pdf.render(html: HTMLDocument { page }, to: fileURL)
     }
 }
 
 @Test("Legal Entity with Two Representatives")
 func singleLEWithTwoRepresentatives() async throws {
+    (.pdf) var pdf
+
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
 
     let company = "Example Company B.V."
@@ -98,16 +100,16 @@ func singleLEWithTwoRepresentatives() async throws {
         $0.language = .english
         $0.locale = Language.english.locale
     } operation: {
-        try await HTMLDocument { page }
-            .print(
-                title: "Signatory Block Legal Entity Two Representatives",
-                to: directory
-            )
+        let filename = "Signatory Block Legal Entity Two Representatives.pdf"
+                let fileURL = directory.appendingPathComponent(filename)
+                try await pdf.render(html: HTMLDocument { page }, to: fileURL)
     }
 }
 
 @Test("Management Company Structure")
 func managementCompanyStructure() async throws {
+    (.pdf) var pdf
+
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
 
     let operatingCompany = "Operating Company B.V."
@@ -149,16 +151,16 @@ func managementCompanyStructure() async throws {
         $0.language = .english
         $0.locale = Language.english.locale
     } operation: {
-        try await HTMLDocument { page }
-            .print(
-                title: "Signatory Block Management Company Structure",
-                to: directory
-            )
+        let filename = "Signatory Block Management Company Structure.pdf"
+                let fileURL = directory.appendingPathComponent(filename)
+                try await pdf.render(html: HTMLDocument { page }, to: fileURL)
     }
 }
 
 @Test("Natural Person with Metadata")
 func naturalPersonWithMetadata() async throws {
+    (.pdf) var pdf
+
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
 
     let block = Signatory.Person.Block(
@@ -174,16 +176,16 @@ func naturalPersonWithMetadata() async throws {
         $0.language = .english
         $0.locale = Language.english.locale
     } operation: {
-        try await HTMLDocument { block }
-            .print(
-                title: "Signatory Block Natural Person with Metadata",
-                to: directory
-            )
+        let filename = "Signatory Block Natural Person with Metadata.pdf"
+                let fileURL = directory.appendingPathComponent(filename)
+                try await pdf.render(html: HTMLDocument { block }, to: fileURL)
     }
 }
 
 @Test("Legal Entity with Proxy Holder")
 func legalEntityWithProxyHolder() async throws {
+    (.pdf) var pdf
+
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
 
     let company = "Example Company B.V."
@@ -207,16 +209,16 @@ func legalEntityWithProxyHolder() async throws {
         $0.language = .english
         $0.locale = Language.english.locale
     } operation: {
-        try await HTMLDocument { page }
-            .print(
-                title: "Signatory Block Legal Entity with Proxy Holder",
-                to: directory
-            )
+        let filename = "Signatory Block Legal Entity with Proxy Holder.pdf"
+                let fileURL = directory.appendingPathComponent(filename)
+                try await pdf.render(html: HTMLDocument { page }, to: fileURL)
     }
 }
 
 @Test("Legal Entity with Registration Details")
 func legalEntityWithRegistrationDetails() async throws {
+    (.pdf) var pdf
+
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
 
     let company = "Example Company B.V."
@@ -244,10 +246,8 @@ func legalEntityWithRegistrationDetails() async throws {
         $0.language = .english
         $0.locale = Language.english.locale
     } operation: {
-        try await HTMLDocument { page }
-            .print(
-                title: "Signatory Block Legal Entity with Registration Details",
-                to: directory
-            )
+        let filename = "Signatory Block Legal Entity with Registration Details.pdf"
+                let fileURL = directory.appendingPathComponent(filename)
+                try await pdf.render(html: HTMLDocument { page }, to: fileURL)
     }
 }

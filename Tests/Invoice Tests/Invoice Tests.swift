@@ -11,12 +11,13 @@ import Foundation
 import HTML
 import Invoice
 import Percent
-import PointFreeHTMLToPDF
+import HtmlToPdf
 import Testing
 import Translating
 
 @Test("HtmlToPdf")
 func basldfva() async throws {
+    @Dependency(\.pdf) var pdf
 
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
     print(directory)
@@ -64,19 +65,14 @@ func basldfva() async throws {
                     ]
                 )
 
+                let filename = "\(language) | \(invoice_title) | \(wrap).pdf"
+                let fileURL = directory.appendingPathComponent(filename)
+
                 switch wrap {
                 case .minimal:
-                    try await HTMLDocument { invoice }
-                        .print(
-                            title: "\(language) | \(invoice_title) | \(wrap)",
-                            to: directory
-                        )
+                    try await pdf.render(html: HTMLDocument { invoice }, to: fileURL)
                 case .modern:
-                    try await HTMLDocument { invoice }
-                        .print(
-                            title: "\(language) | \(invoice_title) | \(wrap)",
-                            to: directory
-                        )
+                    try await pdf.render(html: HTMLDocument { invoice }, to: fileURL)
                 }
             }
         }

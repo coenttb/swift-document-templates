@@ -1,5 +1,4 @@
-// swift-tools-version:5.10
-// The swift-tools-version declares the minimum version of Swift required to build this package.
+// swift-tools-version:6.1
 
 import PackageDescription
 
@@ -30,7 +29,7 @@ extension Target.Dependency {
     static var money: Self { .product(name: "Money", package: "swift-money") }
     static var percent: Self { .product(name: "Percent", package: "swift-percent") }
     static var html: Self { .product(name: "HTML", package: "swift-html") }
-    static var htmlToPdf: Self { .product(name: "PointFreeHTMLToPDF", package: "pointfree-html-to-pdf") }
+    static var htmlToPdf: Self { .product(name: "HtmlToPdf", package: "swift-html-to-pdf") }
     static var htmlLanguages: Self { .product(name: "PointFreeHTMLTranslating", package: "pointfree-html-translating") }
     static var collections: Self { .product(name: "Collections", package: "swift-collections") }
 }
@@ -50,18 +49,23 @@ extension [Target.Dependency] {
 }
 
 extension [Package.Dependency] {
-    static let `default`: Self = [
-        .package(url: "https://github.com/apple/swift-collections.git", from: "1.1.6"),
-        .package(url: "https://github.com/coenttb/pointfree-html-to-pdf.git", from: "0.0.1"),
-        .package(url: "https://github.com/coenttb/pointfree-html-translating.git", from: "0.0.1"),
-        .package(url: "https://github.com/coenttb/swift-types-foundation.git", from: "0.0.1"),
-        .package(url: "https://github.com/coenttb/swift-html.git", from: "0.0.1"),
-        .package(url: "https://github.com/coenttb/swift-html-to-pdf.git", from: "0.0.1"),
-        .package(url: "https://github.com/coenttb/swift-translating.git", from: "0.0.1"),
-        .package(url: "https://github.com/coenttb/swift-money.git", branch: "main"),
-        .package(url: "https://github.com/coenttb/swift-percent.git", branch: "main"),
-        .package(url: "https://github.com/pointfreeco/swift-dependencies.git", from: "1.3.6")
-    ]
+    static var `default`: Self {
+        [
+            .package(url: "https://github.com/apple/swift-collections.git", from: "1.1.6"),
+            .package(url: "https://github.com/coenttb/pointfree-html-translating.git", from: "0.0.1"),
+            .package(url: "https://github.com/coenttb/swift-types-foundation.git", from: "0.0.1"),
+            .package(url: "https://github.com/coenttb/swift-html.git", from: "0.0.1"),
+            .package(
+                url: "https://github.com/coenttb/swift-html-to-pdf.git",
+                from: "1.0.0",
+                traits: ["HTML"]
+            ),
+            .package(url: "https://github.com/coenttb/swift-translating.git", from: "0.0.1"),
+            .package(url: "https://github.com/coenttb/swift-money.git", branch: "main"),
+            .package(url: "https://github.com/coenttb/swift-percent.git", branch: "main"),
+            .package(url: "https://github.com/pointfreeco/swift-dependencies.git", from: "1.3.6")
+        ]
+    }
 }
 
 extension Package {

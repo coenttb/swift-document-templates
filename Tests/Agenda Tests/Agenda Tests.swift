@@ -9,12 +9,13 @@ import Agenda
 import Dependencies
 import Foundation
 import HTML
-import PointFreeHTMLToPDF
+import HtmlToPdf
 import Testing
 import Translating
 
 @Test("Agenda")
 func basldfva() async throws {
+    @Dependency(\.pdf) var pdf
 
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
     print(directory)
@@ -36,10 +37,9 @@ func basldfva() async throws {
                 ]
             )
 
-            try await HTMLDocument { agenda }.print(
-                title: "Agenda \(language)",
-                to: directory
-            )
+            let filename = "Agenda \(language).pdf"
+            let fileURL = directory.appendingPathComponent(filename)
+            try await pdf.render(html: HTMLDocument { agenda }, to: fileURL)
         }
     }
 }

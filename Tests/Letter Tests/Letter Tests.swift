@@ -9,12 +9,14 @@ import Dependencies
 import Foundation
 import HTML
 import Letter
-import PointFreeHTMLToPDF
+import HtmlToPdf
 import Testing
 import Translating
 
 @Test("Letter")
 func letter() async throws {
+    (.pdf) var pdf
+
 
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
 
@@ -25,16 +27,17 @@ func letter() async throws {
         } operation: {
             let letter: some HTML = Letter.Header.preview
 
-            try await letter.print(
-                title: "Letter \(language)",
-                to: directory
-            )
+            let filename = "Letter \(language).pdf"
+                let fileURL = directory.appendingPathComponent(filename)
+                try await pdf.render(html: letter, to: fileURL)
         }
     }
 }
 
 @Test("Github")
 func asda() async throws {
+    (.pdf) var pdf
+
 
     let sender: Letter.Sender = .init(
         name: "Your Company",
@@ -69,10 +72,9 @@ func asda() async throws {
             $0.language = language
             $0.locale = language.locale
         } operation: {
-            try await HTMLDocument { letter }.print(
-                title: "Github Letter \(language)",
-                to: directory
-            )
+            let filename = "Github Letter \(language).pdf"
+                let fileURL = directory.appendingPathComponent(filename)
+                try await pdf.render(html: HTMLDocument { letter }, to: fileURL)
         }
     }
 }

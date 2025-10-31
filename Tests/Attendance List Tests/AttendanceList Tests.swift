@@ -9,12 +9,13 @@ import Attendance_List
 import Dependencies
 import Foundation
 import HTML
-import PointFreeHTMLToPDF
+import HtmlToPdf
 import Testing
 import Translating
 
 @Test("Attendance List")
 func basldfva() async throws {
+    @Dependency(\.pdf) var pdf
 
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
     print(directory)
@@ -37,11 +38,9 @@ func basldfva() async throws {
             } operation: {
                 let attendanceList: some HTML = AttendanceList.preview
 
-                try await HTMLDocument { attendanceList }
-                    .print(
-                        title: "Attendance List \(language) | \(title) | \(wrap)",
-                        to: directory
-                    )
+                let filename = "Attendance List \(language) | \(title) | \(wrap).pdf"
+                let fileURL = directory.appendingPathComponent(filename)
+                try await pdf.render(html: HTMLDocument { attendanceList }, to: fileURL)
             }
         }
     }
