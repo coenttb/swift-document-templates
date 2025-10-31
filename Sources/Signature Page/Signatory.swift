@@ -204,7 +204,7 @@ extension Signatory {
             }
 
             /// Styling options for the individual signatory block
-            public struct Style {
+            public struct Style: Sendable {
                 public let metadataColumnWidth: Int
 
                 public init(metadataColumnWidth: Int = 120) {

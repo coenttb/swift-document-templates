@@ -15,7 +15,7 @@ import Translating
 
 @Test("Letter")
 func letter() async throws {
-    (.pdf) var pdf
+    @Dependency(\.pdf) var pdf
 
 
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
@@ -36,7 +36,7 @@ func letter() async throws {
 
 @Test("Github")
 func asda() async throws {
-    (.pdf) var pdf
+    @Dependency(\.pdf) var pdf
 
 
     let sender: Letter.Sender = .init(

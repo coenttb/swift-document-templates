@@ -529,7 +529,7 @@ extension Invoice.Recipient {
 }
 
 extension Percent.Percentage {
-    public static let vat_regular_dutch: Self = .init(fraction: 0.21)
+    public static var vat_regular_dutch: Self { .init(fraction: 0.21) }
 }
 
 extension Invoice {

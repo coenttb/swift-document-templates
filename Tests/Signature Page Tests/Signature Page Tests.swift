@@ -15,7 +15,7 @@ import Translating
 
 @Test("Single Natural Person")
 func singleNaturalPerson() async throws {
-    (.pdf) var pdf
+    @Dependency(\.pdf) var pdf
 
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
 
@@ -35,7 +35,7 @@ func singleNaturalPerson() async throws {
 
 @Test("Single Legal Entity with One Representative")
 func singleLEWithOneRepresentative() async throws {
-    (.pdf) var pdf
+    @Dependency(\.pdf) var pdf
 
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
 
@@ -68,7 +68,7 @@ func singleLEWithOneRepresentative() async throws {
 
 @Test("Legal Entity with Two Representatives")
 func singleLEWithTwoRepresentatives() async throws {
-    (.pdf) var pdf
+    @Dependency(\.pdf) var pdf
 
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
 
@@ -108,7 +108,7 @@ func singleLEWithTwoRepresentatives() async throws {
 
 @Test("Management Company Structure")
 func managementCompanyStructure() async throws {
-    (.pdf) var pdf
+    @Dependency(\.pdf) var pdf
 
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
 
@@ -159,7 +159,7 @@ func managementCompanyStructure() async throws {
 
 @Test("Natural Person with Metadata")
 func naturalPersonWithMetadata() async throws {
-    (.pdf) var pdf
+    @Dependency(\.pdf) var pdf
 
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
 
@@ -184,7 +184,7 @@ func naturalPersonWithMetadata() async throws {
 
 @Test("Legal Entity with Proxy Holder")
 func legalEntityWithProxyHolder() async throws {
-    (.pdf) var pdf
+    @Dependency(\.pdf) var pdf
 
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
 
@@ -217,7 +217,7 @@ func legalEntityWithProxyHolder() async throws {
 
 @Test("Legal Entity with Registration Details")
 func legalEntityWithRegistrationDetails() async throws {
-    (.pdf) var pdf
+    @Dependency(\.pdf) var pdf
 
     let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(component: "Output")
 

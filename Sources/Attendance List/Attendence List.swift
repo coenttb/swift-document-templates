@@ -11,7 +11,7 @@ import HTML
 import OrderedCollections
 import Translating
 
-public struct AttendanceList {
+public struct AttendanceList: Sendable {
     public var title: String
     public var metadata: Metadata
     public var attendees: [AttendanceList.Attendee]
@@ -30,7 +30,7 @@ public struct AttendanceList {
 }
 
 extension AttendanceList {
-    public struct Attendee {
+    public struct Attendee: Sendable {
         let firstName: String
         let lastName: String
         let role: String
