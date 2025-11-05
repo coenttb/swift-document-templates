@@ -1,8 +1,8 @@
 //
 //  File.swift
+//  swift-document-templates
 //
-//
-//  Created by Coen ten Thije Boonkkamp on 30/07/2024.
+//  Created by Coen ten Thije Boonkkamp on 05/11/2025.
 //
 
 @_exported import DateExtensions
@@ -10,5 +10,4 @@
 @_exported import HTML
 @_exported import Letter
 @_exported import OrderedCollections
-@_exported import Percent
 @_exported import Translating

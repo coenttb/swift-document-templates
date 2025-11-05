@@ -5,10 +5,6 @@
 //  Created by Coen ten Thije Boonkkamp on 12/06/2021.
 //
 
-import Foundation
-import HTML
-import Translating
-
 extension Letter {
     public struct Header {
         let sender: Letter.Sender

@@ -7,20 +7,18 @@
 
 import Agenda
 import Attendance_List
-import DateExtensions
 import Dependencies
 import DependenciesTestSupport
-import Foundation
-import HTML
 import HtmlToPdf
 import Invitation
 import Invoice
 import Letter
-import Percent
 import Signature_Page
 import Testing
-import Translating
 
+// PDF generation tests require WKWebView which is extremely slow on iOS Simulator in CI
+// These tests are primarily for documentation and work best on macOS
+#if os(macOS)
 @Suite("README PDF Examples") struct ReadmePDFExamplesTests {
     @Dependency(\.pdf) var pdf
 
@@ -234,3 +232,4 @@ import Translating
         _ = try await pdf.render.html(htmlString, to: outputURL)
     }
 }
+#endif

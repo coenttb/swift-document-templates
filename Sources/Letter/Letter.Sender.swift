@@ -5,11 +5,6 @@
 //  Created by Coen ten Thije Boonkkamp on 30/07/2024.
 //
 
-import Foundation
-import HTML
-import OrderedCollections
-import Translating
-
 extension Letter {
     public struct Sender: Hashable, Equatable, Codable {
         public let name: String

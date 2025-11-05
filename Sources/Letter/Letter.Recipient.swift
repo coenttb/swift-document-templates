@@ -5,11 +5,6 @@
 //  Created by Coen ten Thije Boonkkamp on 30/07/2024.
 //
 
-import Foundation
-import HTML
-import OrderedCollections
-import Translating
-
 extension TranslatedString {
     public static let perEmail: Self = .init(
         dutch: "Verzonden per email",

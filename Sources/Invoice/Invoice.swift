@@ -5,14 +5,6 @@
 //  Created by Coen ten Thije Boonkkamp on 07/06/2022.
 //
 
-import DateExtensions
-import Foundation
-import HTML
-import Letter
-import OrderedCollections
-import Percent
-import Translating
-
 public struct Invoice {
     public let sender: Invoice.Sender
     public let client: Invoice.Recipient

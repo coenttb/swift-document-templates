@@ -7,7 +7,7 @@ A Swift package for data-driven generation of common business documents includin
 
 ## Overview
 
-swift-document-templates provides type-safe Swift models and HTML-based rendering for business documents. Built on swift-html's DSL, it enables programmatic document generation with multi-language support via swift-translating, and PDF export capabilities through pointfree-html-to-pdf.
+swift-document-templates provides type-safe Swift models and HTML-based rendering for business documents. Built on swift-html's DSL, it enables programmatic document generation with multi-language support via swift-translating, and PDF export capabilities through swift-html-to-pdf.
 
 ## Features
 
@@ -19,7 +19,7 @@ swift-document-templates provides type-safe Swift models and HTML-based renderin
 - **Signature Page**: Create signature blocks for natural persons, legal entities, and complex organizational structures
 - **Multi-language support**: Dutch and English translations built-in via swift-translating
 - **Type-safe HTML**: All documents rendered using swift-html's compile-time-checked DSL
-- **PDF export**: Direct conversion to PDF via pointfree-html-to-pdf integration
+- **PDF export**: Direct conversion to PDF via swift-html-to-pdf integration
 
 ## Installation
 
@@ -50,8 +50,6 @@ targets: [
 
 ```swift
 import DocumentTemplates
-import DateExtensions
-import Percent
 
 let invoice = Invoice(
     sender: .init(
@@ -232,8 +230,6 @@ These PDFs are regenerated on every test run by the `README PDF Examples` test s
 
 ### Dependencies
 
-- [pointfree-html-to-pdf](https://github.com/coenttb/pointfree-html-to-pdf): A Swift package integrating pointfree-html with swift-html-to-pdf.
-- [pointfree-html-translating](https://github.com/coenttb/pointfree-html-translating): A Swift package integrating pointfree-html with swift-translating.
 - [swift-html](https://github.com/coenttb/swift-html): The Swift library for domain-accurate and type-safe HTML & CSS.
 - [swift-html-to-pdf](https://github.com/coenttb/swift-html-to-pdf): The Swift package for printing HTML to PDF.
 - [swift-money](https://github.com/coenttb/swift-money): A Swift package with foundational types for currency and monetary calculations.
@@ -256,4 +252,4 @@ Contributions are welcome. Please open an issue to discuss significant changes b
 
 ## Contact
 
-For questions or feedback, reach out at coen@tenthijeboonkkamp.nl or visit [coenttb.com](https://coenttb.com).
+For questions or feedback, reach out at coen@coenttb.com or visit [coenttb.com](https://coenttb.com).

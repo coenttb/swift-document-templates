@@ -5,14 +5,10 @@
 //  Invoice template tests focusing on HTML generation and structure
 //
 
-import DateExtensions
 import Dependencies
 import DependenciesTestSupport
 import Foundation
-import HTML
-import Percent
 import Testing
-import Translating
 
 @testable import Invoice
 

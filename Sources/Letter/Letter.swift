@@ -5,10 +5,6 @@
 //  Created by Coen ten Thije Boonkkamp on 14/06/2020.
 //
 
-import Foundation
-import HTML
-import Translating
-
 public struct Letter {
     let sender: Letter.Sender
     let recipient: Letter.Recipient

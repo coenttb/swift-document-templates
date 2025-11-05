@@ -5,10 +5,6 @@
 //  Created by Coen ten Thije Boonkkamp on 27/11/2020.
 //
 
-import Foundation
-import HTML
-import Translating
-
 public struct Agenda {
     public var items: [Agenda.Item]
 
