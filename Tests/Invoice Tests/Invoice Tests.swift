@@ -23,6 +23,7 @@ import Translating
   func invoiceGeneratesHTML() async throws {
     try await withDependencies {
       $0.calendar = .autoupdatingCurrent
+      $0.locale = .init(identifier: "en_US")
     } operation: {
       let invoice = Invoice(
         sender: .preview,
@@ -47,6 +48,7 @@ import Translating
   func invoiceWithNoRows() async throws {
     try await withDependencies {
       $0.calendar = .autoupdatingCurrent
+      $0.locale = .init(identifier: "en_US")
     } operation: {
       let invoice = Invoice(
         sender: .preview,
@@ -69,6 +71,7 @@ import Translating
   func invoiceReference() async throws {
     try await withDependencies {
       $0.calendar = .autoupdatingCurrent
+      $0.locale = .init(identifier: "en_US")
     } operation: {
       let invoice = Invoice(
         sender: .preview,
@@ -147,6 +150,7 @@ import Translating
   func invoiceWithMixedRows() async throws {
     try await withDependencies {
       $0.calendar = .autoupdatingCurrent
+      $0.locale = .init(identifier: "en_US")
     } operation: {
       let invoice = Invoice(
         sender: .preview,
@@ -171,6 +175,7 @@ import Translating
   func invoiceWithExpiryDate() async throws {
     try await withDependencies {
       $0.calendar = .autoupdatingCurrent
+      $0.locale = .init(identifier: "en_US")
     } operation: {
       let now = Date.now
       let future = now + 14.days
@@ -193,6 +198,7 @@ import Translating
   func invoiceWithoutExpiryDate() async throws {
     try await withDependencies {
       $0.calendar = .autoupdatingCurrent
+      $0.locale = .init(identifier: "en_US")
     } operation: {
       let invoice = Invoice(
         sender: .preview,
@@ -214,6 +220,7 @@ import Translating
   func invoiceWithMetadata() async throws {
     try await withDependencies {
       $0.calendar = .autoupdatingCurrent
+      $0.locale = .init(identifier: "en_US")
     } operation: {
       let key = TranslatedString(dutch: "Project", english: "Project")
       let value = TranslatedString(dutch: "Website", english: "Website")
