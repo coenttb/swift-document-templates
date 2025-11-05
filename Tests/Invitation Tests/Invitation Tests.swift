@@ -20,8 +20,7 @@ import Translating
 
     // MARK: - Basic Functionality
 
-    @Test("Invitation generates HTML with all components")
-    func invitationGeneratesHTML() {
+    @Test("Invitation generates HTML with all components") func invitationGeneratesHTML() {
         let invitation = Invitation(
             sender: .init(
                 name: "Test Org",
@@ -30,11 +29,7 @@ import Translating
                 email: "test@org.com",
                 website: "test.com"
             ),
-            recipient: .init(
-                id: "RECIP001",
-                name: "Guest Name",
-                address: ["456 Street"]
-            ),
+            recipient: .init(id: "RECIP001", name: "Guest Name", address: ["456 Street"]),
             invitationNumber: "INV-001",
             invitationDate: Date.now,
             eventDate: Date.now,
@@ -67,8 +62,7 @@ import Translating
 
     // MARK: - Sender Tests
 
-    @Test("Invitation sender with all fields")
-    func invitationSender() {
+    @Test("Invitation sender with all fields") func invitationSender() {
         let sender = Invitation.Sender(
             name: "Organization",
             address: ["Street 1", "City"],
@@ -84,8 +78,7 @@ import Translating
 
     // MARK: - Recipient Tests
 
-    @Test("Invitation recipient with ID")
-    func invitationRecipient() {
+    @Test("Invitation recipient with ID") func invitationRecipient() {
         let recipient = Invitation.Recipient(
             id: "RECIP001",
             name: "Guest Name",
@@ -118,8 +111,7 @@ import Translating
 
     // MARK: - Metadata
 
-    @Test("Invitation with custom metadata")
-    func invitationWithMetadata() {
+    @Test("Invitation with custom metadata") func invitationWithMetadata() {
         let key = TranslatedString(dutch: "Dresscode", english: "Dress Code")
         let value = TranslatedString(dutch: "Formeel", english: "Formal")
 
@@ -138,8 +130,8 @@ import Translating
 
     // MARK: - Letter Sender Conversion
 
-    @Test("Convert Invitation.Sender to Letter.Sender")
-    func convertInvitationSenderToLetterSender() {
+    @Test("Convert Invitation.Sender to Letter.Sender") func convertInvitationSenderToLetterSender()
+    {
         let invitationSender = Invitation.Sender(
             name: "Organization",
             address: ["Street"],
@@ -158,8 +150,7 @@ import Translating
 
     // MARK: - Language Support
 
-    @Test("Invitation in Dutch", .dependency(\.language, .dutch))
-    func invitationInDutch() {
+    @Test("Invitation in Dutch", .dependency(\.language, .dutch)) func invitationInDutch() {
         let invitation = Invitation(
             sender: .init(name: "Org", address: [], phone: "1", email: "e", website: "w"),
             recipient: .init(id: "R", name: "G", address: []),
@@ -173,8 +164,7 @@ import Translating
         let _: any HTML = invitation
     }
 
-    @Test("Invitation in English", .dependency(\.language, .english))
-    func invitationInEnglish() {
+    @Test("Invitation in English", .dependency(\.language, .english)) func invitationInEnglish() {
         let invitation = Invitation(
             sender: .init(name: "Org", address: [], phone: "1", email: "e", website: "w"),
             recipient: .init(id: "R", name: "G", address: []),
@@ -190,8 +180,7 @@ import Translating
 
     // MARK: - Equatable/Hashable
 
-    @Test("Sender equality")
-    func senderEquality() {
+    @Test("Sender equality") func senderEquality() {
         let sender1 = Invitation.Sender(
             name: "A",
             address: ["B"],
@@ -218,8 +207,7 @@ import Translating
         #expect(sender1 != sender3)
     }
 
-    @Test("Recipient creation")
-    func recipientCreation() {
+    @Test("Recipient creation") func recipientCreation() {
         let recipient1 = Invitation.Recipient(id: "A", name: "B", address: ["C"])
         let recipient2 = Invitation.Recipient(id: "D", name: "E", address: ["F"])
 

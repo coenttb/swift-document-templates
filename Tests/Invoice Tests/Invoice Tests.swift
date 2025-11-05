@@ -24,8 +24,7 @@ import Translating
         "Invoice generates HTML with all components",
         .dependency(\.calendar, .autoupdatingCurrent),
         .dependency(\.locale, .init(identifier: "en_US"))
-    )
-    func invoiceGeneratesHTML() async throws {
+    ) func invoiceGeneratesHTML() async throws {
         let invoice = Invoice(
             sender: .preview,
             client: .preview,
@@ -48,8 +47,7 @@ import Translating
         "Invoice with no rows",
         .dependency(\.calendar, .autoupdatingCurrent),
         .dependency(\.locale, .init(identifier: "en_US"))
-    )
-    func invoiceWithNoRows() async throws {
+    ) func invoiceWithNoRows() async throws {
         let invoice = Invoice(
             sender: .preview,
             client: .preview,
@@ -70,8 +68,7 @@ import Translating
         "Invoice reference combines client ID and invoice number",
         .dependency(\.calendar, .autoupdatingCurrent),
         .dependency(\.locale, .init(identifier: "en_US"))
-    )
-    func invoiceReference() async throws {
+    ) func invoiceReference() async throws {
         let invoice = Invoice(
             sender: .preview,
             client: .init(id: "CLIENT123", name: "Test Client", address: ["Address"]),
@@ -87,8 +84,7 @@ import Translating
 
     // MARK: - Row Types
 
-    @Test("Service row (Dienst) calculations")
-    func serviceRowCalculations() {
+    @Test("Service row (Dienst) calculations") func serviceRowCalculations() {
         let service = Invoice.Row.Dienst(
             amountOfHours: 10,
             hourlyRate: 150,
@@ -102,8 +98,7 @@ import Translating
         #expect(service.description == "Consulting")
     }
 
-    @Test("Goods row (Goed) with quantity and rate")
-    func goodsRow() {
+    @Test("Goods row (Goed) with quantity and rate") func goodsRow() {
         let goods = Invoice.Row.Goed(
             description: "Widget",
             quantity: 5,
@@ -117,8 +112,7 @@ import Translating
         #expect(goods.rate == 25)
     }
 
-    @Test("Service row without VAT")
-    func serviceRowWithoutVAT() {
+    @Test("Service row without VAT") func serviceRowWithoutVAT() {
         let service = Invoice.Row.Dienst(
             amountOfHours: 8,
             hourlyRate: 120,
@@ -129,8 +123,7 @@ import Translating
         #expect(service.vat == nil)
     }
 
-    @Test("Goods row without VAT")
-    func goodsRowWithoutVAT() {
+    @Test("Goods row without VAT") func goodsRowWithoutVAT() {
         let goods = Invoice.Row.Goed(
             description: "Exported goods",
             quantity: 100,
@@ -148,8 +141,7 @@ import Translating
         "Invoice with mixed row types",
         .dependency(\.calendar, .autoupdatingCurrent),
         .dependency(\.locale, .init(identifier: "en_US"))
-    )
-    func invoiceWithMixedRows() async throws {
+    ) func invoiceWithMixedRows() async throws {
         let invoice = Invoice(
             sender: .preview,
             client: .preview,
@@ -182,8 +174,7 @@ import Translating
         "Invoice with expiry date",
         .dependency(\.calendar, .autoupdatingCurrent),
         .dependency(\.locale, .init(identifier: "en_US"))
-    )
-    func invoiceWithExpiryDate() async throws {
+    ) func invoiceWithExpiryDate() async throws {
         let now = Date.now
         let future = now + 14.days
 
@@ -204,8 +195,7 @@ import Translating
         "Invoice without expiry date",
         .dependency(\.calendar, .autoupdatingCurrent),
         .dependency(\.locale, .init(identifier: "en_US"))
-    )
-    func invoiceWithoutExpiryDate() async throws {
+    ) func invoiceWithoutExpiryDate() async throws {
         let invoice = Invoice(
             sender: .preview,
             client: .preview,
@@ -225,8 +215,7 @@ import Translating
         "Invoice with custom metadata",
         .dependency(\.calendar, .autoupdatingCurrent),
         .dependency(\.locale, .init(identifier: "en_US"))
-    )
-    func invoiceWithMetadata() async throws {
+    ) func invoiceWithMetadata() async throws {
         let key = TranslatedString(dutch: "Project", english: "Project")
         let value = TranslatedString(dutch: "Website", english: "Website")
 
@@ -245,8 +234,7 @@ import Translating
 
     // MARK: - Sender/Client
 
-    @Test("Invoice sender with all required fields")
-    func invoiceSender() {
+    @Test("Invoice sender with all required fields") func invoiceSender() {
         let sender = Invoice.Sender(
             name: "Test Company",
             address: ["Street 1", "City"],
@@ -263,8 +251,7 @@ import Translating
         #expect(sender.btw == "NL123456789B01")
     }
 
-    @Test("Invoice recipient with ID")
-    func invoiceRecipient() {
+    @Test("Invoice recipient with ID") func invoiceRecipient() {
         let client = Invoice.Recipient(
             id: "CLIENT001",
             name: "Client Corp",
@@ -277,8 +264,7 @@ import Translating
 
     // MARK: - Letter Sender Conversion
 
-    @Test("Convert Invoice.Sender to Letter.Sender")
-    func convertInvoiceSenderToLetterSender() {
+    @Test("Convert Invoice.Sender to Letter.Sender") func convertInvoiceSenderToLetterSender() {
         let invoiceSender = Invoice.Sender(
             name: "Company",
             address: ["Street"],
@@ -300,8 +286,7 @@ import Translating
 
     // MARK: - VAT Types
 
-    @Test("BTW percent conversion")
-    func btwPercentConversion() {
+    @Test("BTW percent conversion") func btwPercentConversion() {
         let btw = Invoice.BTW.procent21
         #expect(btw.percent == 21%)
     }
@@ -313,8 +298,7 @@ import Translating
         .dependency(\.language, .dutch),
         .dependency(\.calendar, .autoupdatingCurrent),
         .dependency(\.locale, Locale(identifier: "nl_NL"))
-    )
-    func invoiceInDutch() async throws {
+    ) func invoiceInDutch() async throws {
         let invoice = Invoice(
             sender: .preview,
             client: .preview,
@@ -333,8 +317,7 @@ import Translating
         .dependency(\.language, .english),
         .dependency(\.calendar, .autoupdatingCurrent),
         .dependency(\.locale, Locale(identifier: "en_US"))
-    )
-    func invoiceInEnglish() async throws {
+    ) func invoiceInEnglish() async throws {
         let invoice = Invoice(
             sender: .preview,
             client: .preview,
@@ -350,8 +333,7 @@ import Translating
 
     // MARK: - Equatable/Hashable
 
-    @Test("Sender equality")
-    func senderEquality() {
+    @Test("Sender equality") func senderEquality() {
         let sender1 = Invoice.Sender(
             name: "A",
             address: ["B"],
@@ -387,8 +369,7 @@ import Translating
         #expect(sender1 != sender3)
     }
 
-    @Test("Recipient creation")
-    func recipientCreation() {
+    @Test("Recipient creation") func recipientCreation() {
         let client1 = Invoice.Recipient(id: "A", name: "B", address: ["C"])
         let client2 = Invoice.Recipient(id: "D", name: "E", address: ["F"])
 

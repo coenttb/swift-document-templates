@@ -18,19 +18,14 @@ import Translating
 
     // MARK: - Signatory Enum Tests
 
-    @Test("Individual signatory")
-    func individualSignatory() {
-        let signatory = Signatory.individual(
-            name: TranslatedString("John Doe"),
-            metadata: [:]
-        )
+    @Test("Individual signatory") func individualSignatory() {
+        let signatory = Signatory.individual(name: TranslatedString("John Doe"), metadata: [:])
 
         #expect(signatory.name == TranslatedString("John Doe"))
         #expect(signatory.people.count == 1)
     }
 
-    @Test("Group signatory")
-    func groupSignatory() {
+    @Test("Group signatory") func groupSignatory() {
         let signatory = Signatory.group(
             name: TranslatedString("Company"),
             signers: [
@@ -44,8 +39,7 @@ import Translating
         #expect(signatory.people.count == 2)
     }
 
-    @Test("Individual signatory with title")
-    func individualSignatoryWithTitle() {
+    @Test("Individual signatory with title") func individualSignatoryWithTitle() {
         let signatory = Signatory.individual(
             name: "Dr. Jane Smith",
             title: TranslatedString("Director"),
@@ -56,8 +50,7 @@ import Translating
         #expect(signatory.metadata[.title] == TranslatedString("Director"))
     }
 
-    @Test("Individual signatory with position")
-    func individualSignatoryWithPosition() {
+    @Test("Individual signatory with position") func individualSignatoryWithPosition() {
         let signatory = Signatory.individual(
             name: "John Doe",
             position: TranslatedString("CEO"),
@@ -69,28 +62,23 @@ import Translating
 
     // MARK: - Person Tests
 
-    @Test("Person with name only")
-    func personWithNameOnly() {
+    @Test("Person with name only") func personWithNameOnly() {
         let person = Signatory.Person(name: TranslatedString("Test Person"))
 
         #expect(person.name == TranslatedString("Test Person"))
         #expect(person.metadata.isEmpty)
     }
 
-    @Test("Person with metadata")
-    func personWithMetadata() {
+    @Test("Person with metadata") func personWithMetadata() {
         let person = Signatory.Person(
             name: TranslatedString("Test Person"),
-            metadata: [
-                .position: TranslatedString("Manager")
-            ]
+            metadata: [.position: TranslatedString("Manager")]
         )
 
         #expect(person.metadata[.position] == TranslatedString("Manager"))
     }
 
-    @Test("Person with position")
-    func personWithPosition() {
+    @Test("Person with position") func personWithPosition() {
         let person = Signatory.Person(
             name: TranslatedString("Test Person"),
             position: TranslatedString("Director")
@@ -101,37 +89,30 @@ import Translating
 
     // MARK: - SignaturePage Tests
 
-    @Test("SignaturePage with single signatory")
-    func signaturePageWithSingleSignatory() {
-        let page = SignaturePage(
-            signatories: [
-                .individual(name: TranslatedString("John Doe"), metadata: [:])
-            ]
-        )
+    @Test("SignaturePage with single signatory") func signaturePageWithSingleSignatory() {
+        let page = SignaturePage(signatories: [
+            .individual(name: TranslatedString("John Doe"), metadata: [:])
+        ])
 
         #expect(page.signatories.count == 1)
         let _: any HTML = page
     }
 
-    @Test("SignaturePage with multiple signatories")
-    func signaturePageWithMultipleSignatories() {
-        let page = SignaturePage(
-            signatories: [
-                .individual(name: TranslatedString("Person 1"), metadata: [:]),
-                .group(
-                    name: TranslatedString("Company"),
-                    signers: [Signatory.Person(name: TranslatedString("Person 2"))],
-                    metadata: [:]
-                ),
-            ]
-        )
+    @Test("SignaturePage with multiple signatories") func signaturePageWithMultipleSignatories() {
+        let page = SignaturePage(signatories: [
+            .individual(name: TranslatedString("Person 1"), metadata: [:]),
+            .group(
+                name: TranslatedString("Company"),
+                signers: [Signatory.Person(name: TranslatedString("Person 2"))],
+                metadata: [:]
+            ),
+        ])
 
         #expect(page.signatories.count == 2)
         let _: any HTML = page
     }
 
-    @Test("Empty SignaturePage")
-    func emptySignaturePage() {
+    @Test("Empty SignaturePage") func emptySignaturePage() {
         let page = SignaturePage(signatories: [])
 
         #expect(page.signatories.isEmpty)
@@ -163,8 +144,7 @@ import Translating
         #expect(signatory.people.count == 1)
     }
 
-    @Test("Signatory with role")
-    func signatoryWithRole() {
+    @Test("Signatory with role") func signatoryWithRole() {
         let signatory = Signatory(
             name: TranslatedString("Company"),
             role: TranslatedString("Director"),
@@ -176,8 +156,7 @@ import Translating
 
     // MARK: - Person Block Tests
 
-    @Test("Person Block renders HTML")
-    func personBlockRendersHTML() {
+    @Test("Person Block renders HTML") func personBlockRendersHTML() {
         let block = Signatory.Person.Block(
             person: Signatory.Person(name: TranslatedString("Test Person"))
         )
@@ -187,28 +166,22 @@ import Translating
 
     // MARK: - Metadata Tests
 
-    @Test("Signatory with registration number")
-    func signatoryWithRegistrationNumber() {
+    @Test("Signatory with registration number") func signatoryWithRegistrationNumber() {
         let signatory = Signatory(
             name: TranslatedString("Company"),
             signers: [Signatory.Person(name: TranslatedString("Person"))],
-            metadata: [
-                .registrationNumber: TranslatedString("12345678")
-            ]
+            metadata: [.registrationNumber: TranslatedString("12345678")]
         )
 
         #expect(signatory.metadata[.registrationNumber] == TranslatedString("12345678"))
     }
 
-    @Test("Signatory with custom metadata")
-    func signatoryWithCustomMetadata() {
+    @Test("Signatory with custom metadata") func signatoryWithCustomMetadata() {
         let customKey = TranslatedString(dutch: "Kantoor", english: "Office")
         let signatory = Signatory(
             name: TranslatedString("Company"),
             signers: [Signatory.Person(name: TranslatedString("Person"))],
-            metadata: [
-                customKey: TranslatedString("Amsterdam")
-            ]
+            metadata: [customKey: TranslatedString("Amsterdam")]
         )
 
         #expect(signatory.metadata[customKey] == TranslatedString("Amsterdam"))
@@ -216,32 +189,26 @@ import Translating
 
     // MARK: - Language Support
 
-    @Test("SignaturePage in Dutch", .dependency(\.language, .dutch))
-    func signaturePageInDutch() {
-        let page = SignaturePage(
-            signatories: [
-                .individual(name: TranslatedString("Jan Jansen"), metadata: [:])
-            ]
-        )
+    @Test("SignaturePage in Dutch", .dependency(\.language, .dutch)) func signaturePageInDutch() {
+        let page = SignaturePage(signatories: [
+            .individual(name: TranslatedString("Jan Jansen"), metadata: [:])
+        ])
 
         let _: any HTML = page
     }
 
     @Test("SignaturePage in English", .dependency(\.language, .english))
     func signaturePageInEnglish() {
-        let page = SignaturePage(
-            signatories: [
-                .individual(name: TranslatedString("John Doe"), metadata: [:])
-            ]
-        )
+        let page = SignaturePage(signatories: [
+            .individual(name: TranslatedString("John Doe"), metadata: [:])
+        ])
 
         let _: any HTML = page
     }
 
     // MARK: - Codable/Hashable
 
-    @Test("Signatory is Hashable")
-    func signatoryIsHashable() {
+    @Test("Signatory is Hashable") func signatoryIsHashable() {
         let signatory1 = Signatory.individual(name: TranslatedString("A"), metadata: [:])
         let signatory2 = Signatory.individual(name: TranslatedString("A"), metadata: [:])
         let signatory3 = Signatory.individual(name: TranslatedString("B"), metadata: [:])
@@ -250,8 +217,7 @@ import Translating
         #expect(signatory1 != signatory3)
     }
 
-    @Test("Person is Hashable")
-    func personIsHashable() {
+    @Test("Person is Hashable") func personIsHashable() {
         let person1 = Signatory.Person(name: TranslatedString("A"))
         let person2 = Signatory.Person(name: TranslatedString("A"))
         let person3 = Signatory.Person(name: TranslatedString("B"))
@@ -262,8 +228,7 @@ import Translating
 
     // MARK: - Complex Scenarios
 
-    @Test("Management company structure")
-    func managementCompanyStructure() {
+    @Test("Management company structure") func managementCompanyStructure() {
         let managementCompany = Signatory(
             name: TranslatedString("Management B.V."),
             signers: [
@@ -284,16 +249,13 @@ import Translating
             ]
         )
 
-        let page = SignaturePage(
-            signatories: [operatingCompany, managementCompany]
-        )
+        let page = SignaturePage(signatories: [operatingCompany, managementCompany])
 
         #expect(page.signatories.count == 2)
         let _: any HTML = page
     }
 
-    @Test("Multiple representatives")
-    func multipleRepresentatives() {
+    @Test("Multiple representatives") func multipleRepresentatives() {
         let signatory = Signatory(
             name: TranslatedString("Company"),
             signers: [

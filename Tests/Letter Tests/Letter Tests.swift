@@ -18,8 +18,7 @@ import Translating
 
     // MARK: - Basic Functionality
 
-    @Test("Letter generates HTML with all components")
-    func letterGeneratesHTML() throws {
+    @Test("Letter generates HTML with all components") func letterGeneratesHTML() throws {
         let sender = Letter.Sender(
             name: "Test Company",
             address: ["123 Main St", "City, Country"],
@@ -38,9 +37,7 @@ import Translating
             location: "Amsterdam",
             date: (sending: Date.now, signature: nil),
             subject: "Test Subject"
-        ) {
-            p { "Test body content" }
-        }
+        ) { p { "Test body content" } }
 
         // Verify letter conforms to HTML protocol
         let _: any HTML = letter
@@ -49,18 +46,10 @@ import Translating
         #expect(letter.subject == "Test Subject")
     }
 
-    @Test("Letter with minimal required fields")
-    func letterWithMinimalFields() throws {
-        let sender = Letter.Sender(
-            name: "Sender",
-            address: ["Address"],
-            metadata: [:]
-        )
+    @Test("Letter with minimal required fields") func letterWithMinimalFields() throws {
+        let sender = Letter.Sender(name: "Sender", address: ["Address"], metadata: [:])
 
-        let recipient = Letter.Recipient(
-            name: "Recipient",
-            address: ["Address"]
-        )
+        let recipient = Letter.Recipient(name: "Recipient", address: ["Address"])
 
         let letter = Letter(
             sender: sender,
@@ -68,9 +57,7 @@ import Translating
             location: nil,
             date: (sending: nil, signature: nil),
             subject: nil
-        ) {
-            "Body text"
-        }
+        ) { "Body text" }
 
         // Verify minimal letter compiles and renders
         let _: any HTML = letter
@@ -80,8 +67,7 @@ import Translating
 
     // MARK: - Sender Tests
 
-    @Test("Sender with all metadata fields")
-    func senderWithAllMetadata() {
+    @Test("Sender with all metadata fields") func senderWithAllMetadata() {
         let sender = Letter.Sender(
             name: "Full Company",
             address: ["Street 123", "City"],
@@ -98,8 +84,7 @@ import Translating
         #expect(sender.metadata[.email] == "info@company.com")
     }
 
-    @Test("Sender with custom metadata")
-    func senderWithCustomMetadata() {
+    @Test("Sender with custom metadata") func senderWithCustomMetadata() {
         let customKey = TranslatedString(dutch: "Test", english: "Test")
         let sender = Letter.Sender(
             name: "Company",
@@ -110,21 +95,15 @@ import Translating
         #expect(sender.metadata[customKey] == "Value")
     }
 
-    @Test("Sender with empty address array")
-    func senderWithEmptyAddress() {
-        let sender = Letter.Sender(
-            name: "Company",
-            address: [],
-            metadata: [:]
-        )
+    @Test("Sender with empty address array") func senderWithEmptyAddress() {
+        let sender = Letter.Sender(name: "Company", address: [], metadata: [:])
 
         #expect(sender.address.isEmpty)
     }
 
     // MARK: - Recipient Tests
 
-    @Test("Recipient with email metadata")
-    func recipientWithEmails() {
+    @Test("Recipient with email metadata") func recipientWithEmails() {
         let recipient = Letter.Recipient(
             name: "Recipient",
             address: ["Address"],
@@ -135,8 +114,7 @@ import Translating
         #expect(recipient.metadata[.perEmail]?.contains("email2@test.com") == true)
     }
 
-    @Test("Recipient with custom metadata")
-    func recipientWithCustomMetadata() {
+    @Test("Recipient with custom metadata") func recipientWithCustomMetadata() {
         let customKey = TranslatedString(dutch: "Afdeling", english: "Department")
         let recipient = Letter.Recipient(
             name: "Person",
@@ -149,8 +127,9 @@ import Translating
 
     // MARK: - Language Support
 
-    @Test("Letter header in Dutch", .dependency(\.language, .dutch))
-    func letterHeaderInDutch() throws {
+    @Test("Letter header in Dutch", .dependency(\.language, .dutch)) func letterHeaderInDutch()
+        throws
+    {
         let letter = Letter.preview
 
         // Verify letter compiles with Dutch language dependency
@@ -167,8 +146,7 @@ import Translating
 
     // MARK: - Date Handling
 
-    @Test("Letter with both sending and signature dates")
-    func letterWithBothDates() {
+    @Test("Letter with both sending and signature dates") func letterWithBothDates() {
         let now = Date.now
         let letter = Letter(
             sender: .preview,
@@ -176,41 +154,33 @@ import Translating
             location: "Utrecht",
             date: (sending: now, signature: now),
             subject: "Test"
-        ) {
-            "Body"
-        }
+        ) { "Body" }
 
         #expect(letter.date.sending != nil)
         #expect(letter.date.signature != nil)
     }
 
-    @Test("Letter with only sending date")
-    func letterWithOnlySendingDate() {
+    @Test("Letter with only sending date") func letterWithOnlySendingDate() {
         let letter = Letter(
             sender: .preview,
             recipient: .preview,
             location: "Utrecht",
             date: (sending: Date.now, signature: nil),
             subject: "Test"
-        ) {
-            "Body"
-        }
+        ) { "Body" }
 
         #expect(letter.date.sending != nil)
         #expect(letter.date.signature == nil)
     }
 
-    @Test("Letter with no dates")
-    func letterWithNoDates() {
+    @Test("Letter with no dates") func letterWithNoDates() {
         let letter = Letter(
             sender: .preview,
             recipient: .preview,
             location: nil,
             date: (sending: nil, signature: nil),
             subject: "Test"
-        ) {
-            "Body"
-        }
+        ) { "Body" }
 
         #expect(letter.date.sending == nil)
         #expect(letter.date.signature == nil)
@@ -218,8 +188,7 @@ import Translating
 
     // MARK: - Custom Fields
 
-    @Test("Letter with custom reference title")
-    func letterWithCustomReferenceTitle() {
+    @Test("Letter with custom reference title") func letterWithCustomReferenceTitle() {
         let customRef = TranslatedString(dutch: "Kenmerk", english: "Reference")
         let letter = Letter(
             sender: .preview,
@@ -228,16 +197,13 @@ import Translating
             date: (sending: Date.now, signature: nil),
             subject: "Subject",
             referenceTitel: customRef
-        ) {
-            "Body"
-        }
+        ) { "Body" }
 
         // Verify letter can be created with custom reference title
         let _: any HTML = letter
     }
 
-    @Test("Letter with custom salutation")
-    func letterWithCustomSalutation() {
+    @Test("Letter with custom salutation") func letterWithCustomSalutation() {
         let customSalutation = TranslatedString(dutch: "Geachte", english: "Dear")
         let letter = Letter(
             sender: .preview,
@@ -246,9 +212,7 @@ import Translating
             date: (sending: Date.now, signature: nil),
             subject: "Subject",
             salutation: customSalutation
-        ) {
-            "Body"
-        }
+        ) { "Body" }
 
         // Verify letter can be created with custom salutation
         let _: any HTML = letter
@@ -256,8 +220,7 @@ import Translating
 
     // MARK: - Preview
 
-    @Test("Letter preview is valid")
-    func letterPreviewIsValid() {
+    @Test("Letter preview is valid") func letterPreviewIsValid() {
         let preview = Letter.preview
 
         // Verify preview letter can be created and renders
@@ -266,8 +229,7 @@ import Translating
 
     // MARK: - Equatable/Hashable
 
-    @Test("Sender equality")
-    func senderEquality() {
+    @Test("Sender equality") func senderEquality() {
         let sender1 = Letter.Sender(name: "A", address: ["B"], metadata: [:])
         let sender2 = Letter.Sender(name: "A", address: ["B"], metadata: [:])
         let sender3 = Letter.Sender(name: "C", address: ["D"], metadata: [:])
@@ -276,8 +238,7 @@ import Translating
         #expect(sender1 != sender3)
     }
 
-    @Test("Recipient equality")
-    func recipientEquality() {
+    @Test("Recipient equality") func recipientEquality() {
         let recipient1 = Letter.Recipient(name: "A", address: ["B"])
         let recipient2 = Letter.Recipient(name: "A", address: ["B"])
         let recipient3 = Letter.Recipient(name: "C", address: ["D"])

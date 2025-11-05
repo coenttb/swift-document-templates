@@ -21,27 +21,20 @@ import Signature_Page
 import Testing
 import Translating
 
-@Suite("README PDF Examples")
-struct ReadmePDFExamplesTests {
+@Suite("README PDF Examples") struct ReadmePDFExamplesTests {
     @Dependency(\.pdf) var pdf
 
     /// Output directory for generated PDFs
     private static let outputDirectory: URL = {
-        let testDirectory = URL(fileURLWithPath: #filePath)
-            .deletingLastPathComponent()
-        return
-            testDirectory
-            .appendingPathComponent("README Examples Output", isDirectory: true)
+        let testDirectory = URL(fileURLWithPath: #filePath).deletingLastPathComponent()
+        return testDirectory.appendingPathComponent("README Examples Output", isDirectory: true)
     }()
 
     /// Ensure output directory exists
     private static func ensureOutputDirectoryExists() throws {
         let fileManager = FileManager.default
         if !fileManager.fileExists(atPath: outputDirectory.path) {
-            try fileManager.createDirectory(
-                at: outputDirectory,
-                withIntermediateDirectories: true
-            )
+            try fileManager.createDirectory(at: outputDirectory, withIntermediateDirectories: true)
         }
     }
 
@@ -51,8 +44,7 @@ struct ReadmePDFExamplesTests {
         "Generate Invoice PDF from README example",
         .dependency(\.calendar, .autoupdatingCurrent),
         .dependency(\.locale, .init(identifier: "en_US"))
-    )
-    func generateInvoicePDF() async throws {
+    ) func generateInvoicePDF() async throws {
         try Self.ensureOutputDirectoryExists()
 
         let invoice = Invoice(
@@ -87,8 +79,7 @@ struct ReadmePDFExamplesTests {
             ]
         )
 
-        let outputURL = Self.outputDirectory
-            .appendingPathComponent("Invoice Example.pdf")
+        let outputURL = Self.outputDirectory.appendingPathComponent("Invoice Example.pdf")
 
         let htmlString = try String(invoice)
         _ = try await pdf.render.html(htmlString, to: outputURL)
@@ -99,8 +90,7 @@ struct ReadmePDFExamplesTests {
     @Test(
         "Generate Letter PDF from README example",
         .dependency(\.locale, .init(identifier: "en_US"))
-    )
-    func generateLetterPDF() async throws {
+    ) func generateLetterPDF() async throws {
         try Self.ensureOutputDirectoryExists()
 
         let sender: Letter.Sender = .init(
@@ -129,8 +119,7 @@ struct ReadmePDFExamplesTests {
             p { "Your Name" }
         }
 
-        let outputURL = Self.outputDirectory
-            .appendingPathComponent("Letter Example.pdf")
+        let outputURL = Self.outputDirectory.appendingPathComponent("Letter Example.pdf")
 
         let htmlString = try String(letter)
         _ = try await pdf.render.html(htmlString, to: outputURL)
@@ -141,20 +130,15 @@ struct ReadmePDFExamplesTests {
     @Test(
         "Generate Agenda PDF from README example",
         .dependency(\.locale, .init(identifier: "en_US"))
-    )
-    func generateAgendaPDF() async throws {
+    ) func generateAgendaPDF() async throws {
         try Self.ensureOutputDirectoryExists()
 
-        let agenda = Agenda(
-            items: [
-                .init(title: "Opening Remarks"),
-                .init(title: "Q1 Financial Results"),
-                .init(title: "Strategic Planning Discussion"),
-            ]
-        )
+        let agenda = Agenda(items: [
+            .init(title: "Opening Remarks"), .init(title: "Q1 Financial Results"),
+            .init(title: "Strategic Planning Discussion"),
+        ])
 
-        let outputURL = Self.outputDirectory
-            .appendingPathComponent("Agenda Example.pdf")
+        let outputURL = Self.outputDirectory.appendingPathComponent("Agenda Example.pdf")
 
         let htmlString = try String(agenda)
         _ = try await pdf.render.html(htmlString, to: outputURL)
@@ -165,8 +149,7 @@ struct ReadmePDFExamplesTests {
     @Test(
         "Generate Attendance List PDF from README example",
         .dependency(\.locale, .init(identifier: "en_US"))
-    )
-    func generateAttendanceListPDF() async throws {
+    ) func generateAttendanceListPDF() async throws {
         try Self.ensureOutputDirectoryExists()
 
         let attendanceList = AttendanceList(
@@ -178,8 +161,7 @@ struct ReadmePDFExamplesTests {
             ]
         )
 
-        let outputURL = Self.outputDirectory
-            .appendingPathComponent("Attendance List Example.pdf")
+        let outputURL = Self.outputDirectory.appendingPathComponent("Attendance List Example.pdf")
 
         let htmlString = try String(attendanceList)
         _ = try await pdf.render.html(htmlString, to: outputURL)
@@ -190,8 +172,7 @@ struct ReadmePDFExamplesTests {
     @Test(
         "Generate Invitation PDF from README example",
         .dependency(\.locale, .init(identifier: "en_US"))
-    )
-    func generateInvitationPDF() async throws {
+    ) func generateInvitationPDF() async throws {
         try Self.ensureOutputDirectoryExists()
 
         let invitation = Invitation(
@@ -214,8 +195,7 @@ struct ReadmePDFExamplesTests {
             metadata: [:]
         )
 
-        let outputURL = Self.outputDirectory
-            .appendingPathComponent("Invitation Example.pdf")
+        let outputURL = Self.outputDirectory.appendingPathComponent("Invitation Example.pdf")
 
         let htmlString = try String(invitation)
         _ = try await pdf.render.html(htmlString, to: outputURL)
@@ -226,8 +206,7 @@ struct ReadmePDFExamplesTests {
     @Test(
         "Generate Signature Page PDF from README example",
         .dependency(\.locale, .init(identifier: "en_US"))
-    )
-    func generateSignaturePagePDF() async throws {
+    ) func generateSignaturePagePDF() async throws {
         try Self.ensureOutputDirectoryExists()
 
         // Single individual
@@ -247,12 +226,9 @@ struct ReadmePDFExamplesTests {
             metadata: [:]
         )
 
-        let signaturePage = SignaturePage(
-            signatories: [individual, group]
-        )
+        let signaturePage = SignaturePage(signatories: [individual, group])
 
-        let outputURL = Self.outputDirectory
-            .appendingPathComponent("Signature Page Example.pdf")
+        let outputURL = Self.outputDirectory.appendingPathComponent("Signature Page Example.pdf")
 
         let htmlString = try String(signaturePage)
         _ = try await pdf.render.html(htmlString, to: outputURL)

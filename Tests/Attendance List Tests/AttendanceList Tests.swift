@@ -18,8 +18,7 @@ import Translating
 
     // MARK: - Basic Functionality
 
-    @Test("AttendanceList generates HTML with attendees")
-    func attendanceListGeneratesHTML() {
+    @Test("AttendanceList generates HTML with attendees") func attendanceListGeneratesHTML() {
         let list = AttendanceList(
             title: "Annual Meeting",
             metadata: [:],
@@ -35,13 +34,8 @@ import Translating
         #expect(list.attendees.count == 2)
     }
 
-    @Test("AttendanceList with empty attendees")
-    func attendanceListWithEmptyAttendees() {
-        let list = AttendanceList(
-            title: "Empty Meeting",
-            metadata: [:],
-            attendees: []
-        )
+    @Test("AttendanceList with empty attendees") func attendanceListWithEmptyAttendees() {
+        let list = AttendanceList(title: "Empty Meeting", metadata: [:], attendees: [])
 
         #expect(list.attendees.isEmpty)
         let _: any HTML = list
@@ -49,8 +43,7 @@ import Translating
 
     // MARK: - Attendee Tests
 
-    @Test("Attendee with all fields")
-    func attendeeWithAllFields() {
+    @Test("Attendee with all fields") func attendeeWithAllFields() {
         let attendee = AttendanceList.Attendee(
             firstName: "John",
             lastName: "Doe",
@@ -62,8 +55,7 @@ import Translating
         _ = attendee
     }
 
-    @Test("Attendee without signature")
-    func attendeeWithoutSignature() {
+    @Test("Attendee without signature") func attendeeWithoutSignature() {
         let attendee = AttendanceList.Attendee(
             firstName: "Jane",
             lastName: "Smith",
@@ -76,17 +68,13 @@ import Translating
 
     // MARK: - Metadata Tests
 
-    @Test("AttendanceList with metadata")
-    func attendanceListWithMetadata() {
+    @Test("AttendanceList with metadata") func attendanceListWithMetadata() {
         let key1 = TranslatedString(dutch: "Datum", english: "Date")
         let key2 = TranslatedString(dutch: "Locatie", english: "Location")
 
         let list = AttendanceList(
             title: "Meeting",
-            metadata: [
-                key1: "2024-01-15",
-                key2: "Conference Room A",
-            ],
+            metadata: [key1: "2024-01-15", key2: "Conference Room A"],
             attendees: []
         )
 
@@ -95,20 +83,15 @@ import Translating
         #expect(list.metadata[key2] == "Conference Room A")
     }
 
-    @Test("AttendanceList without metadata")
-    func attendanceListWithoutMetadata() {
-        let list = AttendanceList(
-            title: "Simple Meeting",
-            attendees: []
-        )
+    @Test("AttendanceList without metadata") func attendanceListWithoutMetadata() {
+        let list = AttendanceList(title: "Simple Meeting", attendees: [])
 
         #expect(list.metadata.isEmpty)
     }
 
     // MARK: - Multiple Attendees
 
-    @Test("AttendanceList with many attendees")
-    func attendanceListWithManyAttendees() {
+    @Test("AttendanceList with many attendees") func attendanceListWithManyAttendees() {
         let attendees = (1...50).map { i in
             AttendanceList.Attendee(
                 firstName: "FirstName\(i)",
@@ -117,25 +100,18 @@ import Translating
             )
         }
 
-        let list = AttendanceList(
-            title: "Large Meeting",
-            metadata: [:],
-            attendees: attendees
-        )
+        let list = AttendanceList(title: "Large Meeting", metadata: [:], attendees: attendees)
 
         #expect(list.attendees.count == 50)
     }
 
     // MARK: - Language Support
 
-    @Test("AttendanceList in Dutch", .dependency(\.language, .dutch))
-    func attendanceListInDutch() {
+    @Test("AttendanceList in Dutch", .dependency(\.language, .dutch)) func attendanceListInDutch() {
         let list = AttendanceList(
             title: "Vergadering",
             metadata: [:],
-            attendees: [
-                .init(firstName: "Jan", lastName: "Jansen", role: "Manager")
-            ]
+            attendees: [.init(firstName: "Jan", lastName: "Jansen", role: "Manager")]
         )
 
         let _: any HTML = list
@@ -146,9 +122,7 @@ import Translating
         let list = AttendanceList(
             title: "Meeting",
             metadata: [:],
-            attendees: [
-                .init(firstName: "John", lastName: "Doe", role: "Manager")
-            ]
+            attendees: [.init(firstName: "John", lastName: "Doe", role: "Manager")]
         )
 
         let _: any HTML = list
@@ -156,24 +130,14 @@ import Translating
 
     // MARK: - Sendable Conformance
 
-    @Test("AttendanceList is Sendable")
-    func attendanceListIsSendable() {
-        let list = AttendanceList(
-            title: "Test",
-            metadata: [:],
-            attendees: []
-        )
+    @Test("AttendanceList is Sendable") func attendanceListIsSendable() {
+        let list = AttendanceList(title: "Test", metadata: [:], attendees: [])
 
         let _: any Sendable = list
     }
 
-    @Test("Attendee is Sendable")
-    func attendeeIsSendable() {
-        let attendee = AttendanceList.Attendee(
-            firstName: "Test",
-            lastName: "User",
-            role: "Tester"
-        )
+    @Test("Attendee is Sendable") func attendeeIsSendable() {
+        let attendee = AttendanceList.Attendee(firstName: "Test", lastName: "User", role: "Tester")
 
         let _: any Sendable = attendee
     }

@@ -20,14 +20,12 @@ import Signature_Page
 import Testing
 import Translating
 
-@Suite("README Verification")
-struct ReadmeVerificationTests {
+@Suite("README Verification") struct ReadmeVerificationTests {
 
     @Test(
         "Invoice example from README (lines 51-84)",
         .dependency(\.calendar, .autoupdatingCurrent)
-    )
-    func invoiceExample() {
+    ) func invoiceExample() {
         let invoice = Invoice(
             sender: .init(
                 name: "Your Company",
@@ -67,8 +65,7 @@ struct ReadmeVerificationTests {
         #expect(invoice.rows.count == 1)
     }
 
-    @Test("Letter example from README (lines 93-120)")
-    func letterExample() throws {
+    @Test("Letter example from README (lines 93-120)") func letterExample() throws {
         let sender: Letter.Sender = .init(
             name: "Your Company",
             address: ["123 Main St", "City", "Country"],
@@ -113,11 +110,7 @@ struct ReadmeVerificationTests {
                 btw: "NL123456789B01",
                 iban: "NL00TEST1234567890"
             ),
-            client: .init(
-                id: "CLIENT001",
-                name: "Test Client",
-                address: ["Client Address"]
-            ),
+            client: .init(id: "CLIENT001", name: "Test Client", address: ["Client Address"]),
             invoiceNumber: "INV-001",
             invoiceDate: Date.now,
             expiryDate: Date.now + 7.days,
@@ -129,8 +122,7 @@ struct ReadmeVerificationTests {
         let _: any HTML = invoice
     }
 
-    @Test("Letter can render as HTML")
-    func letterRendersAsHTML() throws {
+    @Test("Letter can render as HTML") func letterRendersAsHTML() throws {
         let letter = Letter(
             sender: .init(
                 name: "Sender",
@@ -139,16 +131,11 @@ struct ReadmeVerificationTests {
                 email: "sender@test.com",
                 website: "test.com"
             ),
-            recipient: .init(
-                name: "Recipient",
-                address: ["Address"]
-            ),
+            recipient: .init(name: "Recipient", address: ["Address"]),
             location: "City",
             date: (sending: Date.now, signature: nil),
             subject: "Test Subject"
-        ) {
-            "Test body content"
-        }
+        ) { "Test body content" }
 
         // Verify letter conforms to HTML protocol
         let _: any HTML = letter
@@ -163,31 +150,26 @@ struct ReadmeVerificationTests {
         #expect(future > now)
     }
 
-    @Test("Percent literal syntax works")
-    func percentLiteral() throws {
+    @Test("Percent literal syntax works") func percentLiteral() throws {
         let vat = 21%
 
         // Verify percent literal compiles
         #expect(vat.rawValue == 21)
     }
 
-    @Test("Agenda example from README (lines 134-142)")
-    func agendaExample() throws {
-        let agenda = Agenda(
-            items: [
-                .init(title: "Opening Remarks"),
-                .init(title: "Q1 Financial Results"),
-                .init(title: "Strategic Planning Discussion"),
-            ]
-        )
+    @Test("Agenda example from README (lines 134-142)") func agendaExample() throws {
+        let agenda = Agenda(items: [
+            .init(title: "Opening Remarks"), .init(title: "Q1 Financial Results"),
+            .init(title: "Strategic Planning Discussion"),
+        ])
 
         // Verify agenda was created and compiles
         #expect(agenda.items.count == 3)
         let _: any HTML = agenda
     }
 
-    @Test("Attendance List example from README (lines 150-159)")
-    func attendanceListExample() throws {
+    @Test("Attendance List example from README (lines 150-159)") func attendanceListExample() throws
+    {
         let attendanceList = AttendanceList(
             title: "Annual Conference",
             metadata: [:],
@@ -203,8 +185,7 @@ struct ReadmeVerificationTests {
         let _: any HTML = attendanceList
     }
 
-    @Test("Invitation example from README (lines 167-187)")
-    func invitationExample() throws {
+    @Test("Invitation example from README (lines 167-187)") func invitationExample() throws {
         let invitation = Invitation(
             sender: .init(
                 name: "Your Company",
@@ -229,8 +210,7 @@ struct ReadmeVerificationTests {
         let _: any HTML = invitation
     }
 
-    @Test("Signature Page example from README (lines 195-212)")
-    func signaturePageExample() throws {
+    @Test("Signature Page example from README (lines 195-212)") func signaturePageExample() throws {
         // Single individual
         let individual = Signatory.individual(
             name: "John Doe",

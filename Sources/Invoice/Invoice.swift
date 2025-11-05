@@ -45,11 +45,7 @@ extension Invoice {
     public typealias Metadata = OrderedDictionary<TranslatedString, TranslatedString>
 }
 
-extension Invoice {
-    var reference: String {
-        "\(client.id)-\(invoiceNumber)"
-    }
-}
+extension Invoice { var reference: String { "\(client.id)-\(invoiceNumber)" } }
 
 extension Invoice {
     public struct Sender: Hashable, Equatable, Codable {
@@ -123,11 +119,7 @@ extension Invoice {
 
 extension Letter.Recipient {
     public init(_ recipient: Invoice.Recipient) {
-        self = .init(
-            name: recipient.name,
-            address: recipient.address,
-            metadata: recipient.metadata
-        )
+        self = .init(name: recipient.name, address: recipient.address, metadata: recipient.metadata)
     }
 }
 
@@ -143,52 +135,46 @@ extension Invoice: HTML {
             table {
                 tr {
                     td {
-                        h1 {
-                            TranslatedString.invoice.capitalized
-                        }
+                        h1 { TranslatedString.invoice.capitalized }
 
-                        .margin(top: 0)
-                        .margin(bottom: 0)
-                    }
-                    .verticalAlign(.top)
-                    .width(.percent(100))
+                            .margin(top: 0).margin(bottom: 0)
+                    }.verticalAlign(.top).width(.percent(100))
 
                     td {
                         table {
                             HTMLGroup {
                                 tr {
-                                    td { b { TranslatedString.clientNumber.capitalized } }
-                                        .padding(right: .px(15))
+                                    td { b { TranslatedString.clientNumber.capitalized } }.padding(
+                                        right: .px(15)
+                                    )
                                     td { "\(self.client.id)" }
 
                                 }
                                 tr {
-                                    td { b { TranslatedString.invoiceNumber.capitalized } }
-                                        .padding(right: .px(15))
+                                    td { b { TranslatedString.invoiceNumber.capitalized } }.padding(
+                                        right: .px(15)
+                                    )
                                     td { "\(self.invoiceNumber)" }
 
                                 }
                                 tr {
-                                    td { b { TranslatedString.invoiceDate.capitalized } }
-                                        .padding(right: .px(15))
+                                    td { b { TranslatedString.invoiceDate.capitalized } }.padding(
+                                        right: .px(15)
+                                    )
 
                                     td {
                                         "\(self.invoiceDate.formatted(date: .long, time: .omitted, translated: true))"
                                     }
 
                                 }
-                            }
-                            .verticalAlign(.bottom)
-                            .whiteSpace(.nowrap)
+                            }.verticalAlign(.bottom).whiteSpace(.nowrap)
 
                         }
 
                     }
 
-                }
-                .verticalAlign(.bottom)
-            }
-            .borderCollapse(.collapse)
+                }.verticalAlign(.bottom)
+            }.borderCollapse(.collapse)
 
             br()()
 
@@ -205,14 +191,12 @@ extension Invoice: HTML {
 
                 HTMLForEach(metadata.map { $0 }) { key, value in
                     tr {
-                        td { "\(key)" }
-                            .padding(right: .px(15))
+                        td { "\(key)" }.padding(right: .px(15))
                         td { "\(value)" }
                     }
                 }
 
-            }
-            .borderCollapse(.collapse)
+            }.borderCollapse(.collapse)
 
             br()()
             br()()
@@ -221,78 +205,60 @@ extension Invoice: HTML {
 
                 thead {
                     tr {
-                        td { b { TranslatedString.description.capitalized } }
-                            .width(.percent(100))
+                        td { b { TranslatedString.description.capitalized } }.width(.percent(100))
                             .padding(right: .px(15))
 
-                        td { b { TranslatedString.quantity.capitalized } }
-                            .padding(right: .px(15))
+                        td { b { TranslatedString.quantity.capitalized } }.padding(right: .px(15))
 
-                        td { b { TranslatedString.unit.capitalized } }
-                            .padding(right: .px(15))
+                        td { b { TranslatedString.unit.capitalized } }.padding(right: .px(15))
 
-                        td { b { TranslatedString.rate.capitalized } }
-                            .padding(right: .px(15))
+                        td { b { TranslatedString.rate.capitalized } }.padding(right: .px(15))
 
-                        td { b { TranslatedString.vatPercentage.uppercased() } }
-                            .padding(right: .px(15))
-                    }
-                    .inlineStyle("border-bottom", "1px solid #000")
+                        td { b { TranslatedString.vatPercentage.uppercased() } }.padding(
+                            right: .px(15)
+                        )
+                    }.inlineStyle("border-bottom", "1px solid #000")
                 }
 
                 HTMLForEach(self.rows) { row in
                     switch row {
                     case .goed(let goed):
                         tr {
-                            td { "\(goed.description)" }
-                                .padding(right: .px(15))
+                            td { "\(goed.description)" }.padding(right: .px(15))
 
-                            td { "\(goed.quantity)" }
-                                .padding(right: .px(15))
+                            td { "\(goed.quantity)" }.padding(right: .px(15))
 
-                            td { TranslatedString.unit.capitalized() }
-                                .padding(right: .px(15))
+                            td { TranslatedString.unit.capitalized() }.padding(right: .px(15))
 
-                            td { "\(goed.rate.formatted(.euro))" }
-                                .padding(right: .px(15))
+                            td { "\(goed.rate.formatted(.euro))" }.padding(right: .px(15))
 
-                            td { "\(goed.vatPercentage?.percent ?? 0%)" }
-                                .padding(right: .px(15))
+                            td { "\(goed.vatPercentage?.percent ?? 0%)" }.padding(right: .px(15))
                         }
                     case .service(let dienst):
                         tr {
-                            td { "\(dienst.description)" }
-                                .padding(right: .px(15))
+                            td { "\(dienst.description)" }.padding(right: .px(15))
 
-                            td { "\(dienst.amountOfHours)" }
-                                .padding(right: .px(15))
+                            td { "\(dienst.amountOfHours)" }.padding(right: .px(15))
 
                             td {
                                 dienst.amountOfHours <= 1
                                     ? TranslatedString.hour.capitalized()
                                     : TranslatedString.hours.capitalized()
-                            }
-                            .padding(right: .px(15))
+                            }.padding(right: .px(15))
 
-                            td { "\(dienst.hourlyRate.formatted(.euro))" }
-                                .padding(right: .px(15))
+                            td { "\(dienst.hourlyRate.formatted(.euro))" }.padding(right: .px(15))
 
-                            td { "\(dienst.vat ?? 0%)" }
-                                .padding(right: .px(15))
+                            td { "\(dienst.vat ?? 0%)" }.padding(right: .px(15))
                         }
                     }
                 }
-            }
-            .borderCollapse(.separate)
+            }.borderCollapse(.separate)
 
             hr().body
 
             table {
                 tr {
-                    td {
-                        HTMLEmpty()
-                    }
-                    .width(.percent(100))
+                    td { HTMLEmpty() }.width(.percent(100))
 
                     td {
                         table {
@@ -302,17 +268,17 @@ extension Invoice: HTML {
                                         dutch: "Bedrag excl. BTW",
                                         english: "Amount excl. VAT"
                                     )
-                                }
-                                .whiteSpace(.nowrap)
-                                .padding(right: .px(15))
+                                }.whiteSpace(.nowrap).padding(right: .px(15))
                                 td { "\(self.rows.totalExcludingVAT.formatted(.euro))" }
                             }
 
                             tr {
                                 td { TranslatedString.vat.uppercased() }
                                 //                                    .inlineStyle("border-bottom", "3px double #000")
-                                td { "\(self.rows.totalVAT.formatted(.euro))" }
-                                    .inlineStyle("border-bottom", "3px double #000")
+                                td { "\(self.rows.totalVAT.formatted(.euro))" }.inlineStyle(
+                                    "border-bottom",
+                                    "3px double #000"
+                                )
                             }
 
                             tr {
@@ -322,8 +288,7 @@ extension Invoice: HTML {
                         }
                     }
                 }
-            }
-            .borderCollapse(.collapse)
+            }.borderCollapse(.collapse)
 
             br()()
             br()()
@@ -340,8 +305,7 @@ extension Invoice: HTML {
                         ))
                         """
                     )
-                    HTMLText(self.sender.iban)
-                        .whiteSpace(.nowrap)
+                    HTMLText(self.sender.iban).whiteSpace(.nowrap)
                     HTMLText(
                         """
                         \(TranslatedString(
@@ -365,8 +329,7 @@ extension Invoice: HTML {
                         ))
                         """
                     )
-                    HTMLText(self.sender.iban)
-                        .whiteSpace(.nowrap)
+                    HTMLText(self.sender.iban).whiteSpace(.nowrap)
                     HTMLText(
                         """
                         \(TranslatedString(
@@ -386,9 +349,7 @@ extension Invoice: HTML {
 
 extension FormatStyle where Self == Decimal.FormatStyle.Currency {
     static var euro: Self {
-        .currency(code: "EUR")
-            .precision(.fractionLength(2))
-            .locale(Locale(identifier: "nl_NL"))
+        .currency(code: "EUR").precision(.fractionLength(2)).locale(Locale(identifier: "nl_NL"))
     }
 }
 
@@ -399,11 +360,7 @@ extension Invoice {
     }
 }
 
-extension Invoice {
-    public enum BTW {
-        case procent21
-    }
-}
+extension Invoice { public enum BTW { case procent21 } }
 
 extension Invoice.BTW {
     public var percent: Percent.Percentage {
@@ -455,19 +412,13 @@ extension Invoice.Row {
 
 extension Array where Element == Invoice.Row {
     public var totalExcludingVAT: Decimal {
-        self.reduce(Decimal(0)) { partialResult, row in
-            partialResult + row.total
-        }
+        self.reduce(Decimal(0)) { partialResult, row in partialResult + row.total }
     }
 
-    public var totalIncludingVAT: Decimal {
-        totalExcludingVAT + totalVAT
-    }
+    public var totalIncludingVAT: Decimal { totalExcludingVAT + totalVAT }
 
     public var totalVAT: Decimal {
-        self.reduce(Decimal(0)) { partialResult, row in
-            partialResult + row.totalVAT
-        }
+        self.reduce(Decimal(0)) { partialResult, row in partialResult + row.totalVAT }
     }
 }
 
@@ -509,21 +460,14 @@ extension Invoice.Row.Goed {
 }
 
 extension TranslatedString {
-    public static let netherlands: Self = .init(
-        dutch: "Nederland",
-        english: "The Netherlands"
-    )
+    public static let netherlands: Self = .init(dutch: "Nederland", english: "The Netherlands")
 }
 
 extension Invoice.Sender {
     package static var preview: Self {
         .init(
             name: "Preview Invoice B.V.",
-            address: [
-                "Straat 1",
-                "3544 CV Utrecht",
-                "\(TranslatedString.netherlands)",
-            ],
+            address: ["Straat 1", "3544 CV Utrecht", "\(TranslatedString.netherlands)"],
             phone: "+31 6 43901430",
             email: "info@previewfactuur.nl",
             website: "www.previewfactuur.nl",
@@ -539,18 +483,12 @@ extension Invoice.Recipient {
         .init(
             id: "GFH12JK98J",
             name: "Cliënt B.V.",
-            address: [
-                "Laan der Wegen 56",
-                "3555 HV Amsterdam",
-                "\(TranslatedString.netherlands)",
-            ]
+            address: ["Laan der Wegen 56", "3555 HV Amsterdam", "\(TranslatedString.netherlands)"]
         )
     }
 }
 
-extension Percent.Percentage {
-    public static var vat_regular_dutch: Self { .init(fraction: 0.21) }
-}
+extension Percent.Percentage { public static var vat_regular_dutch: Self { .init(fraction: 0.21) } }
 
 extension Invoice {
     package static var preview: Self {
@@ -588,9 +526,9 @@ extension Invoice {
                         vat: .vat_regular_dutch,
                         description: """
                             \(TranslatedString(
-                            dutch: "additioneel verzocht werk: [...]",
-                            english: "additionally requested work: : [...]"
-                        ))
+                                dutch: "additioneel verzocht werk: [...]",
+                                english: "additionally requested work: : [...]"
+                            ))
                             """
                     )
                 ),
@@ -609,19 +547,11 @@ extension Invoice {
 
 extension TranslatedString {
     package static func fixed_hours(week: Int) -> TranslatedString {
-        return .init(
-            dutch: "week \(week) vaste uren",
-            english: "week \(week) fixed hours"
-        )
+        return .init(dutch: "week \(week) vaste uren", english: "week \(week) fixed hours")
     }
 }
 
 #if os(macOS) && canImport(SwiftUI)
     import SwiftUI
-    #Preview {
-        HTMLDocument {
-            Invoice.preview
-        }
-        .frame(width: 632, height: 750)
-    }
+    #Preview { HTMLDocument { Invoice.preview }.frame(width: 632, height: 750) }
 #endif
