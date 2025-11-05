@@ -7,6 +7,7 @@
 
 import DateExtensions
 import Dependencies
+import DependenciesTestSupport
 import Foundation
 import HTML
 import Letter
@@ -97,26 +98,22 @@ import Translating
 
   // MARK: - Date Handling
 
-  @Test("Invitation with event date in future")
+  @Test("Invitation with event date in future", .dependency(\.calendar, .autoupdatingCurrent))
   func invitationWithFutureEventDate() async throws {
-    try await withDependencies {
-      $0.calendar = .autoupdatingCurrent
-    } operation: {
-      let now = Date.now
-      let future = now + 7.days
+    let now = Date.now
+    let future = now + 7.days
 
-      let invitation = Invitation(
-        sender: .init(name: "O", address: [], phone: "1", email: "e", website: "w"),
-        recipient: .init(id: "R", name: "G", address: []),
-        invitationNumber: "INV",
-        invitationDate: now,
-        eventDate: future,
-        location: "L",
-        metadata: [:]
-      )
+    let invitation = Invitation(
+      sender: .init(name: "O", address: [], phone: "1", email: "e", website: "w"),
+      recipient: .init(id: "R", name: "G", address: []),
+      invitationNumber: "INV",
+      invitationDate: now,
+      eventDate: future,
+      location: "L",
+      metadata: [:]
+    )
 
-      #expect(invitation.eventDate > invitation.invitationDate)
-    }
+    #expect(invitation.eventDate > invitation.invitationDate)
   }
 
   // MARK: - Metadata
@@ -161,42 +158,34 @@ import Translating
 
   // MARK: - Language Support
 
-  @Test("Invitation in Dutch")
+  @Test("Invitation in Dutch", .dependency(\.language, .dutch))
   func invitationInDutch() {
-    withDependencies {
-      $0.language = .dutch
-    } operation: {
-      let invitation = Invitation(
-        sender: .init(name: "Org", address: [], phone: "1", email: "e", website: "w"),
-        recipient: .init(id: "R", name: "G", address: []),
-        invitationNumber: "INV",
-        invitationDate: Date.now,
-        eventDate: Date.now,
-        location: "L",
-        metadata: [:]
-      )
+    let invitation = Invitation(
+      sender: .init(name: "Org", address: [], phone: "1", email: "e", website: "w"),
+      recipient: .init(id: "R", name: "G", address: []),
+      invitationNumber: "INV",
+      invitationDate: Date.now,
+      eventDate: Date.now,
+      location: "L",
+      metadata: [:]
+    )
 
-      let _: any HTML = invitation
-    }
+    let _: any HTML = invitation
   }
 
-  @Test("Invitation in English")
+  @Test("Invitation in English", .dependency(\.language, .english))
   func invitationInEnglish() {
-    withDependencies {
-      $0.language = .english
-    } operation: {
-      let invitation = Invitation(
-        sender: .init(name: "Org", address: [], phone: "1", email: "e", website: "w"),
-        recipient: .init(id: "R", name: "G", address: []),
-        invitationNumber: "INV",
-        invitationDate: Date.now,
-        eventDate: Date.now,
-        location: "L",
-        metadata: [:]
-      )
+    let invitation = Invitation(
+      sender: .init(name: "Org", address: [], phone: "1", email: "e", website: "w"),
+      recipient: .init(id: "R", name: "G", address: []),
+      invitationNumber: "INV",
+      invitationDate: Date.now,
+      eventDate: Date.now,
+      location: "L",
+      metadata: [:]
+    )
 
-      let _: any HTML = invitation
-    }
+    let _: any HTML = invitation
   }
 
   // MARK: - Equatable/Hashable

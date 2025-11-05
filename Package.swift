@@ -23,6 +23,7 @@ extension Target.Dependency {
 
 extension Target.Dependency {
     static var dependencies: Self { .product(name: "Dependencies", package: "swift-dependencies") }
+    static var dependenciesTestSupport: Self { .product(name: "DependenciesTestSupport", package: "swift-dependencies") }
     static var typesFoundation: Self { .product(name: "TypesFoundation", package: "swift-types-foundation") }
     static var translating: Self { .product(name: "Translating", package: "swift-translating") }
     static var translations: Self { .product(name: "Translations", package: "swift-translating") }
@@ -112,7 +113,7 @@ extension Package {
                 targets.map { document in
                     Target.testTarget(
                         name: "\(document.name) Tests",
-                        dependencies: [.init(stringLiteral: document.name)] + [.htmlToPdf]
+                        dependencies: [.init(stringLiteral: document.name)] + [.htmlToPdf, .dependenciesTestSupport]
                     )
                 }
             ].flatMap { $0 }

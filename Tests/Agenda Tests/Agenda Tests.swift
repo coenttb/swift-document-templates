@@ -6,6 +6,7 @@
 //
 
 import Dependencies
+import DependenciesTestSupport
 import Foundation
 import HTML
 import Testing
@@ -70,34 +71,26 @@ import Translating
 
   // MARK: - Language Support
 
-  @Test("Agenda in Dutch")
+  @Test("Agenda in Dutch", .dependency(\.language, .dutch))
   func agendaInDutch() {
-    withDependencies {
-      $0.language = .dutch
-    } operation: {
-      let agenda = Agenda(
-        items: [
-          .init(title: "Test onderwerp")
-        ]
-      )
+    let agenda = Agenda(
+      items: [
+        .init(title: "Test onderwerp")
+      ]
+    )
 
-      let _: any HTML = agenda
-    }
+    let _: any HTML = agenda
   }
 
-  @Test("Agenda in English")
+  @Test("Agenda in English", .dependency(\.language, .english))
   func agendaInEnglish() {
-    withDependencies {
-      $0.language = .english
-    } operation: {
-      let agenda = Agenda(
-        items: [
-          .init(title: "Test topic")
-        ]
-      )
+    let agenda = Agenda(
+      items: [
+        .init(title: "Test topic")
+      ]
+    )
 
-      let _: any HTML = agenda
-    }
+    let _: any HTML = agenda
   }
 
   // MARK: - View Variants
@@ -117,7 +110,7 @@ import Translating
   @Test("Agenda variant is short by default")
   func agendaVariantIsShort() {
     let agenda = Agenda(items: [])
-    let view = Agenda.View(agenda: agenda)
+    _ = Agenda.View(agenda: agenda)
 
     // The variant should be .short by default
     // This is verified by the fact that the full case returns HTMLEmpty

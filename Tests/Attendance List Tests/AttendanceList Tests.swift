@@ -6,6 +6,7 @@
 //
 
 import Dependencies
+import DependenciesTestSupport
 import Foundation
 import HTML
 import Testing
@@ -127,38 +128,30 @@ import Translating
 
   // MARK: - Language Support
 
-  @Test("AttendanceList in Dutch")
+  @Test("AttendanceList in Dutch", .dependency(\.language, .dutch))
   func attendanceListInDutch() {
-    withDependencies {
-      $0.language = .dutch
-    } operation: {
-      let list = AttendanceList(
-        title: "Vergadering",
-        metadata: [:],
-        attendees: [
-          .init(firstName: "Jan", lastName: "Jansen", role: "Manager")
-        ]
-      )
+    let list = AttendanceList(
+      title: "Vergadering",
+      metadata: [:],
+      attendees: [
+        .init(firstName: "Jan", lastName: "Jansen", role: "Manager")
+      ]
+    )
 
-      let _: any HTML = list
-    }
+    let _: any HTML = list
   }
 
-  @Test("AttendanceList in English")
+  @Test("AttendanceList in English", .dependency(\.language, .english))
   func attendanceListInEnglish() {
-    withDependencies {
-      $0.language = .english
-    } operation: {
-      let list = AttendanceList(
-        title: "Meeting",
-        metadata: [:],
-        attendees: [
-          .init(firstName: "John", lastName: "Doe", role: "Manager")
-        ]
-      )
+    let list = AttendanceList(
+      title: "Meeting",
+      metadata: [:],
+      attendees: [
+        .init(firstName: "John", lastName: "Doe", role: "Manager")
+      ]
+    )
 
-      let _: any HTML = list
-    }
+    let _: any HTML = list
   }
 
   // MARK: - Sendable Conformance

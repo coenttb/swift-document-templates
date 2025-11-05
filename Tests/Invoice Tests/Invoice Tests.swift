@@ -7,6 +7,7 @@
 
 import DateExtensions
 import Dependencies
+import DependenciesTestSupport
 import Foundation
 import HTML
 import Percent
@@ -19,72 +20,69 @@ import Translating
 
   // MARK: - Basic Functionality
 
-  @Test("Invoice generates HTML with all components")
+  @Test(
+    "Invoice generates HTML with all components",
+    .dependency(\.calendar, .autoupdatingCurrent),
+    .dependency(\.locale, .init(identifier: "en_US"))
+  )
   func invoiceGeneratesHTML() async throws {
-    try await withDependencies {
-      $0.calendar = .autoupdatingCurrent
-      $0.locale = .init(identifier: "en_US")
-    } operation: {
-      let invoice = Invoice(
-        sender: .preview,
-        client: .preview,
-        invoiceNumber: "INV001",
-        invoiceDate: Date.now,
-        expiryDate: Date.now + 30.days,
-        metadata: [:],
-        rows: [
-          .service(.init(amountOfHours: 10, hourlyRate: 100, vat: 21%, description: "Test"))
-        ]
-      )
+    let invoice = Invoice(
+      sender: .preview,
+      client: .preview,
+      invoiceNumber: "INV001",
+      invoiceDate: Date.now,
+      expiryDate: Date.now + 30.days,
+      metadata: [:],
+      rows: [
+        .service(.init(amountOfHours: 10, hourlyRate: 100, vat: 21%, description: "Test"))
+      ]
+    )
 
-      // Verify invoice conforms to HTML protocol
-      let _: any HTML = invoice
-      #expect(invoice.invoiceNumber == "INV001")
-      #expect(invoice.rows.count == 1)
-    }
+    // Verify invoice conforms to HTML protocol
+    let _: any HTML = invoice
+    #expect(invoice.invoiceNumber == "INV001")
+    #expect(invoice.rows.count == 1)
   }
 
-  @Test("Invoice with no rows")
+  @Test(
+    "Invoice with no rows",
+    .dependency(\.calendar, .autoupdatingCurrent),
+    .dependency(\.locale, .init(identifier: "en_US"))
+  )
   func invoiceWithNoRows() async throws {
-    try await withDependencies {
-      $0.calendar = .autoupdatingCurrent
-      $0.locale = .init(identifier: "en_US")
-    } operation: {
-      let invoice = Invoice(
-        sender: .preview,
-        client: .preview,
-        invoiceNumber: "INV002",
-        invoiceDate: Date.now,
-        expiryDate: nil,
-        metadata: [:],
-        rows: []
-      )
+    let invoice = Invoice(
+      sender: .preview,
+      client: .preview,
+      invoiceNumber: "INV002",
+      invoiceDate: Date.now,
+      expiryDate: nil,
+      metadata: [:],
+      rows: []
+    )
 
-      #expect(invoice.rows.isEmpty)
-      let _: any HTML = invoice
-    }
+    #expect(invoice.rows.isEmpty)
+    let _: any HTML = invoice
   }
 
   // MARK: - Reference Generation
 
-  @Test("Invoice reference combines client ID and invoice number")
+  @Test(
+    "Invoice reference combines client ID and invoice number",
+    .dependency(\.calendar, .autoupdatingCurrent),
+    .dependency(\.locale, .init(identifier: "en_US"))
+  )
   func invoiceReference() async throws {
-    try await withDependencies {
-      $0.calendar = .autoupdatingCurrent
-      $0.locale = .init(identifier: "en_US")
-    } operation: {
-      let invoice = Invoice(
-        sender: .preview,
-        client: .init(id: "CLIENT123", name: "Test Client", address: ["Address"]),
-        invoiceNumber: "INV456",
-        invoiceDate: Date.now,
-        expiryDate: nil,
-        metadata: [:],
-        rows: []
-      )
+    let invoice = Invoice(
+      sender: .preview,
+      client: .init(id: "CLIENT123", name: "Test Client", address: ["Address"]),
+      invoiceNumber: "INV456",
+      invoiceDate: Date.now,
+      expiryDate: nil,
+      metadata: [:],
+      rows: []
+    )
 
-      #expect(invoice.reference == "CLIENT123-INV456")
-    }
+    #expect(invoice.reference == "CLIENT123-INV456")
   }
 
   // MARK: - Row Types
@@ -146,97 +144,93 @@ import Translating
 
   // MARK: - Multiple Rows
 
-  @Test("Invoice with mixed row types")
+  @Test(
+    "Invoice with mixed row types",
+    .dependency(\.calendar, .autoupdatingCurrent),
+    .dependency(\.locale, .init(identifier: "en_US"))
+  )
   func invoiceWithMixedRows() async throws {
-    try await withDependencies {
-      $0.calendar = .autoupdatingCurrent
-      $0.locale = .init(identifier: "en_US")
-    } operation: {
-      let invoice = Invoice(
-        sender: .preview,
-        client: .preview,
-        invoiceNumber: "INV003",
-        invoiceDate: Date.now,
-        expiryDate: nil,
-        metadata: [:],
-        rows: [
-          .service(.init(amountOfHours: 10, hourlyRate: 100, vat: 21%, description: "Service")),
-          .goed(.init(description: "Product", quantity: 2, unit: "pcs", rate: 50, vatPercentage: .procent21)),
-        ]
-      )
+    let invoice = Invoice(
+      sender: .preview,
+      client: .preview,
+      invoiceNumber: "INV003",
+      invoiceDate: Date.now,
+      expiryDate: nil,
+      metadata: [:],
+      rows: [
+        .service(.init(amountOfHours: 10, hourlyRate: 100, vat: 21%, description: "Service")),
+        .goed(.init(description: "Product", quantity: 2, unit: "pcs", rate: 50, vatPercentage: .procent21)),
+      ]
+    )
 
-      #expect(invoice.rows.count == 2)
-    }
+    #expect(invoice.rows.count == 2)
   }
 
   // MARK: - Date Handling
 
-  @Test("Invoice with expiry date")
+  @Test(
+    "Invoice with expiry date",
+    .dependency(\.calendar, .autoupdatingCurrent),
+    .dependency(\.locale, .init(identifier: "en_US"))
+  )
   func invoiceWithExpiryDate() async throws {
-    try await withDependencies {
-      $0.calendar = .autoupdatingCurrent
-      $0.locale = .init(identifier: "en_US")
-    } operation: {
-      let now = Date.now
-      let future = now + 14.days
+    let now = Date.now
+    let future = now + 14.days
 
-      let invoice = Invoice(
-        sender: .preview,
-        client: .preview,
-        invoiceNumber: "INV004",
-        invoiceDate: now,
-        expiryDate: future,
-        metadata: [:],
-        rows: []
-      )
+    let invoice = Invoice(
+      sender: .preview,
+      client: .preview,
+      invoiceNumber: "INV004",
+      invoiceDate: now,
+      expiryDate: future,
+      metadata: [:],
+      rows: []
+    )
 
-      #expect(invoice.expiryDate == future)
-    }
+    #expect(invoice.expiryDate == future)
   }
 
-  @Test("Invoice without expiry date")
+  @Test(
+    "Invoice without expiry date",
+    .dependency(\.calendar, .autoupdatingCurrent),
+    .dependency(\.locale, .init(identifier: "en_US"))
+  )
   func invoiceWithoutExpiryDate() async throws {
-    try await withDependencies {
-      $0.calendar = .autoupdatingCurrent
-      $0.locale = .init(identifier: "en_US")
-    } operation: {
-      let invoice = Invoice(
-        sender: .preview,
-        client: .preview,
-        invoiceNumber: "INV005",
-        invoiceDate: Date.now,
-        expiryDate: nil,
-        metadata: [:],
-        rows: []
-      )
+    let invoice = Invoice(
+      sender: .preview,
+      client: .preview,
+      invoiceNumber: "INV005",
+      invoiceDate: Date.now,
+      expiryDate: nil,
+      metadata: [:],
+      rows: []
+    )
 
-      #expect(invoice.expiryDate == nil)
-    }
+    #expect(invoice.expiryDate == nil)
   }
 
   // MARK: - Metadata
 
-  @Test("Invoice with custom metadata")
+  @Test(
+    "Invoice with custom metadata",
+    .dependency(\.calendar, .autoupdatingCurrent),
+    .dependency(\.locale, .init(identifier: "en_US"))
+  )
   func invoiceWithMetadata() async throws {
-    try await withDependencies {
-      $0.calendar = .autoupdatingCurrent
-      $0.locale = .init(identifier: "en_US")
-    } operation: {
-      let key = TranslatedString(dutch: "Project", english: "Project")
-      let value = TranslatedString(dutch: "Website", english: "Website")
+    let key = TranslatedString(dutch: "Project", english: "Project")
+    let value = TranslatedString(dutch: "Website", english: "Website")
 
-      let invoice = Invoice(
-        sender: .preview,
-        client: .preview,
-        invoiceNumber: "INV006",
-        invoiceDate: Date.now,
-        expiryDate: nil,
-        metadata: [key: value],
-        rows: []
-      )
+    let invoice = Invoice(
+      sender: .preview,
+      client: .preview,
+      invoiceNumber: "INV006",
+      invoiceDate: Date.now,
+      expiryDate: nil,
+      metadata: [key: value],
+      rows: []
+    )
 
-      #expect(invoice.metadata[key] == value)
-    }
+    #expect(invoice.metadata[key] == value)
   }
 
   // MARK: - Sender/Client
@@ -304,44 +298,44 @@ import Translating
 
   // MARK: - Language Support
 
-  @Test("Invoice in Dutch")
+  @Test(
+    "Invoice in Dutch",
+    .dependency(\.language, .dutch),
+    .dependency(\.calendar, .autoupdatingCurrent),
+    .dependency(\.locale, Locale(identifier: "nl_NL"))
+  )
   func invoiceInDutch() async throws {
-    try await withDependencies {
-      $0.language = .dutch
-      $0.calendar = .autoupdatingCurrent
-    } operation: {
-      let invoice = Invoice(
-        sender: .preview,
-        client: .preview,
-        invoiceNumber: "INV007",
-        invoiceDate: Date.now,
-        expiryDate: nil,
-        metadata: [:],
-        rows: []
-      )
+    let invoice = Invoice(
+      sender: .preview,
+      client: .preview,
+      invoiceNumber: "INV007",
+      invoiceDate: Date.now,
+      expiryDate: nil,
+      metadata: [:],
+      rows: []
+    )
 
-      let _: any HTML = invoice
-    }
+    let _: any HTML = invoice
   }
 
-  @Test("Invoice in English")
+  @Test(
+    "Invoice in English",
+    .dependency(\.language, .english),
+    .dependency(\.calendar, .autoupdatingCurrent),
+    .dependency(\.locale, Locale(identifier: "en_US"))
+  )
   func invoiceInEnglish() async throws {
-    try await withDependencies {
-      $0.language = .english
-      $0.calendar = .autoupdatingCurrent
-    } operation: {
-      let invoice = Invoice(
-        sender: .preview,
-        client: .preview,
-        invoiceNumber: "INV008",
-        invoiceDate: Date.now,
-        expiryDate: nil,
-        metadata: [:],
-        rows: []
-      )
+    let invoice = Invoice(
+      sender: .preview,
+      client: .preview,
+      invoiceNumber: "INV008",
+      invoiceDate: Date.now,
+      expiryDate: nil,
+      metadata: [:],
+      rows: []
+    )
 
-      let _: any HTML = invoice
-    }
+    let _: any HTML = invoice
   }
 
   // MARK: - Equatable/Hashable

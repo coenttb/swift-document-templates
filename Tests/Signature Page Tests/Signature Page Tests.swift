@@ -6,6 +6,7 @@
 //
 
 import Dependencies
+import DependenciesTestSupport
 import Foundation
 import HTML
 import Testing
@@ -215,34 +216,26 @@ import Translating
 
   // MARK: - Language Support
 
-  @Test("SignaturePage in Dutch")
+  @Test("SignaturePage in Dutch", .dependency(\.language, .dutch))
   func signaturePageInDutch() {
-    withDependencies {
-      $0.language = .dutch
-    } operation: {
-      let page = SignaturePage(
-        signatories: [
-          .individual(name: TranslatedString("Jan Jansen"), metadata: [:])
-        ]
-      )
+    let page = SignaturePage(
+      signatories: [
+        .individual(name: TranslatedString("Jan Jansen"), metadata: [:])
+      ]
+    )
 
-      let _: any HTML = page
-    }
+    let _: any HTML = page
   }
 
-  @Test("SignaturePage in English")
+  @Test("SignaturePage in English", .dependency(\.language, .english))
   func signaturePageInEnglish() {
-    withDependencies {
-      $0.language = .english
-    } operation: {
-      let page = SignaturePage(
-        signatories: [
-          .individual(name: TranslatedString("John Doe"), metadata: [:])
-        ]
-      )
+    let page = SignaturePage(
+      signatories: [
+        .individual(name: TranslatedString("John Doe"), metadata: [:])
+      ]
+    )
 
-      let _: any HTML = page
-    }
+    let _: any HTML = page
   }
 
   // MARK: - Codable/Hashable

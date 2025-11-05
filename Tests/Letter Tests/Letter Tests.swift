@@ -6,6 +6,7 @@
 //
 
 import Dependencies
+import DependenciesTestSupport
 import Foundation
 import HTML
 import Testing
@@ -148,28 +149,20 @@ import Translating
 
   // MARK: - Language Support
 
-  @Test("Letter header in Dutch")
+  @Test("Letter header in Dutch", .dependency(\.language, .dutch))
   func letterHeaderInDutch() throws {
-    withDependencies {
-      $0.language = .dutch
-    } operation: {
-      let letter = Letter.preview
+    let letter = Letter.preview
 
-      // Verify letter compiles with Dutch language dependency
-      let _: any HTML = letter
-    }
+    // Verify letter compiles with Dutch language dependency
+    let _: any HTML = letter
   }
 
-  @Test("Letter header in English")
+  @Test("Letter header in English", .dependency(\.language, .english))
   func letterHeaderInEnglish() throws {
-    withDependencies {
-      $0.language = .english
-    } operation: {
-      let letter = Letter.preview
+    let letter = Letter.preview
 
-      // Verify letter compiles with English language dependency
-      let _: any HTML = letter
-    }
+    // Verify letter compiles with English language dependency
+    let _: any HTML = letter
   }
 
   // MARK: - Date Handling
