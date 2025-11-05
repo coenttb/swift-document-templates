@@ -83,7 +83,7 @@ let invoice = Invoice(
 ```
 
 <p align="center">
-    <img src=".github/Images/invoice.pdf" width="400" max-width="90%" alt="Invoice" />
+    <img src=".github/Images/invoice.png" width="400" max-width="90%" alt="Invoice" />
 </p>
 
 ### Letter Example
@@ -119,7 +119,7 @@ let letter = Letter(
 ```
 
 <p align="center">
-    <img src=".github/Images/letter.pdf" width="400" max-width="90%" alt="Letter" />
+    <img src=".github/Images/letter.png" width="400" max-width="90%" alt="Letter" />
 </p>
 
 ## Usage Examples
@@ -141,7 +141,7 @@ let agenda = Agenda(
 ```
 
 <p align="center">
-    <img src=".github/Images/agenda.pdf" width="400" max-width="90%" alt="Agenda" />
+    <img src=".github/Images/agenda.png" width="400" max-width="90%" alt="Agenda" />
 </p>
 
 ### Attendance List
@@ -162,7 +162,7 @@ let attendanceList = AttendanceList(
 ```
 
 <p align="center">
-    <img src=".github/Images/attendance_list.pdf" width="400" max-width="90%" alt="Attendance List" />
+    <img src=".github/Images/attendance_list.png" width="400" max-width="90%" alt="Attendance List" />
 </p>
 
 ### Invitation
@@ -194,7 +194,7 @@ let invitation = Invitation(
 ```
 
 <p align="center">
-    <img src=".github/Images/invitation.pdf" width="400" max-width="90%" alt="Invitation" />
+    <img src=".github/Images/invitation.png" width="400" max-width="90%" alt="Invitation" />
 </p>
 
 ### Signature Page
@@ -223,7 +223,7 @@ let group = Signatory(
 ```
 
 <p align="center">
-    <img src=".github/Images/signature_page.pdf" width="400" max-width="90%" alt="Signature Page" />
+    <img src=".github/Images/signature_page.png" width="400" max-width="90%" alt="Signature Page" />
 </p>
 
 ## Generated Examples
