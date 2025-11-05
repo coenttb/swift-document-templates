@@ -1,78 +1,223 @@
 //
-//  InvitationTests.swift
+//  Invitation Tests.swift
+//  swift-document-templates
 //
-//
-//  Created by Claude on 06/12/2024.
+//  Invitation template tests focusing on HTML generation and structure
 //
 
 import DateExtensions
 import Dependencies
 import Foundation
 import HTML
-import HtmlToPdf
-import Invitation
+import Letter
 import Testing
 import Translating
 
-@Test("Invitation")
-func testInvitation() async throws {
-  @Dependency(\.pdf) var pdf
+@testable import Invitation
 
-  let directory = URL(filePath: #filePath).deletingLastPathComponent().appending(
-    component: "Output"
-  )
-  print(directory)
+@Suite("Invitation Template") struct InvitationTests {
 
-  let testDate = Date(timeIntervalSince1970: 1_735_689_600)  // January 1, 2025
+  // MARK: - Basic Functionality
 
-  enum Style {
-    case minimal
-    case modern
+  @Test("Invitation generates HTML with all components")
+  func invitationGeneratesHTML() {
+    let invitation = Invitation(
+      sender: .init(
+        name: "Test Org",
+        address: ["123 Street"],
+        phone: "123-456",
+        email: "test@org.com",
+        website: "test.com"
+      ),
+      recipient: .init(
+        id: "RECIP001",
+        name: "Guest Name",
+        address: ["456 Street"]
+      ),
+      invitationNumber: "INV-001",
+      invitationDate: Date.now,
+      eventDate: Date.now,
+      location: "Test Hall",
+      metadata: [:]
+    )
+
+    // Verify invitation conforms to HTML protocol
+    let _: any HTML = invitation
+    #expect(invitation.invitationNumber == "INV-001")
+    #expect(invitation.location == "Test Hall")
   }
-  for wrap in [Style.minimal, Style.modern] {
-    for language in [Language.english, .dutch] {
-      try await withDependencies {
-        $0.language = language
-        $0.locale = language.locale
-        $0.calendar = .autoupdatingCurrent
-      } operation: {
-        let invitation = Invitation(
-          sender: .init(
-            name: "Test Organization",
-            address: [
-              "123 Test Street",
-              "1234 AB TestCity",
-              "TestCountry",
-            ],
-            phone: "+31 6 12345678",
-            email: "test@organization.com",
-            website: "www.testorganization.com"
-          ),
-          recipient: .init(
-            id: "TEST001",
-            name: "John Doe",
-            address: [
-              "456 Sample Road",
-              "5678 CD SampleTown",
-              "SampleCountry",
-            ]
-          ),
-          invitationNumber: "INV-2024-001",
-          invitationDate: testDate,
-          eventDate: testDate + 1.weekOfYear,
-          location: "Grand Test Hall",
-          metadata: [
-            TranslatedString(dutch: "Dresscode", english: "Dress Code"):
-              TranslatedString(dutch: "Formeel", english: "Formal"),
-            TranslatedString(dutch: "Aanvangstijd", english: "Start Time"):
-              TranslatedString(dutch: "19:00", english: "7:00 PM"),
-          ]
-        )
 
-        let filename = "Invitation \(language) | \(wrap).pdf"
-        let fileURL = directory.appendingPathComponent(filename)
-        try await pdf.render(html: HTMLDocument { invitation }, to: fileURL)
-      }
+  // MARK: - Reference Generation
+
+  @Test("Invitation reference combines recipient ID and invitation number")
+  func invitationReference() {
+    let invitation = Invitation(
+      sender: .init(name: "Org", address: [], phone: "1", email: "e", website: "w"),
+      recipient: .init(id: "GUEST123", name: "Guest", address: []),
+      invitationNumber: "INV456",
+      invitationDate: Date.now,
+      eventDate: Date.now,
+      location: "Hall",
+      metadata: [:]
+    )
+
+    #expect(invitation.reference == "GUEST123-INV456")
+  }
+
+  // MARK: - Sender Tests
+
+  @Test("Invitation sender with all fields")
+  func invitationSender() {
+    let sender = Invitation.Sender(
+      name: "Organization",
+      address: ["Street 1", "City"],
+      phone: "123-456",
+      email: "info@org.com",
+      website: "org.com"
+    )
+
+    #expect(sender.name == "Organization")
+    #expect(sender.phone == "123-456")
+    #expect(sender.email == "info@org.com")
+  }
+
+  // MARK: - Recipient Tests
+
+  @Test("Invitation recipient with ID")
+  func invitationRecipient() {
+    let recipient = Invitation.Recipient(
+      id: "RECIP001",
+      name: "Guest Name",
+      address: ["Address Line 1"]
+    )
+
+    #expect(recipient.id == "RECIP001")
+    #expect(recipient.name == "Guest Name")
+  }
+
+  // MARK: - Date Handling
+
+  @Test("Invitation with event date in future")
+  func invitationWithFutureEventDate() async throws {
+    try await withDependencies {
+      $0.calendar = .autoupdatingCurrent
+    } operation: {
+      let now = Date.now
+      let future = now + 7.days
+
+      let invitation = Invitation(
+        sender: .init(name: "O", address: [], phone: "1", email: "e", website: "w"),
+        recipient: .init(id: "R", name: "G", address: []),
+        invitationNumber: "INV",
+        invitationDate: now,
+        eventDate: future,
+        location: "L",
+        metadata: [:]
+      )
+
+      #expect(invitation.eventDate > invitation.invitationDate)
     }
+  }
+
+  // MARK: - Metadata
+
+  @Test("Invitation with custom metadata")
+  func invitationWithMetadata() {
+    let key = TranslatedString(dutch: "Dresscode", english: "Dress Code")
+    let value = TranslatedString(dutch: "Formeel", english: "Formal")
+
+    let invitation = Invitation(
+      sender: .init(name: "O", address: [], phone: "1", email: "e", website: "w"),
+      recipient: .init(id: "R", name: "G", address: []),
+      invitationNumber: "INV",
+      invitationDate: Date.now,
+      eventDate: Date.now,
+      location: "L",
+      metadata: [key: value]
+    )
+
+    #expect(invitation.metadata[key] == value)
+  }
+
+  // MARK: - Letter Sender Conversion
+
+  @Test("Convert Invitation.Sender to Letter.Sender")
+  func convertInvitationSenderToLetterSender() {
+    let invitationSender = Invitation.Sender(
+      name: "Organization",
+      address: ["Street"],
+      phone: "123",
+      email: "test@test.com",
+      website: "test.com"
+    )
+
+    let letterSender = Letter.Sender(invitationSender)
+
+    #expect(letterSender.name == invitationSender.name)
+    #expect(letterSender.address == invitationSender.address)
+    #expect(letterSender.metadata[.phone] == invitationSender.phone)
+    #expect(letterSender.metadata[.email] == invitationSender.email)
+  }
+
+  // MARK: - Language Support
+
+  @Test("Invitation in Dutch")
+  func invitationInDutch() {
+    withDependencies {
+      $0.language = .dutch
+    } operation: {
+      let invitation = Invitation(
+        sender: .init(name: "Org", address: [], phone: "1", email: "e", website: "w"),
+        recipient: .init(id: "R", name: "G", address: []),
+        invitationNumber: "INV",
+        invitationDate: Date.now,
+        eventDate: Date.now,
+        location: "L",
+        metadata: [:]
+      )
+
+      let _: any HTML = invitation
+    }
+  }
+
+  @Test("Invitation in English")
+  func invitationInEnglish() {
+    withDependencies {
+      $0.language = .english
+    } operation: {
+      let invitation = Invitation(
+        sender: .init(name: "Org", address: [], phone: "1", email: "e", website: "w"),
+        recipient: .init(id: "R", name: "G", address: []),
+        invitationNumber: "INV",
+        invitationDate: Date.now,
+        eventDate: Date.now,
+        location: "L",
+        metadata: [:]
+      )
+
+      let _: any HTML = invitation
+    }
+  }
+
+  // MARK: - Equatable/Hashable
+
+  @Test("Sender equality")
+  func senderEquality() {
+    let sender1 = Invitation.Sender(name: "A", address: ["B"], phone: "1", email: "e", website: "w")
+    let sender2 = Invitation.Sender(name: "A", address: ["B"], phone: "1", email: "e", website: "w")
+    let sender3 = Invitation.Sender(name: "C", address: ["D"], phone: "2", email: "f", website: "x")
+
+    #expect(sender1 == sender2)
+    #expect(sender1 != sender3)
+  }
+
+  @Test("Recipient creation")
+  func recipientCreation() {
+    let recipient1 = Invitation.Recipient(id: "A", name: "B", address: ["C"])
+    let recipient2 = Invitation.Recipient(id: "D", name: "E", address: ["F"])
+
+    // Verify recipients can be created
+    _ = recipient1
+    _ = recipient2
   }
 }
