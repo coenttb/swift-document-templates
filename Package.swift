@@ -111,9 +111,14 @@ extension Package {
                     )
                 },
                 targets.map { document in
-                    Target.testTarget(
+                    // Document Utilities Tests needs all modules for README verification
+                    let testDependencies: [Target.Dependency] = document.name == .documentUtilities
+                        ? targets.map { .init(stringLiteral: $0.name) } + [.htmlToPdf, .dependenciesTestSupport]
+                        : [.init(stringLiteral: document.name)] + [.htmlToPdf, .dependenciesTestSupport]
+
+                    return Target.testTarget(
                         name: "\(document.name) Tests",
-                        dependencies: [.init(stringLiteral: document.name)] + [.htmlToPdf, .dependenciesTestSupport]
+                        dependencies: testDependencies
                     )
                 }
             ].flatMap { $0 }
