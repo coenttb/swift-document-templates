@@ -212,6 +212,16 @@ let group = Signatory(
 )
 ```
 
+## Generated Examples
+
+All code examples shown in this README are automatically generated and tested as PDF documents to ensure they stay in sync with the codebase. The generated PDFs can be found in:
+
+```
+Tests/Document Utilities Tests/README Examples Output/
+```
+
+These PDFs are regenerated on every test run by the `README PDF Examples` test suite, providing visual verification that the examples work as documented.
+
 ## Platform Support
 
 - macOS 14.0+
