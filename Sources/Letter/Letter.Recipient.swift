@@ -77,7 +77,7 @@ extension Letter.Recipient: HTML {
       br()
     }
     table {
-      HTMLForEach(self.metadata.map { $0 }) { (key, value) in
+      HTMLForEach(self.metadata.map { $0 }) { key, value in
         tr {
           td {
             small { "\(key)" }

@@ -72,7 +72,7 @@ extension Agenda {
       switch variant {
       case .short:
         HTMLEmpty()
-      case .full(subtitle: _, bodyHeader: _):
+      case .full:
         HTMLEmpty()
       }
     }

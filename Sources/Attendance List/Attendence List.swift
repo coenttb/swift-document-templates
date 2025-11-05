@@ -59,7 +59,7 @@ extension AttendanceList: HTML {
     }
 
     table {
-      HTMLForEach(self.metadata.map { $0 }) { (key, value) in
+      HTMLForEach(self.metadata.map { $0 }) { key, value in
         tr {
           td {
             "\(key)"

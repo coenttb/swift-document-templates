@@ -59,13 +59,13 @@ extension Letter.Header: HTML {
     .inlineStyle("border-collapse", "collapse")
 
     switch (location, date.sending) {
-    case let (.some(location), .some(date)):
+    case (.some(let location), .some(let date)):
       HTMLText("\(location), \(date.formatted(date: .long, time: .omitted, translated: true))")
       br()
-    case let (.some(location), .none):
+    case (.some(let location), .none):
       HTMLText("\(location)")
       br()
-    case let (.none, .some(date)):
+    case (.none, .some(let date)):
       HTMLText("\(date.formatted(date: .long, time: .omitted, translated: true)))")
       br()
     case (.none, .none):

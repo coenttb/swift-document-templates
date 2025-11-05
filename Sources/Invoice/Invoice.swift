@@ -201,7 +201,7 @@ extension Invoice: HTML {
           }
         }
 
-        HTMLForEach(metadata.map { $0 }) { (key, value) in
+        HTMLForEach(metadata.map { $0 }) { key, value in
           tr {
             td { "\(key)" }
               .padding(right: .px(15))
@@ -240,7 +240,7 @@ extension Invoice: HTML {
 
         HTMLForEach(self.rows) { row in
           switch row {
-          case let .goed(goed):
+          case .goed(let goed):
             tr {
               td { "\(goed.description)" }
                 .padding(right: .px(15))
@@ -257,7 +257,7 @@ extension Invoice: HTML {
               td { "\(goed.vatPercentage?.percent ?? 0%)" }
                 .padding(right: .px(15))
             }
-          case let .service(dienst):
+          case .service(let dienst):
             tr {
               td { "\(dienst.description)" }
                 .padding(right: .px(15))
@@ -437,15 +437,15 @@ extension Invoice.Row {
 extension Invoice.Row {
   public var total: Decimal {
     switch self {
-    case let .service(dienst): return dienst.total
-    case let .goed(goed): return goed.total
+    case .service(let dienst): return dienst.total
+    case .goed(let goed): return goed.total
     }
   }
 
   public var totalVAT: Decimal {
     switch self {
-    case let .service(dienst): return dienst.totalVAT
-    case let .goed(goed): return goed.totalVAT
+    case .service(let dienst): return dienst.totalVAT
+    case .goed(let goed): return goed.totalVAT
     }
   }
 }

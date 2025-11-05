@@ -88,7 +88,7 @@ extension Letter.Sender: HTML {
           }
         }
       }
-      HTMLForEach(self.metadata.map { $0 }) { (key, value) in
+      HTMLForEach(self.metadata.map { $0 }) { key, value in
         tr {
           td {
             small { "\(key)" }
