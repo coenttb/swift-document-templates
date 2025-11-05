@@ -4,7 +4,12 @@
   "indentation": {
     "spaces": 4
   },
-  "respectsExistingLineBreaks": true,
+  "respectsExistingLineBreaks": false,
   "lineBreakBeforeControlFlowKeywords": false,
-  "lineBreakBeforeEachArgument": true
+  "lineBreakBeforeEachArgument": true,
+  "lineBreakBeforeEachGenericRequirement": true,
+  "prioritizeKeepingFunctionOutputTogether": true,
+  "indentConditionalCompilationBlocks": true,
+  "indentSwitchCaseLabels": false,
+  "spacesAroundRangeFormationOperators": false
 }
