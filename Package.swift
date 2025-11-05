@@ -30,6 +30,7 @@ extension Target.Dependency {
     static var money: Self { .product(name: "Money", package: "swift-money") }
     static var percent: Self { .product(name: "Percent", package: "swift-percent") }
     static var html: Self { .product(name: "HTML", package: "swift-html") }
+    static var htmlComponents: Self { .product(name: "HTMLComponents", package: "swift-html") }
     static var htmlToPdf: Self { .product(name: "HtmlToPdf", package: "swift-html-to-pdf") }
     static var collections: Self { .product(name: "Collections", package: "swift-collections") }
 }
@@ -40,6 +41,7 @@ extension [Target.Dependency] {
             .dependencies,
             .translating,
             .html,
+            .htmlComponents,
             .percent,
             .typesFoundation,
             .money

@@ -15,6 +15,7 @@ import Invoice
 import Letter
 import Signature_Page
 import Testing
+import HTMLComponents
 
 // PDF generation tests require WKWebView which is extremely slow on iOS Simulator in CI
 // These tests are primarily for documentation and work best on macOS
@@ -86,8 +87,7 @@ import Testing
 
             let outputURL = Self.outputDirectory.appendingPathComponent("invoice.pdf")
 
-            let htmlString = try String(invoice)
-            _ = try await pdf.render.html(htmlString, to: outputURL)
+            _ = try await pdf.render(html: HTMLDocument.modern { invoice }, to: outputURL)
         }
 
         // MARK: - Letter Example
@@ -126,8 +126,7 @@ import Testing
 
             let outputURL = Self.outputDirectory.appendingPathComponent("letter.pdf")
 
-            let htmlString = try String(letter)
-            _ = try await pdf.render.html(htmlString, to: outputURL)
+            _ = try await pdf.render(html: HTMLDocument.modern { letter }, to: outputURL)
         }
 
         // MARK: - Agenda Example
@@ -145,8 +144,7 @@ import Testing
 
             let outputURL = Self.outputDirectory.appendingPathComponent("agenda.pdf")
 
-            let htmlString = try String(agenda)
-            _ = try await pdf.render.html(htmlString, to: outputURL)
+            _ = try await pdf.render(html: HTMLDocument.modern { agenda }, to: outputURL)
         }
 
         // MARK: - Attendance List Example
@@ -168,8 +166,7 @@ import Testing
 
             let outputURL = Self.outputDirectory.appendingPathComponent("attendance_list.pdf")
 
-            let htmlString = try String(attendanceList)
-            _ = try await pdf.render.html(htmlString, to: outputURL)
+            _ = try await pdf.render(html: HTMLDocument.modern { attendanceList }, to: outputURL)
         }
 
         // MARK: - Invitation Example
@@ -202,8 +199,7 @@ import Testing
 
             let outputURL = Self.outputDirectory.appendingPathComponent("invitation.pdf")
 
-            let htmlString = try String(invitation)
-            _ = try await pdf.render.html(htmlString, to: outputURL)
+            _ = try await pdf.render(html: HTMLDocument.modern { invitation }, to: outputURL)
         }
 
         // MARK: - Signature Page Example
@@ -235,8 +231,7 @@ import Testing
 
             let outputURL = Self.outputDirectory.appendingPathComponent("signature_page.pdf")
 
-            let htmlString = try String(signaturePage)
-            _ = try await pdf.render.html(htmlString, to: outputURL)
+            _ = try await pdf.render(html: HTMLDocument.modern { signaturePage }, to: outputURL)
         }
     }
 #endif
